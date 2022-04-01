@@ -5,6 +5,11 @@ import HomeContainer from '../containers/home'
 
 export default function Home() {
   return (
-    <HomeContainer />
+    <>
+      <Head>
+        <title>mager - Homepage</title>
+      </Head>
+      <HomeContainer />
+    </>
   )
 }
