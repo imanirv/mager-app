@@ -5,7 +5,7 @@ import PostList from './elements/PostList'
 import {callAPI} from '../../helpers/network'
 
 const HomeContainer = () =>{
-    const [data, setData] = useState();
+    const [data, setData] = useState([]);
 
 
     const getData = async () => {
@@ -24,7 +24,7 @@ const HomeContainer = () =>{
     }, [])
 
     return(
-        <div className='bg-black '>
+        <div className='bg-black  min-h-screen'>
         {/* nanti navbar taro sini  */}
         <div className="pt-20 px-40">
             <div className="flex items-start justify-center">

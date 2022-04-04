@@ -50,18 +50,18 @@ const data = [
 ]
 
 const PostList = ({datas}) =>{
-
+    
     console.log(datas)
     return (
         <div>
             {
-                data.map((item, i) => (
+                datas.map((item, i) => (
                     <div className="w-full mt-3" key={i}>
                        <PostItem
                         displayName = {item.displayName}
                         userName = {item.userName}
                         date={item.date}
-                        text={item.text}
+                        text={item.postText}
                         likeCount = {item.likeCount}
                         commentCount = {item.commentCount}
                         media = {item.media ? item.media : ""}
