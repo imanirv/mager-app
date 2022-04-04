@@ -49,7 +49,9 @@ const data = [
     },
 ]
 
-const PostList = () =>{
+const PostList = ({datas}) =>{
+
+    console.log(datas)
     return (
         <div>
             {

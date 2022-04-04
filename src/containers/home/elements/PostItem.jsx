@@ -123,7 +123,7 @@ const Media = ({src, type}) => {
     } else {
         return (
             <div className="mt-3 flex justify-center bg-black">
-                <ReactPlayer url={src} playing controls={true} />
+                <ReactPlayer url={src} controls={true} />
             </div>
         )
     }
