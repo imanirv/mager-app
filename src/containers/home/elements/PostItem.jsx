@@ -148,11 +148,22 @@ const Count = ({likeCount, commentCount}) =>{
     )
 }
 
+
 const ActionButtons = () => {
+  const [liked, setLiked] = useState(false)
+  const handleLike = () => {
+   setLiked(!liked) 
+  }
     return (
         <div className="mt-3 flex justify-between items-center">
-            <button className='flex items-center mx-16 py-3 px-6 rounded-md hover:bg-darkmode-hover'>
-                <ThumbUpOutline className='text-white w-5 h-5 mr-3'/>
+            <button className='flex items-center mx-16 py-3 px-6 rounded-md hover:bg-darkmode-hover' onClick={handleLike}>
+              {
+                !liked ? (
+                  <ThumbUpOutline className='text-white w-5 h-5 mr-3'/>
+                  ): (
+                  <ThumbUpIcon className='text-white w-5 h-5 mr-3'/>
+                )
+              }
                 <Body1 disabled={true}>Suka</Body1>
             </button>
             <button className='flex items-center mx-16 py-3 px-6 rounded-md hover:bg-darkmode-hover'>
