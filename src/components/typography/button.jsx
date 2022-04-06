@@ -1,5 +1,5 @@
-const Body2 = ({text}) => {
-    <span className="text-base text-darkmode-4 font-bold">{text}</span>
-}
+const Button = ({children}) => (
+    <span className="text-base text-darkmode-4 font-bold">{children}</span>
+)
 
-export default Body2
+export default Button

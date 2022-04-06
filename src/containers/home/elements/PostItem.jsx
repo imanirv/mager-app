@@ -88,15 +88,15 @@ function Dropdown() {
   )
 }
 
-const Header = ({displayName, userName, date}) => {
+const Header = ({displayName , userName , date}) => {
     return (
         <div className="flex items-center justify-between">
-            <div className="flex">
-                <Image src={"/images/profile.png"} width={50} height={50} alt="profile"/>
+            <div className="flex items-center">
+                <Image src={"/images/profile.png"} width={40} height={40} alt="profile"/>
                 <div className="mx-3">
                     <div className="flex items-center">
                         <Subtitle1>{displayName}</Subtitle1>
-                        <div className="w-1 h-1 rounded-full bg-darkmode-4 mx-3"></div>
+                        <div className="w-1 h-1 rounded-full bg-darkmode-4 mx-2 mt-1 md:mx-3"></div>
                         <Subtitle2 disabled={true}>{userName}</Subtitle2>
                     </div>
                     <Caption disabled={true}>{date}</Caption>
@@ -129,7 +129,7 @@ const Media = ({src, type}) => {
     }
 }
 
-const Count = ({likeCount, commentCount}) =>{
+const Count = ({likeCount = 0, commentCount = 0}) =>{
     return(
         <div className="mt-3 flex items-center">
                 <div className="flex items-center p-2 mr-8">
@@ -156,7 +156,7 @@ const ActionButtons = () => {
   }
     return (
         <div className="mt-3 flex justify-between items-center">
-            <button className='flex items-center mx-16 py-3 px-6 rounded-md hover:bg-darkmode-hover' onClick={handleLike}>
+            <button className='flex items-center  py-3 md:px-6 rounded-md hover:bg-darkmode-hover' onClick={handleLike}>
               {
                 !liked ? (
                   <ThumbUpOutline className='text-white w-5 h-5 mr-3'/>
@@ -166,11 +166,11 @@ const ActionButtons = () => {
               }
                 <Body1 disabled={true}>Suka</Body1>
             </button>
-            <button className='flex items-center mx-16 py-3 px-6 rounded-md hover:bg-darkmode-hover'>
+            <button className='flex items-center  py-3 px-6 rounded-md hover:bg-darkmode-hover'>
                 <AnnotationOutline className='text-white w-5 h-5 mr-3'/>
                 <Body1 disabled={true}>Komentar</Body1>
             </button>
-            <button className='flex items-center mx-16 py-3 px-2 rounded-md hover:bg-darkmode-hover'>
+            <button className='flex items-center  py-3 px-2 rounded-md hover:bg-darkmode-hover'>
                 <LinkIcon className='text-white w-5 h-5 mr-3'/>
                 <Body1 disabled>Salin Link</Body1>
             </button>
@@ -180,10 +180,10 @@ const ActionButtons = () => {
 
 const PostItem = (
     {
-        displayName = "", 
-        userName = "", 
-        date = "", 
-        text= "", 
+        displayName = "unknown", 
+        userName = "unknown", 
+        date = "unknown", 
+        text= "empty", 
         media = "",
         mediaType = "",
         likeCount = 0, 
