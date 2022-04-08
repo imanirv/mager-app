@@ -13,7 +13,7 @@ const HomeContainer = () =>{
 
         try {
             const response = await callAPI({
-                url:`/postingan?size=10&page=10`,
+                url:`/postingan?page=10&size=10`,
                 method: 'get',
             })
             setData(

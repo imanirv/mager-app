@@ -5,7 +5,7 @@ import GroupAdd from "../../../../public/custom-icon/group-add"
 
 const ItemList = ({name, src}) => {
     return(
-        <div className="flex items-center my-2">
+        <div className="flex items-center m-2 p-1 hover:bg-darkmode-hover rounded-md">
             <div className="w-10 h-10 mx-4 rounded-md relative">
                 <Image alt="community" className="rounded-md" layout="fill" src={src}/>
             </div>

@@ -6,6 +6,7 @@ import { Menu, Transition } from '@headlessui/react'
 
 import { ThumbUpIcon, AnnotationIcon, ChevronDownIcon, PencilIcon, FlagIcon, TrashIcon } from '@heroicons/react/solid'
 import { ThumbUpIcon as ThumbUpOutline, AnnotationIcon as AnnotationOutline, LinkIcon } from '@heroicons/react/outline'
+import SendIcon from '../../../../public/custom-icon/send'
 import { Subtitle1, Subtitle2, Caption, Body1, Body2 } from '../../../components/typography'
 
 
@@ -155,7 +156,7 @@ const ActionButtons = () => {
    setLiked(!liked) 
   }
     return (
-        <div className="mt-3 flex justify-between items-center">
+        <div className="my-1 flex justify-between items-center md:px-14">
             <button className='flex items-center  py-3 md:px-6 rounded-md hover:bg-darkmode-hover' onClick={handleLike}>
               {
                 !liked ? (
@@ -199,7 +200,28 @@ const PostItem = (
             {/* jumlah like & comment  */}
             <Count likeCount={likeCount} commentCount={commentCount} />
             {/* action post  */}
-            <ActionButtons />
+            <div className="bg-darkmode-hover w-full h-px"></div>
+              <ActionButtons />
+            <div className="bg-darkmode-hover w-full h-px"></div>
+            <div className="mt-3">
+              {/* input comment  */}
+              <div className="flex w-full items-center ">
+                <Image src={"/images/profile.png"} width={30} height={30} alt="profile"/>
+                <div className="w-full px-2 relative">
+                  <input type="text" className='bg-darkmode-3 rounded-lg p-1 pl-4 w-full ml-2' placeholder='tulis komentar' />
+                  <button className='absolute top-1 right-3 '><SendIcon /></button>
+                </div>
+              </div>
+              {/* comment section  */}
+              <div className="flex w-full items-start mt-3">
+                <Image src={"/images/profile.png"} width={30} height={30} alt="profile"/>
+                <div className="w-full  bg-darkmode-3 ml-4 px-2 py-1 relative rounded-lg overflow-hidden">
+                  <Subtitle2>athalla123</Subtitle2>
+                  <p className='text-ellipsis text-white'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit commodi eos odio atque, nemo quaerat dolore praesentium quis accusamus alias ipsam corporis iste maxime perspiciatis porro esse suscipit recusandae eaque aliquam, rem facere qui ad deleniti! Quasi omnis quo nesciunt aperiam ipsam impedit soluta maiores itaque. Porro voluptates quas architecto.</p>
+                </div>
+              </div>
+            </div>
+            
         </div>
     )
 }

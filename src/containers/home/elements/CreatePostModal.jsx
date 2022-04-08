@@ -56,21 +56,27 @@ import { callAPI } from '../../../helpers/network'
         const onSubmit = async (values) => {
             try {
                 const payload = {
-                    postingan: {
-                        title: "",
-                        postText: values.postText,
-                        draft: false,
-                        visibility: true
-                    }
+                    title: "",
+                    postText: values.postText,
+                    draft: false,
+                    visibility: true
+                    // postingan: {
+                    // }
 
                 };
+                const formData = new FormData();
+                
+                formData.append('postingan', JSON.stringify(payload));
+
 
                 const response = await callAPI({
                     url:'/postingan',
                     method: 'POST',
-                    data: payload
+                    data: formData
                   });
+
                 const {data} = response;
+                
                 console.log(data);
                 // alert(values.postText)
             } catch (error) {
