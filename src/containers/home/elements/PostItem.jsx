@@ -215,9 +215,9 @@ const PostItem = (
               {/* comment section  */}
               <div className="flex w-full items-start mt-3">
                 <Image src={"/images/profile.png"} width={30} height={30} alt="profile"/>
-                <div className="w-full  bg-darkmode-3 ml-4 px-2 py-1 relative rounded-lg overflow-hidden">
+                <div className="w-full bg-darkmode-3 ml-4 px-2 py-1 relative rounded-lg overflow-hidden">
                   <Subtitle2>athalla123</Subtitle2>
-                  <p className='text-ellipsis text-white'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit commodi eos odio atque, nemo quaerat dolore praesentium quis accusamus alias ipsam corporis iste maxime perspiciatis porro esse suscipit recusandae eaque aliquam, rem facere qui ad deleniti! Quasi omnis quo nesciunt aperiam ipsam impedit soluta maiores itaque. Porro voluptates quas architecto.</p>
+                  <p className='text-ellipsis overflow-hidden text-white'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit commodi eos odio atque, nemo quaerat dolore praesentium quis accusamus alias ipsam corporis iste maxime perspiciatis porro esse suscipit recusandae eaque aliquam, rem facere qui ad deleniti! Quasi omnis quo nesciunt aperiam ipsam impedit soluta maiores itaque. Porro voluptates quas architecto.</p>
                 </div>
               </div>
             </div>

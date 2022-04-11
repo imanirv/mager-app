@@ -7,7 +7,7 @@ import { useFormik, getIn } from 'formik'
 import * as Yup from 'yup'
 
 // icons 
-import { PhotographIcon,  } from '@heroicons/react/solid'
+import { PhotographIcon, GlobeIcon  } from '@heroicons/react/solid'
 import PostAdd from "../../../../public/custom-icon/post-add"
 import ImageAdd from "../../../../public/custom-icon/image-add"
 import LiveIcon from "../../../../public/custom-icon/live"
@@ -183,7 +183,7 @@ import { callAPI } from '../../../helpers/network'
     
     const Header = ({displayName ="unknown" , userName = "unknown"}) => {
         return (
-            <div className="flex items-center justify-between px-5">
+            <div className="flex items-center justify-between px-5 mb-3">
                 <div className="flex items-center justify-between">
                     <Image src={"/images/profile.png"} width={42} height={42} alt="profile"/>
                     <div className="mx-3">
@@ -192,15 +192,18 @@ import { callAPI } from '../../../helpers/network'
                             <div className="w-1 h-1 rounded-full bg-darkmode-4 mx-3"></div>
                             <Subtitle2 disabled={true}>{userName}</Subtitle2>
                         </div>
+                        <div className="flex items-center">
+                            <GlobeIcon className='w-4 h-4 text-darkmode-disabled mr-2' />
+                            <Caption disabled>Public</Caption>
+                        </div>
                     </div>
                 </div>
+                <button className='bg-darkmode-3 px-3 py-2 rounded-lg'><Button>Draft (2)</Button></button>
             </div>
         )
     }
   
     const Modal = ({status, close}) => {
-
-        
         return (
         <>
             <Transition appear show={status} as={Fragment}>
