@@ -4,10 +4,10 @@ import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon, UserGroupIcon, LocationMarkerIcon } from '@heroicons/react/solid'
 import { Header4, Body2 } from '../../components/typography'
 
-import MainLayout from "../../components/layout/"
+import MainLayout from "../../components/layout"
 import CommunityCard from "../../components/elements/CommunityCard"
 
-import Card from "../../components/card/"
+import Card from "../../components/card"
 
 
 const people = [
@@ -133,7 +133,7 @@ const Item = () => {
     )
 }
 
-const KomunitasContainer = () => {
+const ExploreContainer = () => {
     return(
         <MainLayout>
              <div className="pt-4 px-3 lg:px-40">
@@ -173,4 +173,4 @@ const KomunitasContainer = () => {
     )
 }
 
-export default KomunitasContainer
+export default ExploreContainer

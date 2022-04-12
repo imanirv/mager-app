@@ -1,4 +1,9 @@
-import PostItem from "./PostItem"
+import { useRouter } from "next/router"
+import MainLayout from "../../components/layout"
+import {Header1} from "../../components/typography"
+import Card from "../../components/card"
+import PostList from "../../components/elements/PostList"
+
 
 const data = [
     {
@@ -49,46 +54,35 @@ const data = [
     },
 ]
 
-const PostList = ({datas}) =>{
-    
-    console.log(datas)
+const Komunitas = () => {
+
+    const router = useRouter()
+    const {name} = router.query
     return (
-        <div>
-            {/* {
-                datas.map((item, i) => (
-                    <div className="w-full mt-3" key={i}>
-                       <PostItem
-                        displayName = {item.displayName}
-                        userName = {item.userName}
-                        date={item.date}
-                        text={item.postText}
-                        likeCount = {item.likeCount}
-                        commentCount = {item.commentCount}
-                        media = {item.media ? item.media : ""}
-                        mediaType = {item.mediaType ? item.mediaType : ""}
-                       />
+        <MainLayout>
+            {/* header group  */}
+            <div className="w-full h-60 bg-red-300"></div>
+            <div className="w-full  bg-darkmode-3 md:px-40 py-4 flex">
+                <div className="w-60 h-60 bg-red-600 mr-4 border-4 rounded-md"></div>
+                <Header1>{name}</Header1>
+            </div>
+            <div className="pt-24 px-3 lg:px-40 ">
+                <div className="flex items-start justify-center">
+                    <div className=" w-full md:w-8/12 mr-3">
+                        <PostList datas={data} />
                     </div>
-                ))
-            } */}
-            {
-                data.map((item, i) => (
-                    <div className="w-full mb-3" key={i}>
-                       <PostItem
-                        displayName = {item.displayName}
-                        userName = {item.userName}
-                        date={item.date}
-                        text={item.text}
-                        likeCount = {item.likeCount}
-                        commentCount = {item.commentCount}
-                        media = {item.media ? item.media : ""}
-                        mediaType = {item.mediaType ? item.mediaType : ""}
-                       />
+                    <div className="hidden md:block w-4/12  bg-darkmode-2 rounded-2xl">
+                        
+                        <Card>
+                            <div className="h-40"></div>
+                        </Card>
+                       
                     </div>
-                ))
-            }        
-        </div>
+                
+                </div>
+            </div>
+        </MainLayout>
     )
 }
 
-
-export default PostList
+export default Komunitas

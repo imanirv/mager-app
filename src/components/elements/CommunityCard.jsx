@@ -1,11 +1,14 @@
 import Image from "next/image"
+import {useRouter} from "next/router"
 import { Header3, Body1 } from "../typography"
 import GroupAdd from "../icons/group-add"
 
 
 const ItemList = ({name, src}) => {
+    const {push} = useRouter()
+
     return(
-        <div className="flex items-center my-2 p-1 hover:bg-darkmode-hover rounded-md">
+        <div className="flex items-center my-2 p-1 hover:bg-darkmode-hover rounded-md" onClick={() => push(`/komunitas/${name}`)}>
             <div className="w-10 h-10 mr-4 rounded-md relative">
                 <Image alt="community" className="rounded-md" layout="fill" src={src}/>
             </div>

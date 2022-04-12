@@ -34,7 +34,9 @@ const HomeContainer = () =>{
             <div className="pt-4 px-3 lg:px-40">
                 <div className="flex items-start justify-center">
                     <div className=" w-full md:w-8/12 mr-3">
-                        <CreatePost />
+                        <div className="mb-3">
+                            <CreatePost />
+                        </div>
                         <PostList datas={data} />
                     </div>
                     <div className="hidden md:block w-4/12  bg-darkmode-2 rounded-2xl">
