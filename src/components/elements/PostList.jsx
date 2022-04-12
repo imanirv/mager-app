@@ -54,7 +54,7 @@ const PostList = ({datas}) =>{
     console.log(datas)
     return (
         <div>
-            {/* {
+            {
                 datas.map((item, i) => (
                     <div className="w-full mt-3" key={i}>
                        <PostItem
@@ -69,8 +69,8 @@ const PostList = ({datas}) =>{
                        />
                     </div>
                 ))
-            } */}
-            {
+            }
+            {/* {
                 data.map((item, i) => (
                     <div className="w-full mb-3" key={i}>
                        <PostItem
@@ -85,7 +85,7 @@ const PostList = ({datas}) =>{
                        />
                     </div>
                 ))
-            }        
+            }         */}
         </div>
     )
 }

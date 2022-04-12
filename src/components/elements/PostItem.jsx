@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { Fragment,  useState } from 'react'
+import {useRouter} from 'next/router'
 import Image from 'next/image'
 import ReactPlayer from 'react-player/lazy'
 import { Menu, Transition } from '@headlessui/react'
@@ -201,12 +202,17 @@ const PostItem = (
         mediaType = "",
         likeCount = 0, 
         commentCount = 0}) => {
+
+          const {push} = useRouter()
     return(
         <div className="bg-darkmode-2 w-full rounded-2xl p-3 mb-3">
+            <div className="" onClick={() => push("/posts/10")}>
             {/* header  */}
            <Header userName={userName} displayName={displayName} date={date} />
             {/* konten  */}
            <Content text={text}/>
+
+            </div>
             {/* media  */}
             {media ? <Media src={media} type={mediaType} /> : ""}   
             {/* jumlah like & comment  */}

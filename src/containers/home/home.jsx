@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 import MainLayout from '../../components/layout'
 import CreatePost from './elements/CreatePost'
-import PostList from './elements/PostList'
-import CommunityCard from './elements/CommunityCard'
+// import PostList from './elements/PostList'
+// import CommunityCard from './elements/CommunityCard'
+import PostList from "../../components/elements/PostList"
+import CommunityCard from "../../components/elements/CommunityCard"
 import {callAPI} from '../../helpers/network'
 
 const HomeContainer = () =>{
@@ -13,7 +15,7 @@ const HomeContainer = () =>{
 
         try {
             const response = await callAPI({
-                url:`/postingan?page=10&size=10`,
+                url:`/postingan?page=0&size=100`,
                 method: 'get',
             })
             setData(
