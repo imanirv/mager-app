@@ -33,7 +33,7 @@ const HomeContainer = () =>{
 
     return(
        <MainLayout>
-            <div className="pt-4 px-3 lg:px-40">
+            <div className="pt-4 px-3 lg:px-40 pt-24">
                 <div className="flex items-start justify-center">
                     <div className=" w-full md:w-8/12 mr-3">
                         <div className="mb-3">

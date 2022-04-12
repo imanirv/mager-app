@@ -4,7 +4,7 @@ import {HomeIcon, UserGroupIcon, BellIcon, ChevronDownIcon, SearchIcon} from "@h
 const Navbar = () => {
     const {push} = useRouter()
     return (
-        <div className=" h-14 bg-darkmode-2 px-3 md:px-40 flex items-center justify-between">
+        <div className="fixed z-50 w-screen h-14 bg-darkmode-2 px-3 md:px-40 flex items-center justify-between">
             <div className="w-1/2 flex items-center pr-3    ">
                 <div className="flex items-center" onClick={() => push('/')}>
                     <Image alt="logo" src="/images/Logo Mager-01.png" width={40} height={40} />
@@ -20,7 +20,7 @@ const Navbar = () => {
                     <HomeIcon className="text-white w-6 h-6"/>
                     <h1 className="text-white font-nunito font-bold mt-1 ml-1">Home</h1>
                 </div>
-                <div className="flex items-center" onClick={() => push("/komunitas")}>
+                <div className="flex items-center" onClick={() => push("/explore")}>
                     <UserGroupIcon className="text-darkmode-disabled w-6 h-6"/>
                     <h1 className="text-darkmode-disabled font-nunito font-bold mt-1 ml-1">Komunitas</h1>
                 </div>

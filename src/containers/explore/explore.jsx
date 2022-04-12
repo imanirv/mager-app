@@ -40,13 +40,13 @@ function Example() {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Listbox.Options className="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+            <Listbox.Options className="absolute w-full py-1 mt-1 overflow-auto text-base bg-darkmode-3 z-20 border border-white  rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
               {people.map((person, personIdx) => (
                 <Listbox.Option
                   key={personIdx}
                   className={({ active }) =>
                     `cursor-default select-none relative py-2 pl-10 pr-4 ${
-                      active ? 'text-amber-900 bg-amber-100' : 'text-gray-900'
+                      active ? 'text-white bg-darkmode-2' : 'text-gray-900'
                     }`
                   }
                   value={person}
@@ -54,7 +54,7 @@ function Example() {
                   {({ selected }) => (
                     <>
                       <span
-                        className={`block truncate ${
+                        className={`block truncate text-white ${
                           selected ? 'font-medium' : 'font-normal'
                         }`}
                       >
@@ -136,7 +136,7 @@ const Item = () => {
 const ExploreContainer = () => {
     return(
         <MainLayout>
-             <div className="pt-4 px-3 lg:px-40">
+             <div className=" px-3 lg:px-40 pt-20">
                 <div className="flex items-start justify-center">
                     <div className=" w-full md:w-8/12 mr-3">
                         <Filter />
