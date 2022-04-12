@@ -49,7 +49,7 @@ const data = [
     },
 ]
 
-const PostList = ({datas}) =>{
+const PostList = ({datas, limitComment}) =>{
     
     console.log(datas)
     return (
@@ -66,6 +66,7 @@ const PostList = ({datas}) =>{
                         commentCount = {item.commentCount}
                         media = {item.media ? item.media : ""}
                         mediaType = {item.mediaType ? item.mediaType : ""}
+                        limitComment ={limitComment}
                        />
                     </div>
                 ))

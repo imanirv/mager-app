@@ -39,7 +39,7 @@ const HomeContainer = () =>{
                         <div className="mb-3">
                             <CreatePost />
                         </div>
-                        <PostList datas={data} />
+                        <PostList datas={data} limitComment={true} />
                     </div>
                     <div className="hidden md:block w-4/12  bg-darkmode-2 rounded-2xl">
                         {/* card komunitas taro sini */}

@@ -201,7 +201,9 @@ const PostItem = (
         media = "",
         mediaType = "",
         likeCount = 0, 
-        commentCount = 0}) => {
+        commentCount = 0,
+        limitComment = false,
+      }) => {
 
           const {push} = useRouter()
     return(
@@ -231,17 +233,25 @@ const PostItem = (
                 </div>
               </div>
               {/* comment section  */}
-              <CommentItem />
-              <CommentItem />
-              <CommentItem />
-              <CommentItem />
-              <CommentItem />
-              <CommentItem />
-              <CommentItem />
-              <CommentItem />
-              <CommentItem />
-              <CommentItem />
-              <CommentItem />
+              {
+                limitComment ? (
+                  <CommentItem />
+
+                ):(
+                  <>
+                    <CommentItem />
+                    <CommentItem />
+                    <CommentItem />
+                    <CommentItem />
+                    <CommentItem />
+                    <CommentItem />
+                    <CommentItem />
+                    <CommentItem />
+                    <CommentItem />
+                    <CommentItem />
+                  </>
+                )
+              }
             </div>
             
         </div>
