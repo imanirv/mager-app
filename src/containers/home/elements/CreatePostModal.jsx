@@ -112,7 +112,7 @@ import { callAPI } from '../../../helpers/network'
                         : 'bg-darkmode-3 text-gray-500  hover:text-white'
                     )
                     }>
-                    <PostAdd className='w-5 h-5 mr-1'/>  <Caption> Foto/Video</Caption>
+                    <PostAdd className='w-5 h-5 mr-1'/>  <Caption> Post</Caption>
                     </Tab>
                     <Tab
                     className={({ selected }) =>
@@ -166,8 +166,8 @@ import { callAPI } from '../../../helpers/network'
                         ):("")
                         }
                         <div className="mt-4 flex align-items-center justify-center">
-                        <button name='submit' type='submit' className='bg-gradient-to-r from-[#384CFF] to-[#009EF8] w-1/2 mx-2 p-2 rounded-lg'>submit</button>
-                        <button className='bg-darkmode-disabled w-1/2 mx-2 p-2 rounded-lg'>draft</button>
+                        <button name='submit' type='submit' className='bg-gradient-to-r from-[#384CFF] to-[#009EF8] w-1/2 mx-2 p-2 rounded-lg'>Kirim</button>
+                        <button className='bg-darkmode-disabled w-1/2 mx-2 p-2 rounded-lg'>Simpan di Draft</button>
                         </div>
                     </form>
                     

@@ -1,4 +1,5 @@
 import PostItem from "./PostItem"
+import moment from 'moment';
 
 const data = [
     {
@@ -50,7 +51,6 @@ const data = [
 ]
 
 const PostList = ({datas, limitComment}) =>{
-    
     console.log(datas)
     return (
         <div>
@@ -58,15 +58,18 @@ const PostList = ({datas, limitComment}) =>{
                 datas.map((item, i) => (
                     <div className="w-full mt-3" key={i}>
                        <PostItem
-                        displayName = {item.displayName}
-                        userName = {item.userName}
-                        date={item.date}
+                        id ={item.id}
+                        displayName = {item.createdBy ? item.createdBy.nama : ""}
+                        userName =  {item.createdBy ? item.createdBy.username : ""}
+                        date={moment(item.created_date).format('MMMM Do')}
                         text={item.postText}
-                        likeCount = {item.likeCount}
-                        commentCount = {item.commentCount}
+                        likeCount = {item.jumlahLike}
+                        commentCount = {item.jumlahKomentar}
                         media = {item.media ? item.media : ""}
                         mediaType = {item.mediaType ? item.mediaType : ""}
                         limitComment ={limitComment}
+                        postType = {item.postedIn ? "komunitas" : "user"}
+                        communityName = {item.postedIn ? item.postedIn.namaKomunitas : "user"}
                        />
                     </div>
                 ))

@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { Fragment,  useState } from 'react'
+import { Fragment,  useState, useEffect } from 'react'
 import {useRouter} from 'next/router'
 import Image from 'next/image'
 import ReactPlayer from 'react-player/lazy'
@@ -9,7 +9,9 @@ import { ThumbUpIcon, AnnotationIcon, ChevronDownIcon, PencilIcon, FlagIcon, Tra
 import { ThumbUpIcon as ThumbUpOutline, AnnotationIcon as AnnotationOutline, LinkIcon } from '@heroicons/react/outline'
 import SendIcon from '../icons/send'
 import { Subtitle1, Subtitle2, Caption, Body1, Body2 } from '../typography'
+import Card from "../card"
 
+import { callAPI } from "../../helpers/network";
 
 
 function Dropdown() {
@@ -90,7 +92,7 @@ function Dropdown() {
   )
 }
 
-const Header = ({displayName , userName , date}) => {
+const HeaderUser = ({displayName , userName , date}) => {
     return (
         <div className="flex items-center justify-between">
             <div className="flex items-center">
@@ -102,6 +104,24 @@ const Header = ({displayName , userName , date}) => {
                         <Subtitle2 disabled={true}>{userName}</Subtitle2>
                     </div>
                     <Caption disabled={true}>{date}</Caption>
+                </div>
+            </div>
+            <Dropdown />
+        </div>
+    )
+}
+const HeaderKomunitas = ({communityName , userName , date}) => {
+    return (
+        <div className="flex items-center justify-between">
+            <div className="flex items-center">
+                <Image src={"/images/profile.png"} width={40} height={40} alt="profile"/>
+                <div className="mx-3">
+                    <Subtitle1>{communityName}</Subtitle1>
+                    <div className="flex items-center">
+                        <Subtitle2 disabled={true}>{userName}</Subtitle2>
+                        <div className="w-1 h-1 rounded-full bg-darkmode-4 mx-2 mt-1 md:mx-3"></div>
+                        <Caption disabled={true}>{date}</Caption>
+                    </div>
                 </div>
             </div>
             <Dropdown />
@@ -151,10 +171,25 @@ const Count = ({likeCount = 0, commentCount = 0}) =>{
 }
 
 
-const ActionButtons = () => {
+const ActionButtons = ({id}) => {
+  const {push} = useRouter();
   const [liked, setLiked] = useState(false)
-  const handleLike = () => {
-   setLiked(!liked) 
+  const handleLike = async () => {
+    try {
+      const response = await callAPI({
+        url: `/like?idPostingan=${id}&idUser=2`,
+        method: 'post'
+      })
+      if (response) {
+        setLiked(!liked) 
+        window.location.href = '/'
+      }else{
+        console.log('gabisa')
+      }
+    } catch (error) {
+      console.log(error)
+      
+    }
   }
     return (
         <div className="my-1 flex justify-between items-center md:px-14">
@@ -168,7 +203,7 @@ const ActionButtons = () => {
               }
                 <Body1 disabled={true}>Suka</Body1>
             </button>
-            <button className='flex items-center  py-3 px-6 rounded-md hover:bg-darkmode-hover'>
+            <button className='flex items-center  py-3 px-6 rounded-md hover:bg-darkmode-hover' onClick={() => push(`/posts/${id}`)}>
                 <AnnotationOutline className='text-white w-5 h-5 mr-3'/>
                 <Body1 disabled={true}>Komentar</Body1>
             </button>
@@ -194,6 +229,7 @@ const CommentItem = () => {
 
 const PostItem = (
     {
+        id=0,
         displayName = "unknown", 
         userName = "unknown", 
         date = "unknown", 
@@ -203,14 +239,50 @@ const PostItem = (
         likeCount = 0, 
         commentCount = 0,
         limitComment = false,
+        postType="user",
+        communityName=""
       }) => {
 
-          const {push} = useRouter()
+          const {push} = useRouter();
+          const [comment, setComment] = useState([])
+
+          const getKomentar = async (id) => {
+            try {
+              const response = await callAPI({
+                url: `/komentar?idPostingan=${id}`,
+                method: 'get'
+              })
+
+              if (limitComment) {
+                setComment(
+                  response.data[0]
+                ) 
+              }else{
+                setComment(
+                  response.data
+                )
+              }
+              // console.log(response)
+            } catch (error) {
+              
+            }
+          }
+
+          useEffect(()=> {
+            getKomentar(id)
+          }, [])
+
     return(
         <div className="bg-darkmode-2 w-full rounded-2xl p-3 mb-3">
-            <div className="" onClick={() => push("/posts/10")}>
+            <div className="" onClick={() => push(`/posts/${id}`)}>
             {/* header  */}
-           <Header userName={userName} displayName={displayName} date={date} />
+            {
+              postType === "user" ? (
+                  <HeaderUser userName={userName} displayName={displayName} date={date} />
+                ):(
+                  <HeaderKomunitas userName={userName} communityName={communityName} date={date} />
+              )
+            }
             {/* konten  */}
            <Content text={text}/>
 
@@ -221,35 +293,27 @@ const PostItem = (
             <Count likeCount={likeCount} commentCount={commentCount} />
             {/* action post  */}
             <div className="bg-darkmode-hover w-full h-px"></div>
-              <ActionButtons />
+              <ActionButtons id={id} />
             <div className="bg-darkmode-hover w-full h-px"></div>
             <div className="mt-3">
               {/* input comment  */}
               <div className="flex w-full items-center ">
                 <Image src={"/images/profile.png"} width={30} height={30} alt="profile"/>
                 <div className="w-full px-2 relative">
-                  <input type="text" className='bg-darkmode-3 rounded-lg p-1 pl-4 w-full ml-2' placeholder='tulis komentar' />
+                  <input type="text" className='bg-darkmode-3 rounded-lg p-1 pl-4 w-full ml-2' placeholder='Tulis Komentar' />
                   <button className='absolute top-1 right-3 '><SendIcon /></button>
                 </div>
               </div>
               {/* comment section  */}
               {
-                limitComment ? (
+                comment > 0 ? (
                   <CommentItem />
-
                 ):(
-                  <>
-                    <CommentItem />
-                    <CommentItem />
-                    <CommentItem />
-                    <CommentItem />
-                    <CommentItem />
-                    <CommentItem />
-                    <CommentItem />
-                    <CommentItem />
-                    <CommentItem />
-                    <CommentItem />
-                  </>
+                  <Card>
+                    <div className="w-full h-10 flex items-center ">
+                      <Body2 disabled>tidak ada komentar</Body2>
+                    </div>
+                  </Card>
                 )
               }
             </div>

@@ -16,7 +16,7 @@ const data = {
 const DetailPostContainer = () => {
     return (
         <MainLayout>
-             <div className="pt-4 px-3 lg:px-40">
+             <div className="pt-20 px-3 lg:px-40">
                 <div className="flex items-start justify-center">
                     <div className=" w-full md:w-8/12 mr-3">
                     <PostItem

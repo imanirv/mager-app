@@ -26,6 +26,7 @@ const HomeContainer = () =>{
             
         }
     }
+
     
     useEffect(() => {
         getData();
