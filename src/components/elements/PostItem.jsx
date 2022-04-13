@@ -182,7 +182,7 @@ const ActionButtons = ({id}) => {
       })
       if (response) {
         setLiked(!liked) 
-        window.location.href = '/'
+        window.location.reload()
       }else{
         console.log('gabisa')
       }
