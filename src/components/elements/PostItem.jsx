@@ -12,7 +12,17 @@ import { Subtitle1, Subtitle2, Caption, Body1, Body2 } from '../typography'
 import Card from "../card"
 
 import { callAPI } from "../../helpers/network";
+import { useFormik, getIn } from 'formik'
+import * as Yup from 'yup'
 
+
+const validationSchema = Yup.object({
+  isiKomentar: Yup.string().required(),
+});
+
+const initialValues = {
+  isiKomentar: "",
+}
 
 function Dropdown() {
   return (
@@ -215,15 +225,22 @@ const ActionButtons = ({id}) => {
     )
 }
 
-const CommentItem = () => {
+const CommentItem = ({comment}) => {   
   return (
-    <div className="flex w-full items-start mt-3">
-      <Image src={"/images/profile.png"} width={30} height={30} alt="profile"/>
-      <div className="w-full bg-darkmode-3 ml-4 px-2 py-1 relative rounded-lg overflow-hidden">
-        <Subtitle2>athalla123</Subtitle2>
-        <p className='text-ellipsis overflow-hidden text-white'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit commodi eos odio atque, nemo quaerat dolore praesentium quis accusamus alias ipsam corporis iste maxime perspiciatis porro esse suscipit recusandae eaque aliquam, rem facere qui ad deleniti! Quasi omnis quo nesciunt aperiam ipsam impedit soluta maiores itaque. Porro voluptates quas architecto.</p>
+    <>
+    {
+      comment.map((item, i) => (
+      <div className="flex w-full items-start mt-3" key={i}>
+        <Image src={"/images/profile.png"} width={30} height={30} alt="profile"/>
+        <div className="w-full bg-darkmode-3 ml-4 px-2 py-1 relative rounded-lg overflow-hidden">
+          <Subtitle2>{item.user.nama}</Subtitle2>
+          <p className='text-ellipsis overflow-hidden text-white'>{item.isiKomentar}</p>
+        </div>
       </div>
-    </div>
+
+      ))
+    }
+    </>
   )
 }
 
@@ -239,13 +256,12 @@ const PostItem = (
         likeCount = 0, 
         commentCount = 0,
         limitComment = false,
+        commentar = [],
         postType="user",
         communityName=""
       }) => {
-
           const {push} = useRouter();
           const [comment, setComment] = useState([])
-
           const getKomentar = async (id) => {
             try {
               const response = await callAPI({
@@ -267,6 +283,34 @@ const PostItem = (
               
             }
           }
+
+          const onSubmit = async (values) => {
+              // console.log(values);
+              const payload = values
+              const response = await callAPI({
+                url:`/komentar?idUser=2&idPostingan=${id}`,
+                method:'post',
+                data: payload
+              })
+              // console.log(response)
+              if (response.status == 200) {
+                window.location.reload()
+              }
+          }
+
+          const {
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            errors,
+            touched,
+        } = useFormik({
+            initialValues,
+            validationSchema,
+            onSubmit
+        });
+        
+          
 
           useEffect(()=> {
             getKomentar(id)
@@ -300,14 +344,16 @@ const PostItem = (
               <div className="flex w-full items-center ">
                 <Image src={"/images/profile.png"} width={30} height={30} alt="profile"/>
                 <div className="w-full px-2 relative">
-                  <input type="text" className='bg-darkmode-3 rounded-lg p-1 pl-4 w-full ml-2' placeholder='Tulis Komentar' />
-                  <button className='absolute top-1 right-3 '><SendIcon /></button>
+                  <form onSubmit={handleSubmit}>
+                    <input type="text" name='isiKomentar' className='bg-darkmode-3 text-white rounded-lg p-1 pl-4 w-full ml-2' placeholder='Tulis Komentar' onChange={handleChange} />
+                    <button name='submit' type='submit' className='absolute top-1 right-3 '><SendIcon /></button>
+                  </form>
                 </div>
               </div>
               {/* comment section  */}
               {
-                comment > 0 ? (
-                  <CommentItem />
+                commentCount > 0 ? (
+                  <CommentItem comment={commentar}/>
                 ):(
                   <Card>
                     <div className="w-full h-10 flex items-center ">

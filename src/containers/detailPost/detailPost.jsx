@@ -17,10 +17,7 @@ import moment from 'moment';
 //     commentCount: 0
 // }
 const DetailPostContainer = ({idPost = 0, data={} }) => {
-
-    console.log(data)
     
-
     return (
         <MainLayout>
              <div className="pt-20 px-3 lg:px-40">
@@ -34,6 +31,7 @@ const DetailPostContainer = ({idPost = 0, data={} }) => {
                         text={data.postText}
                         likeCount = {data.jumlahLike}
                         commentCount = {data.jumlahKomentar}
+                        commentar = {data.komentarBy ? data.komentarBy : []}
                         media = {data.media ? data.media : ""}
                         mediaType = {data.mediaType ? data.mediaType : ""}
                         postType = {data.postedIn ? "komunitas" : "user"}

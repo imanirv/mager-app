@@ -51,30 +51,10 @@ const data = [
 ]
 
 const PostList = ({datas, limitComment}) =>{
-    console.log(datas)
+    // console.log(datas)
     return (
         <div>
-            {
-                datas.map((item, i) => (
-                    <div className="w-full mt-3" key={i}>
-                       <PostItem
-                        id ={item.id}
-                        displayName = {item.createdBy ? item.createdBy.nama : ""}
-                        userName =  {item.createdBy ? item.createdBy.username : ""}
-                        date={moment(item.created_date).format('MMMM Do')}
-                        text={item.postText}
-                        likeCount = {item.jumlahLike}
-                        commentCount = {item.jumlahKomentar}
-                        media = {item.media ? item.media : ""}
-                        mediaType = {item.mediaType ? item.mediaType : ""}
-                        limitComment ={limitComment}
-                        postType = {item.postedIn ? "komunitas" : "user"}
-                        communityName = {item.postedIn ? item.postedIn.namaKomunitas : "user"}
-                       />
-                    </div>
-                ))
-            }
-            {/* {
+             {
                 data.map((item, i) => (
                     <div className="w-full mb-3" key={i}>
                        <PostItem
@@ -89,7 +69,29 @@ const PostList = ({datas, limitComment}) =>{
                        />
                     </div>
                 ))
-            }         */}
+            }        
+            {
+                datas.map((item, i) => (
+                    <div className="w-full mt-3" key={i}>
+                       <PostItem
+                        id ={item.id}
+                        displayName = {item.createdBy ? item.createdBy.nama : ""}
+                        userName =  {item.createdBy ? item.createdBy.username : ""}
+                        date={moment(item.created_date).format('MMMM Do')}
+                        text={item.postText}
+                        likeCount = {item.jumlahLike}
+                        commentCount = {item.jumlahKomentar}
+                        media = {item.media ? item.media : ""}
+                        mediaType = {item.mediaType ? item.mediaType : ""}
+                        limitComment ={limitComment}
+                        commentar = {item.komentarBy ? item.komentarBy : []}
+                        postType = {item.postedIn ? "komunitas" : "user"}
+                        communityName = {item.postedIn ? item.postedIn.namaKomunitas : "user"}
+                       />
+                    </div>
+                ))
+            }
+           
         </div>
     )
 }
