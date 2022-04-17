@@ -37,7 +37,7 @@ const Navbar = () => {
             </div>
 
             {/* mobile item  */}
-            <div className="w1/2 flex items-center justify-end">
+            <div className="w1/2 flex items-center justify-end md:hidden">
                 <button className="mr-3">
                     <SearchIcon className="w-6 h-6 text-darkmode-disabled hover:text-white "/>
                 </button>
