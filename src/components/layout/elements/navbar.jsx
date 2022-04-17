@@ -15,7 +15,7 @@ const Navbar = () => {
                     <input type="text" className="p-2 pl-14 focus:outline-none  bg-darkmode-3 w-full rounded-lg text-white" placeholder="Cari Di Markas Gamer"/>
                 </form>
             </div>
-            <div className="w-1/2 flex items-center justify-between pl-16 hidden md:block">
+            <div className="w-1/2  items-center justify-between pl-16 hidden md:flex">
                 <div className="flex items-center">
                     <HomeIcon className="text-white w-6 h-6"/>
                     <h1 className="text-white font-nunito font-bold mt-1 ml-1">Home</h1>

@@ -83,6 +83,7 @@ const PostList = ({datas, limitComment}) =>{
                         commentCount = {item.jumlahKomentar}
                         media = {item.files ? item.files : ""}
                         mediaType = {item.files ? "image" : ""}
+                        liveStream = {item.linkLivestream ? item.linkLivestream : ""}
                         limitComment ={limitComment}
                         commentar = {item.komentarBy ? item.komentarBy : []}
                         postType = {item.postedIn ? "komunitas" : "user"}

@@ -38,8 +38,8 @@ const CreatePost = () => {
             <div className={`bg-darkmode-3 hover:bg-darkmode-hover text-gray-200 w-full h-10 rounded-lg mx-2 flex items-center px-4` }  onClick={openModal}>Buat post</div>
           </div>
             <div className="flex md:flex">
-              <CreatePostItem><PhotographIcon className={`bg-darkmode-3 w-4 h-4`} /></CreatePostItem>
-              <CreatePostItem><LiveIcon /></CreatePostItem>
+              <CreatePostItem><PhotographIcon className={`bg-darkmode-3 w-4 h-4`} onClick={openModal} /></CreatePostItem>
+              <CreatePostItem><LiveIcon onClick={openModal} /></CreatePostItem>
             </div>
         </div>
         

@@ -7,7 +7,7 @@ import { useFormik, getIn } from 'formik'
 import * as Yup from 'yup'
 
 // icons 
-import { PhotographIcon, GlobeIcon  } from '@heroicons/react/solid'
+import { PhotographIcon, GlobeIcon, LinkIcon  } from '@heroicons/react/solid'
 import PostAdd from "../../../../public/custom-icon/post-add"
 import ImageAdd from "../../../../public/custom-icon/image-add"
 import LiveIcon from "../../../../public/custom-icon/live"
@@ -61,7 +61,8 @@ import { callAPI } from '../../../helpers/network'
 
                 const payload = {
                     postText: values.postText,
-                    files: fileUrl
+                    files: fileUrl,
+                    linkLivestream: values.liveStream ? values.liveStream : ""
                 };
                 const response = await callAPI({
                     url:'/postingan?idUser=5',
@@ -80,7 +81,6 @@ import { callAPI } from '../../../helpers/network'
                 console.log(error)
             }
 
-            // console.log(values)
         }
 
         const {
@@ -196,7 +196,30 @@ import { callAPI } from '../../../helpers/network'
                     </Tab.Panel>
                     {/* ini post livestream  */}
                     <Tab.Panel>
-                        <h1>ini P 3</h1>
+                        <form action="" onSubmit={handleSubmit}>
+                            <div className="relative bg-darkmode-2 rounded-b-lg text-white p-4">
+                                <div className="absolute left-3 top-0">
+                                </div>
+                                <textarea type="text" name="postText" onChange={handleChange} onBlur={handleBlur} id="" placeholder='Text' className='w-full h-full bg-transparent outline-none px-3 mb-5' />
+                                <div className="absolute right-3 bottom-3">
+                                    <Caption disabled>0/200</Caption>
+                                </div>
+                            </div>
+                                <div className=" bg-darkmode-2 flex items-center text-white mt-2 rounded-lg  ">
+                                    <div className="p-2 bg-darkmode-hover flex items-center rounded-tl-lg rounded-bl-lg">
+                                        <LinkIcon className='text-white w-5 h-5 mx-3'/>
+                                        <Button>Link</Button>
+                                    </div>
+                                    <div className="h-full w-full">
+                                        <input type="text" name='liveStream' className='pl-4 bg-transparent h-full w-full outline-none' onChange={handleChange} />
+                                    </div>
+                                </div>
+                           
+                            <div className="mt-4 flex align-items-center justify-center">
+                                <button name='submit' type='submit' className='bg-gradient-to-r from-[#384CFF] to-[#009EF8] w-1/2 mx-2 p-2 rounded-lg'>Kirim</button>
+                                <button className='bg-darkmode-disabled w-1/2 mx-2 p-2 rounded-lg'>Simpan di Draft</button>
+                            </div>
+                        </form>
                     </Tab.Panel>
                 </Tab.Panels>
             </Tab.Group>

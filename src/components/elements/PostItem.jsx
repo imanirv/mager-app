@@ -24,7 +24,8 @@ const initialValues = {
   isiKomentar: "",
 }
 
-function Dropdown() {
+function Dropdown({idPost}) {
+  const {push} = useRouter()
   return (
       <Menu as="div" className="relative inline-block text-left">
         <div>
@@ -53,6 +54,7 @@ function Dropdown() {
                     className={`${
                       active ? 'bg-darkmode-hover ' : '' 
                     }  text-white group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                    onClick={() => push(`/posts/edit/${idPost}`)}
                   >
                       <PencilIcon
                         className="w-5 h-5 mr-2"
@@ -102,7 +104,7 @@ function Dropdown() {
   )
 }
 
-const HeaderUser = ({displayName , userName , date}) => {
+const HeaderUser = ({displayName , userName , date, idPost}) => {
     return (
         <div className="flex items-center justify-between">
             <div className="flex items-center">
@@ -116,11 +118,11 @@ const HeaderUser = ({displayName , userName , date}) => {
                     <Caption disabled={true}>{date}</Caption>
                 </div>
             </div>
-            <Dropdown />
+            <Dropdown idPost={idPost} />
         </div>
     )
 }
-const HeaderKomunitas = ({communityName , userName , date}) => {
+const HeaderKomunitas = ({communityName , userName , date, idPost}) => {
     return (
         <div className="flex items-center justify-between">
             <div className="flex items-center">
@@ -134,13 +136,13 @@ const HeaderKomunitas = ({communityName , userName , date}) => {
                     </div>
                 </div>
             </div>
-            <Dropdown />
+            <Dropdown idPost={idPost} />
         </div>
     )
 }
 
 const Content = ({text}) => (
-    <div className="mt-3">
+    <div className="mt-3 overflow-hidden">
         <Body1>{text} </Body1>
     </div>
 )
@@ -159,6 +161,13 @@ const Media = ({src, type}) => {
             </div>
         )
     }
+}
+const LiveStreaming = ({src}) => {
+    return (
+        <div className="mt-3 flex justify-center bg-black">
+            <ReactPlayer url={src} controls={true} />
+        </div>
+    )
 }
 
 const Count = ({likeCount = 0, commentCount = 0}) =>{
@@ -253,6 +262,7 @@ const PostItem = (
         text= "empty", 
         media = "",
         mediaType = "",
+        liveStream = "",
         likeCount = 0, 
         commentCount = 0,
         limitComment = false,
@@ -317,14 +327,14 @@ const PostItem = (
           }, [])
 
     return(
-        <div className="bg-darkmode-2 w-full rounded-2xl p-3 mb-3">
+        <div className="bg-darkmode-2 w-full rounded-2xl p-3 mb-3 overflow-hidden">
             <div className="" onClick={() => push(`/posts/${id}`)}>
             {/* header  */}
             {
               postType === "user" ? (
-                  <HeaderUser userName={userName} displayName={displayName} date={date} />
+                  <HeaderUser userName={userName} displayName={displayName} date={date} idPost={id} />
                 ):(
-                  <HeaderKomunitas userName={userName} communityName={communityName} date={date} />
+                  <HeaderKomunitas userName={userName} communityName={communityName} date={date} idPost={id} />
               )
             }
             {/* konten  */}
@@ -333,6 +343,8 @@ const PostItem = (
             </div>
             {/* media  */}
             {media ? <Media src={media} type={mediaType} /> : ""}   
+            {liveStream ? <LiveStreaming src={liveStream}/> : ""}   
+
             {/* jumlah like & comment  */}
             <Count likeCount={likeCount} commentCount={commentCount} />
             {/* action post  */}
