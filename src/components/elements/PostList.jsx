@@ -54,7 +54,7 @@ const PostList = ({datas, limitComment}) =>{
     // console.log(datas)
     return (
         <div>
-             {
+             {/* {
                 data.map((item, i) => (
                     <div className="w-full mb-3" key={i}>
                        <PostItem
@@ -69,7 +69,7 @@ const PostList = ({datas, limitComment}) =>{
                        />
                     </div>
                 ))
-            }        
+            }         */}
             {
                 datas.map((item, i) => (
                     <div className="w-full mt-3" key={i}>
@@ -81,8 +81,8 @@ const PostList = ({datas, limitComment}) =>{
                         text={item.postText}
                         likeCount = {item.jumlahLike}
                         commentCount = {item.jumlahKomentar}
-                        media = {item.media ? item.media : ""}
-                        mediaType = {item.mediaType ? item.mediaType : ""}
+                        media = {item.files ? item.files : ""}
+                        mediaType = {item.files ? "image" : ""}
                         limitComment ={limitComment}
                         commentar = {item.komentarBy ? item.komentarBy : []}
                         postType = {item.postedIn ? "komunitas" : "user"}

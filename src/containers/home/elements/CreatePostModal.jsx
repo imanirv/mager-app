@@ -39,36 +39,32 @@ import { callAPI } from '../../../helpers/network'
     }
     
     function Tabs() {
-        let [categories] = useState({
-        Post: {
-            icon: "",
-            media: false
-        },
-        Foto: {
-            icon: "",
-            media: true
-        },
-        LiveStream: {
-            icon: "",
-            media: false
-        },
-        })
+        const [preview, setPreview] = useState();
         const onSubmit = async (values) => {
             try {
+                const fileUrl = "";
+                if (values.files) {
+                    const formData = new FormData();
+                    formData.append("file", values.files)
+
+                    console.log(formData);
+                    
+                    const upload = await callAPI({
+                        url:"/uploadFiles",
+                        method:"post",
+                        data: formData,
+                    })
+
+                    // console.log(upload.data.data)
+                    fileUrl = upload.data.data;
+                }
+
                 const payload = {
-                    // title: "",
                     postText: values.postText,
-                    // draft: false,
-                    // visibility: true
-                    // postingan: {
-                    // }
-
+                    files: fileUrl
                 };
-                
-
-
                 const response = await callAPI({
-                    url:'/postingan?idUser=2',
+                    url:'/postingan?idUser=5',
                     method: 'POST',
                     data: payload
                   });
@@ -79,17 +75,19 @@ import { callAPI } from '../../../helpers/network'
                 }else{
                     window.location.href = "/?error"
                 }
-                // console.log(data);
-                // alert(values.postText)
+               
             } catch (error) {
                 console.log(error)
             }
+
+            // console.log(values)
         }
 
         const {
             handleChange,
             handleBlur,
             handleSubmit,
+            setFieldValue,
             errors,
             touched,
         } = useFormik({
@@ -98,6 +96,13 @@ import { callAPI } from '../../../helpers/network'
             onSubmit
         });
          
+        const handleChangeFile = (e) =>{
+            const files = e.target.files;
+            if (files) {
+                setPreview(URL.createObjectURL(files[0]))
+                setFieldValue("files", files[0])
+            }
+        } 
     
         return (
         <div className="p-2">
@@ -141,40 +146,58 @@ import { callAPI } from '../../../helpers/network'
                     
                 </Tab.List>
                 <Tab.Panels className="mb-4 bg-darkmode-1">
-                {Object.values(categories).map((posts, idx) => (
-                    <Tab.Panel
-                    key={idx}
-                    className={classNames(
-                        '',
-                        'text-white'
-                    )}
-                    >
-                    <form action="" onSubmit={handleSubmit}>
-                        <div className="relative bg-darkmode-2 rounded-b-lg text-white p-4">
-                        <div className="absolute left-3 top-0">
-                        </div>
-                        <textarea type="text" name="postText" onChange={handleChange} onBlur={handleBlur} id="" placeholder='Text' className='w-full h-full bg-transparent outline-none px-3 mb-5' />
-                        <div className="absolute right-3 bottom-3">
-                            <Caption disabled>0/200</Caption>
-                        </div>
-                        </div>
-                        {
-                        posts.media ? (
-                            <div className="h-36 bg-darkmode-2 p-3 text-white mt-2 rounded-lg border border-dashed border-gray-500">
-                            <div className="flex items-center justify-center w-full h-full">
-                                <ImageAdd className="mr-1"/><Body1>Upload Foto/Video</Body1>
+                    {/* ini post  */}
+                    <Tab.Panel>
+                        <form action="" onSubmit={handleSubmit}>
+                            <div className="relative bg-darkmode-2 rounded-b-lg text-white p-4">
+                                <div className="absolute left-3 top-0">
+                                </div>
+                                <textarea type="text" name="postText" onChange={handleChange} onBlur={handleBlur} id="" placeholder='Text' className='w-full h-full bg-transparent outline-none px-3 mb-5' />
+                                <div className="absolute right-3 bottom-3">
+                                    <Caption disabled>0/200</Caption>
+                                </div>
                             </div>
+                            <div className="mt-4 flex align-items-center justify-center">
+                                <button name='submit' type='submit' className='bg-gradient-to-r from-[#384CFF] to-[#009EF8] w-1/2 mx-2 p-2 rounded-lg'>Kirim</button>
+                                <button className='bg-darkmode-disabled w-1/2 mx-2 p-2 rounded-lg'>Simpan di Draft</button>
                             </div>
-                        ):("")
-                        }
-                        <div className="mt-4 flex align-items-center justify-center">
-                        <button name='submit' type='submit' className='bg-gradient-to-r from-[#384CFF] to-[#009EF8] w-1/2 mx-2 p-2 rounded-lg'>Kirim</button>
-                        <button className='bg-darkmode-disabled w-1/2 mx-2 p-2 rounded-lg'>Simpan di Draft</button>
-                        </div>
-                    </form>
-                    
+                        </form>
                     </Tab.Panel>
-                ))}
+                    {/* ini post with media  */}
+                    <Tab.Panel>
+                        <form action="" onSubmit={handleSubmit}>
+                            <div className="relative bg-darkmode-2 rounded-b-lg text-white p-4">
+                                <div className="absolute left-3 top-0">
+                                </div>
+                                <textarea type="text" name="postText" onChange={handleChange} onBlur={handleBlur} id="" placeholder='Text' className='w-full h-full bg-transparent outline-none px-3 mb-5' />
+                                <div className="absolute right-3 bottom-3">
+                                    <Caption disabled>0/200</Caption>
+                                </div>
+                            </div>
+                            <label htmlFor="files">
+                                <div className="h-36 bg-darkmode-2 p-3 text-white mt-2 rounded-lg border border-dashed border-gray-500">
+                                    {preview ? (
+                                        <div className="h-full w-60 bg-red-200 relative">
+                                            <Image alt='post image' src={preview} layout='fill' className='object-cover' />
+                                        </div>
+                                    ): (
+                                        <div className="flex items-center justify-center w-full h-full">
+                                            <ImageAdd className="mr-1"/><Body1>Upload Foto/Video</Body1>
+                                        </div> 
+                                    )}
+                                </div>
+                                <input type="file" id='files' name="file" className='hidden' onChange={handleChangeFile} accept=".jpg, .png, .jpeg"  />
+                            </label>
+                            <div className="mt-4 flex align-items-center justify-center">
+                                <button name='submit' type='submit' className='bg-gradient-to-r from-[#384CFF] to-[#009EF8] w-1/2 mx-2 p-2 rounded-lg'>Kirim</button>
+                                <button className='bg-darkmode-disabled w-1/2 mx-2 p-2 rounded-lg'>Simpan di Draft</button>
+                            </div>
+                        </form>
+                    </Tab.Panel>
+                    {/* ini post livestream  */}
+                    <Tab.Panel>
+                        <h1>ini P 3</h1>
+                    </Tab.Panel>
                 </Tab.Panels>
             </Tab.Group>
             </div>

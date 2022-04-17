@@ -1,10 +1,16 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import HomeContainer from '../containers/home'
+import LandingContainer from '../containers/landingPage/'
+
 
 
 export default function Home() {
   return (
-    <HomeContainer />
+    <>
+    <Head>
+      <title>mager - gaming community</title>
+    </Head>
+    <LandingContainer />
+    </>
   )
 }

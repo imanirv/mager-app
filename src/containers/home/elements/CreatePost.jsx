@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 import { useState } from 'react'
 
-import LiveIcon from "../../../../public/custom-icon/live"
+import LiveIcon from "../../../components/icons/live"
 import Modal from './CreatePostModal'
 
 
