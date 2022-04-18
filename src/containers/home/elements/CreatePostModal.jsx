@@ -31,7 +31,7 @@ import { callAPI } from '../../../helpers/network'
         title: "",
         postText: "",
         draft:false,
-        visibility:false
+        visibility:true
     }
 
     function classNames(...classes) {
@@ -88,6 +88,7 @@ import { callAPI } from '../../../helpers/network'
             handleBlur,
             handleSubmit,
             setFieldValue,
+            values,
             errors,
             touched,
         } = useFormik({
@@ -159,7 +160,7 @@ import { callAPI } from '../../../helpers/network'
                             </div>
                             <div className="mt-4 flex align-items-center justify-center">
                                 <button name='submit' type='submit' className='bg-gradient-to-r from-[#384CFF] to-[#009EF8] w-1/2 mx-2 p-2 rounded-lg'>Kirim</button>
-                                <button className='bg-darkmode-disabled w-1/2 mx-2 p-2 rounded-lg'>Simpan di Draft</button>
+                                <button type='button' onClick={() => onSubmit({...values, draft: true, visibility: false })} className='bg-darkmode-disabled w-1/2 mx-2 p-2 rounded-lg'>Simpan di Draft</button>
                             </div>
                         </form>
                     </Tab.Panel>

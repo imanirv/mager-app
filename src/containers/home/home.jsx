@@ -1,37 +1,27 @@
 import { useEffect, useState } from 'react'
 import MainLayout from '../../components/layout'
 import CreatePost from './elements/CreatePost'
-// import PostList from './elements/PostList'
-// import CommunityCard from './elements/CommunityCard'
 import PostList from "../../components/elements/PostList"
 import CommunityCard from "../../components/elements/CommunityCard"
 import {callAPI} from '../../helpers/network'
+import { useHomeDispatcher } from '../../redux/reducers/home/slice'
 
 const HomeContainer = () =>{
-    const [data, setData] = useState([]);
-
-
-    const getData = async () => {
-
+ 
+    const {home: {posts}, makePost} = useHomeDispatcher()
+    const loadData = () => {
         try {
-            const response = await callAPI({
-                url:`/postingan?page=0&size=100&sort=desc`,
-                method: 'get',
-            })
-            setData(
-                response.data.data
-            );
+            makePost()
         } catch (error) {
-            console.log(error);
-            
+            console.log(error)
         }
     }
-
     
     useEffect(() => {
-        getData();
+        loadData();
     }, [])
 
+    console.log(posts)
     return(
        <MainLayout>
             <div className=" px-3 lg:px-40 pt-24">
@@ -40,7 +30,7 @@ const HomeContainer = () =>{
                         <div className="mb-3">
                             <CreatePost />
                         </div>
-                        <PostList datas={data} limitComment={true} />
+                        <PostList datas={posts} limitComment={true} />
                     </div>
                     <div className="hidden md:block w-4/12  bg-darkmode-2 rounded-2xl">
                         {/* card komunitas taro sini */}
