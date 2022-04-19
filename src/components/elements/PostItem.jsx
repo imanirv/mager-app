@@ -190,7 +190,7 @@ const Count = ({likeCount = 0, commentCount = 0}) =>{
 }
 
 
-const ActionButtons = ({id}) => {
+const ActionButtons = ({id, setToggle, toggle}) => {
   const {push} = useRouter();
   const [liked, setLiked] = useState(false)
   const handleLike = async () => {
@@ -222,7 +222,7 @@ const ActionButtons = ({id}) => {
               }
                 <Body1 disabled={true}>Suka</Body1>
             </button>
-            <button className='flex items-center  py-3 px-6 rounded-md hover:bg-darkmode-hover' onClick={() => push(`/posts/${id}`)}>
+            <button className='flex items-center  py-3 px-6 rounded-md hover:bg-darkmode-hover' onClick={() => setToggle(!toggle) }>
                 <AnnotationOutline className='text-white w-5 h-5 mr-3'/>
                 <Body1 disabled={true}>Komentar</Body1>
             </button>
@@ -252,6 +252,35 @@ const CommentItem = ({comment}) => {
     </>
   )
 }
+const Comment = ({handleSubmit, handleChange, commentCount, commentar, toggle}) => {
+  
+  return (
+    <div className="mt-3">
+      {/* input comment  */}
+      <div className={`flex w-full items-center ${toggle ? 'block' : 'hidden'}`}>
+        <Image src={"/images/profile.png"} width={30} height={30} alt="profile"/>
+        <div className="w-full px-2 relative">
+          <form onSubmit={handleSubmit}>
+            <input type="text" name='isiKomentar' className='bg-darkmode-3 text-white rounded-lg p-1 pl-4 w-full ml-2' placeholder='Tulis Komentar' onChange={handleChange} />
+            <button name='submit' type='submit' className='absolute top-1 right-3 '><SendIcon /></button>
+          </form>
+        </div>
+      </div>
+      {/* comment section  */}
+      {
+        commentCount > 0 ? (
+          <CommentItem comment={commentar}/>
+        ):(
+          <Card>
+            <div className="w-full h-10 flex items-center ">
+              <Body2 disabled>tidak ada komentar</Body2>
+            </div>
+          </Card>
+        )
+      }
+    </div>
+  )
+}
 
 const PostItem = (
     {
@@ -272,6 +301,7 @@ const PostItem = (
       }) => {
           const {push} = useRouter();
           const [comment, setComment] = useState([])
+          const [toggle, setToggle] = useState(false)
           const getKomentar = async (id) => {
             try {
               const response = await callAPI({
@@ -347,32 +377,16 @@ const PostItem = (
             <Count likeCount={likeCount} commentCount={commentCount} />
             {/* action post  */}
             <div className="bg-darkmode-hover w-full h-px"></div>
-              <ActionButtons id={id} />
+              <ActionButtons id={id} setToggle={setToggle} toggle={toggle}/>
             <div className="bg-darkmode-hover w-full h-px"></div>
-            <div className="mt-3">
-              {/* input comment  */}
-              <div className="flex w-full items-center ">
-                <Image src={"/images/profile.png"} width={30} height={30} alt="profile"/>
-                <div className="w-full px-2 relative">
-                  <form onSubmit={handleSubmit}>
-                    <input type="text" name='isiKomentar' className='bg-darkmode-3 text-white rounded-lg p-1 pl-4 w-full ml-2' placeholder='Tulis Komentar' onChange={handleChange} />
-                    <button name='submit' type='submit' className='absolute top-1 right-3 '><SendIcon /></button>
-                  </form>
-                </div>
-              </div>
-              {/* comment section  */}
-              {
-                commentCount > 0 ? (
-                  <CommentItem comment={commentar}/>
-                ):(
-                  <Card>
-                    <div className="w-full h-10 flex items-center ">
-                      <Body2 disabled>tidak ada komentar</Body2>
-                    </div>
-                  </Card>
-                )
-              }
-            </div>
+            {/* comment  */}
+            <Comment 
+              handleSubmit={handleSubmit} 
+              handleChange={handleChange} 
+              commentCount={commentCount}
+              commentar={commentar}  
+              toggle={toggle}
+            />
             
         </div>
     )
