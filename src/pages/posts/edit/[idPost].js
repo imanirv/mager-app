@@ -15,7 +15,7 @@ const EditPost = () => {
             url: `postingan/${id}`,
             method: 'get',
         })
-        setData(response)
+        setData(response.data.data)
         // console.log(response);
     }
 
