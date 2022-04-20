@@ -5,6 +5,7 @@ import {callAPI} from "../../../helpers/network"
 const initialState = {
     posts:[],
     loading: false
+    
 }
 
 
@@ -31,12 +32,13 @@ export const useHomeDispatcher = () => {
     const makePost = async (posts) => {
 
         const response = await callAPI({
-            url:`/postingan?page=0&size=10&sort=desc`,
+            url:`/postingan?page=0&size=100&sort=desc`,
             method: 'get',
         })
         const data = response.data.data
         dispatch(setPosts(data))
     }
+
     return {
         home,
         makePost
