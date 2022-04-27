@@ -1,7 +1,7 @@
 import Image from 'next/image'
-import {  Subtitle2, Body2 } from '../../typography'
-import SendIcon from '../../icons/send'
-import Card from "../../card"
+import {  Subtitle2, Body2 } from '../../../typography'
+import SendIcon from '../../../icons/send'
+import Card from "../../../card"
 
 
 

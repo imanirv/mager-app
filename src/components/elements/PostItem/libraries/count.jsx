@@ -2,7 +2,7 @@
 import { ThumbUpIcon, AnnotationIcon } from '@heroicons/react/solid'
 
 
-import { Body2 } from '../../typography'
+import { Body2 } from '../../../typography'
 
 
 const Count = ({likeCount = 0, commentCount = 0}) =>{

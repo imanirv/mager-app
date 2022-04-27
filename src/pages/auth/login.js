@@ -1,5 +1,5 @@
 import Head from "next/head"
-import LoginContainer from "../containers/login/"
+import LoginContainer from "../../containers/login"
 
 const Login = () => {
     return(

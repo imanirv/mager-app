@@ -3,25 +3,22 @@ import MainLayout from '../../components/layout'
 import CreatePost from './elements/CreatePost'
 import PostList from "../../components/elements/PostList"
 import CommunityCard from "../../components/elements/CommunityCard"
-import {callAPI} from '../../helpers/network'
-import { useHomeDispatcher } from '../../redux/reducers/home/slice'
+// import {callAPI} from '../../helpers/network'
+import { usePostDispatcher } from '../../redux/reducers/posts/slice'
 
 const HomeContainer = () =>{
  
-    const {home: {posts}, makePost} = useHomeDispatcher()
-    const loadData = () => {
+    const {posting: {posts}, makePost} = usePostDispatcher()
+    
+    useEffect(() => {
         try {
             makePost()
         } catch (error) {
             console.log(error)
         }
-    }
-    
-    useEffect(() => {
-        loadData();
     }, [])
 
-    console.log(posts)
+    // console.log(posts)
     return(
        <MainLayout>
             <div className=" px-3 lg:px-40 pt-24">

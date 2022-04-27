@@ -2,11 +2,12 @@ import { combineReducers } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
 
 // reducers 
-import home from "./reducers/home"
+import posting from "./reducers/posts"
+import auth from "./reducers/auth"
 
 // root reducer 
 const rootreducer = combineReducers({
-    home
+    posting
 });
 
 // store - main storage 

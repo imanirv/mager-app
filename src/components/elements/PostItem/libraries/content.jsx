@@ -1,4 +1,4 @@
-import { Body1 } from '../../typography'
+import { Body1 } from '../../../typography'
 
 
 const Content = ({text}) => (

@@ -14,7 +14,7 @@ import Media from './media'
 
 
 
-import { callAPI } from "../../../helpers/network";
+import { callAPI } from "../../../../helpers/network";
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 

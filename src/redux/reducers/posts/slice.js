@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import { callAPI } from "../../../helpers/network";
+import { getJwt } from "../../../helpers/auth";
 
 const initialState = {
     posts:[],
@@ -26,12 +27,17 @@ const {setPosts} = slices.actions
 export const usePostDispatcher = () => {
     const {posting} = useSelector((state) => state);
     const dispatch = useDispatch();
+    const token = getJwt();
 
     const makePost = async (posts) => {
 
         const response = await callAPI({
             url:`/postingan?page=0&size=10&sort=desc`,
-            method: 'get',
+            method: 'get', 
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+            
         })
         const data = response.data.data
         dispatch(setPosts(data))

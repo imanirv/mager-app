@@ -2,12 +2,12 @@ import {useRouter} from 'next/router'
 import { Fragment, useState } from 'react'
 import {  PencilIcon, FlagIcon, TrashIcon, GlobeIcon, LinkIcon } from '@heroicons/react/solid'
 import { Menu, Transition, Dialog } from '@headlessui/react'
-import { Subtitle1, Subtitle2, Body1, Caption, Button} from '../../typography'
+import { Subtitle1, Subtitle2, Body1, Caption, Button} from '../../../typography'
 import Image from 'next/image'
 
 import { useFormik, getIn } from 'formik'
 import * as Yup from 'yup'
-import { callAPI } from '../../../helpers/network'
+import { callAPI } from '../../../../helpers/network'
 
 const validationSchema = Yup.object({
   title: Yup.string(),

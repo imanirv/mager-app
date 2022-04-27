@@ -2,7 +2,7 @@ import { useState } from 'react'
 import {useRouter} from 'next/router'
 
 import { ThumbUpIcon as ThumbUpOutline, AnnotationIcon as AnnotationOutline, LinkIcon } from '@heroicons/react/outline'
-import { Body1 } from '../../typography'
+import { Body1 } from '../../../typography'
 import { ThumbUpIcon } from '@heroicons/react/solid'
 
 
