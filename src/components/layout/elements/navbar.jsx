@@ -5,7 +5,7 @@ import { Menu, Transition } from '@headlessui/react'
 
 import {HomeIcon, UserGroupIcon, BellIcon, ChevronDownIcon, SearchIcon, LogoutIcon} from "@heroicons/react/solid"
 import RoundProfile from '../../icons/round-profile';
-import {useAuthDispatcher} from '../../../redux/reducers/auth/slice'
+import {useAuthDispatcher} from '../../../redux/reducers/auth'
 import {getUser} from '../../../helpers/auth'
 
 function Profile() {

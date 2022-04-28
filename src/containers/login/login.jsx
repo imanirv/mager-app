@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react"
+
 import { useFormik, getIn } from "formik"
 import * as Yup from 'yup'
-import Swal from 'sweetalert2'
-import { callAPI } from "../../helpers/network"
-import { useAuthDispatcher } from "../../redux/reducers/auth/slice"
+import { useAuthDispatcher } from "../../redux/reducers/auth"
 import { BackgroundLayout } from "../../components/layout"
+import Input from "../../components/input/"
+import {useRouter} from "next/router"
+
 const validationSchema = Yup.object({
     username: Yup.string().required(),
     password: Yup.string().required()
@@ -16,7 +17,8 @@ const initialValues = {
 }
 
 const LoginContainer = () => {
-    const { doLogin} = useAuthDispatcher()
+    const {push} = useRouter()
+    const {auth: {loading}, doLogin} = useAuthDispatcher()
     const onSubmit = async (values) => {
       doLogin(values)
     }
@@ -24,8 +26,6 @@ const LoginContainer = () => {
         handleChange,
         handleBlur,
         handleSubmit,
-        setFieldValue,
-        values,
         errors,
         touched,
     } = useFormik({
@@ -45,21 +45,31 @@ const LoginContainer = () => {
 
                     <div className="mt-9">
                         <form action="" onSubmit={handleSubmit}>
-                            <label htmlFor="username">
-                                <span className="block mb-2 text-white">Username / email</span>
-                                <input className="w-full bg-darkmode-3 text-white p-4 h-14 rounded-md mb-1 outline-primary" type="text" name="username" id="username" autoComplete="off" placeholder="masukan email atau username" onChange={handleChange} onBlur={handleBlur} />
-                            </label>
+                            <Input
+                                title="Email atau username"
+                                name="username"
+                                id="username"
+                                type="text"
+                                placeholder="Masukkan email atau username"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                            />
                             {
                                 getIn(touched, "username") && getIn(errors, "username") && (
                                     <div className="text-xs text-red-500 pb-3" >
-                                        Username / email tidak boleh kosong
+                                        Email atau username tidak boleh kosong
                                     </div>
                                 )
                             }
-                            <label htmlFor="password" className="">
-                                <span className="block mb-2 text-white">Password</span>
-                                <input className="w-full bg-darkmode-3 text-white p-4 h-14 rounded-md mb-1 outline-primary" type="password" name="password" id="password" placeholder="Masukkan kata sandi" onChange={handleChange} onBlur={handleBlur} />
-                            </label>
+                             <Input
+                                title="Password"
+                                name="password"
+                                id="password"
+                                type="password"
+                                placeholder="Masukkan kata sandi"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                            />
                             {
                                 getIn(touched, "password") && getIn(errors, "password") && (
                                     <div className="text-xs text-red-500 pb-3" >
@@ -76,11 +86,13 @@ const LoginContainer = () => {
                                 <a href="" className="text-primary">Lupa kata sandi?</a>
                             </div>
                             {!errors.username && !errors.password ? (
-                                <button type="submit" className="bg-blue-500 p-2 px-10 w-full mt-5 text-white rounded-lg">Masuk</button>
+                                <button type="submit" className="bg-blue-500 p-2 px-10 w-full mt-5 text-white rounded-lg">
+                                    {!loading ? "Masuk" : "Memuat"}
+                                </button>
                                 ):(
                                     <button className="bg-darkmode-disabled p-2 px-10 w-full mt-5 text-white rounded-lg">Masuk</button>
                             )}
-                            <p className="text-white text-center mt-4">Belum Punya akun ? <a href="" className="text-primary">daftar</a></p>
+                            <p className="text-white text-center mt-4">Belum Punya akun ? <span onClick={() => push('/auth/register')} className="text-primary">daftar</span></p>
                         </form>
                     </div>
 

@@ -7,7 +7,8 @@ import auth from "./reducers/auth"
 
 // root reducer 
 const rootreducer = combineReducers({
-    posting
+    posting,
+    auth
 });
 
 // store - main storage 
