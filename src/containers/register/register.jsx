@@ -1,7 +1,7 @@
 import { useFormik, getIn } from "formik"
 import * as Yup from 'yup'
 import { BackgroundLayout } from "../../components/layout"
-
+import Input from "../../components/input"
 
 const validationSchema = Yup.object({
     username: Yup.string().required(),
@@ -43,61 +43,110 @@ const RegisterContainer = () => {
                     </div>
                     <div className="mt-9">
                         <form action="" onSubmit={handleSubmit}>
-                            <label htmlFor="username">
-                                <span className="block mb-2 text-white">Username / email</span>
-                                <input className="w-full bg-darkmode-3 text-white p-4 h-14 rounded-md mb-1 outline-primary" type="text" name="username" id="username" autoComplete="off" placeholder="masukan email atau username" onChange={handleChange} onBlur={handleBlur} />
-                            </label>
+                        <Input
+                                title="Nama"
+                                name="nama"
+                                id="nama"
+                                type="text"
+                                placeholder="Masukkan nama"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                            />
                             {
-                                getIn(touched, "username") && getIn(errors, "username") && (
+                                getIn(touched, "nama") && getIn(errors, "nama") && (
                                     <div className="text-xs text-red-500 pb-3" >
-                                        Username / email tidak boleh kosong
+                                        Nama tidak boleh kosong
                                     </div>
                                 )
                             }
-                            <label htmlFor="username">
-                                <span className="block mb-2 text-white">Username / email</span>
-                                <input className="w-full bg-darkmode-3 text-white p-4 h-14 rounded-md mb-1 outline-primary" type="text" name="username" id="username" autoComplete="off" placeholder="masukan email atau username" onChange={handleChange} onBlur={handleBlur} />
-                            </label>
+                        <Input
+                                title="Email"
+                                name="email"
+                                id="email"
+                                type="email"
+                                placeholder="Masukkan email"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                            />
                             {
-                                getIn(touched, "username") && getIn(errors, "username") && (
+                                getIn(touched, "email") && getIn(errors, "email") && (
                                     <div className="text-xs text-red-500 pb-3" >
-                                        Username / email tidak boleh kosong
+                                        email tidak boleh kosong
                                     </div>
                                 )
                             }
-                            <label htmlFor="username">
-                                <span className="block mb-2 text-white">Username / email</span>
-                                <input className="w-full bg-darkmode-3 text-white p-4 h-14 rounded-md mb-1 outline-primary" type="text" name="username" id="username" autoComplete="off" placeholder="masukan email atau username" onChange={handleChange} onBlur={handleBlur} />
-                            </label>
+                        <Input
+                                title="Username"
+                                name="username"
+                                id="username"
+                                type="text"
+                                placeholder="Masukkan username"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                            />
                             {
                                 getIn(touched, "username") && getIn(errors, "username") && (
                                     <div className="text-xs text-red-500 pb-3" >
-                                        Username / email tidak boleh kosong
+                                        Username tidak boleh kosong
                                     </div>
                                 )
                             }
-                            <label htmlFor="username">
-                                <span className="block mb-2 text-white">Username / email</span>
-                                <input className="w-full bg-darkmode-3 text-white p-4 h-14 rounded-md mb-1 outline-primary" type="text" name="username" id="username" autoComplete="off" placeholder="masukan email atau username" onChange={handleChange} onBlur={handleBlur} />
-                            </label>
+                        <Input
+                                title="Username"
+                                name="username"
+                                id="username"
+                                type="text"
+                                placeholder="Masukkan username"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                            />
                             {
                                 getIn(touched, "username") && getIn(errors, "username") && (
                                     <div className="text-xs text-red-500 pb-3" >
-                                        Username / email tidak boleh kosong
+                                        Username tidak boleh kosong
                                     </div>
                                 )
                             }
-                            <label htmlFor="username">
-                                <span className="block mb-2 text-white">Username / email</span>
-                                <input className="w-full bg-darkmode-3 text-white p-4 h-14 rounded-md mb-1 outline-primary" type="text" name="username" id="username" autoComplete="off" placeholder="masukan email atau username" onChange={handleChange} onBlur={handleBlur} />
-                            </label>
+                        <Input
+                                title="Kata Sandi"
+                                name="password"
+                                id="password"
+                                type="password"
+                                placeholder="Masukkan Kata Sandi"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                            />
                             {
-                                getIn(touched, "username") && getIn(errors, "username") && (
+                                getIn(touched, "password") && getIn(errors, "password") && (
                                     <div className="text-xs text-red-500 pb-3" >
-                                        Username / email tidak boleh kosong
+                                        Password tidak boleh kosong
                                     </div>
                                 )
                             }
+                        <Input
+                                title="Konfirmasi Kata Sandi"
+                                name="confirmPassword"
+                                id="confirmPassword"
+                                type="password"
+                                placeholder="Masukkan Kata Sandi"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                            />
+                            {
+                                getIn(touched, "confirmPassword") && getIn(errors, "confirmPassword") && (
+                                    <div className="text-xs text-red-500 pb-3" >
+                                        Konfirmasi Password tidak boleh kosong
+                                    </div>
+                                )
+                            }
+                            <label htmlFor="gender" className="h-5 w-5 bg-red-200 p-2">
+                                <input type="radio" name="gender" id="gender" value="l"/>
+                                man
+                            </label>
+                            <label htmlFor="genderwoman">
+                                <input type="radio" name="gender" id="genderwoman" value="P"/>
+                                woman
+                            </label>
                         </form>
                     </div>
                 </div>

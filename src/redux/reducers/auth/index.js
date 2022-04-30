@@ -8,6 +8,7 @@ import Swal from 'sweetalert2'
 const initialState = {
     userData: [],
     loading: false,
+    errMessage: ""
 }
 
 const slices = createSlice({
@@ -25,12 +26,18 @@ const slices = createSlice({
                 ...state,
                 loading: action.payload
             })
+        },
+        setErrMessage(state, action) {
+            Object.assign(state, {
+                ...state,
+                errMessage: action.payload
+            })
         }
     }
 })
 
 
-const {setUser, setLoading} = slices.actions
+const {setUser, setLoading, setErrMessage} = slices.actions
 
 export const useAuthDispatcher = () => {
     const {auth} = useSelector((state) => state);
@@ -38,41 +45,44 @@ export const useAuthDispatcher = () => {
 
     const doLogin = async (values) => {
         dispatch(setLoading(true))
+
         const params = new URLSearchParams()
         params.append('username', values.username)
         params.append('password', values.password)
         
         try {
-            const sendData = await callAPI({
+            const {data: login} = await callAPI({
                 url:'/login',
                 method:'post',
                 headers: { 'content-type': 'application/x-www-form-urlencoded' },
                 data: params
             })
 
-            const token = sendData.data.access_token
-            const id = sendData.data.idUser
-            const getDataUser = await callAPI({
-                url:`/user/${id}`,
+            const {data:userData} =  await callAPI({
+                url:`/user/${login.idUser}`,
                 method:'get',
                 headers: {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${login.access_token}`
                 }
             })
-            console.log(getDataUser)
+           
+
             const user = {
-                id: getDataUser.data.data.id,
-                username: getDataUser.data.data.username,
-                name: getDataUser.data.data.nama,
-                headerPic: getDataUser.data.data.fotoHeader,
-                ProfilePic: getDataUser.data.data.fotoProfile   
+                id: userData.data.id,
+                username: userData.data.username,
+                name: userData.data.nama,
+                headerPic: userData.data.fotoHeader,
+                ProfilePic: userData.data.fotoProfile   
             }
-            console.log(getDataUser.data.data)
-            localStorage.setItem('user', JSON.stringify(user))
-            localStorage.setItem('jwt', token)
             
+            // send to localStorage 
+            localStorage.setItem('user', JSON.stringify(user))
+            localStorage.setItem('jwt', login.access_token)
+            
+            // dispatch data 
             dispatch(setUser(user));
             dispatch(setLoading(false))
+
             const res = await Swal.fire({
                 title: 'Berhasil',
                 text: 'Anda akan segera dialihkan ke halaman utama',
@@ -83,14 +93,14 @@ export const useAuthDispatcher = () => {
                 window.location.href = "/homepage"
             }
         } catch (error) {
-            console.log(error)
+            console.log(error.response)
             const res = await Swal.fire({
                 title: 'Error',
                 text: 'Username atau password anda salah',
                 icon: 'error',
             });
+            dispatch(setErrMessage(error.response.data.message))
             dispatch(setLoading(false))
-            
         }
     }
 

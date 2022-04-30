@@ -18,7 +18,7 @@ const initialValues = {
 
 const LoginContainer = () => {
     const {push} = useRouter()
-    const {auth: {loading}, doLogin} = useAuthDispatcher()
+    const {auth: {loading, errMessage}, doLogin} = useAuthDispatcher()
     const onSubmit = async (values) => {
       doLogin(values)
     }
@@ -44,6 +44,7 @@ const LoginContainer = () => {
                     </div>
 
                     <div className="mt-9">
+                        <p className="mb-2 text-center text-red-500 text-nunito">{errMessage}</p>
                         <form action="" onSubmit={handleSubmit}>
                             <Input
                                 title="Email atau username"
