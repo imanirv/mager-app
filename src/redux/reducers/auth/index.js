@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import { callAPI } from "../../../helpers/network";
-// import { getJwt } from "../../../helpers/auth";
 import Swal from 'sweetalert2'
 
 
@@ -132,10 +131,47 @@ export const useAuthDispatcher = () => {
           })
     }
 
+    const doRegister = async (values) => {
+        dispatch(setLoading(true))
+        const payload = {
+            nama: values.nama,
+            username: values.username,
+            email: values.email,
+            password:values.password,
+            biodata: ''
+        }
+
+        try {
+            const {data: register} = await callAPI({
+                url:'/user',
+                method:'post',
+                data: payload
+            })
+
+            console.log(register)
+            const res = await Swal.fire({
+                title: 'Berhasil',
+                icon: 'success',
+            });
+            
+            if (res.isConfirmed) {
+                window.location.href = "/auth/login"
+            }
+            dispatch(setLoading(false))
+        } catch (error) {
+            console.log(error.response.message)   
+        }
+        
+
+
+
+    }
+
     return {
         auth,
         doLogin,
-        doLogout
+        doLogout,
+        doRegister
     }
 
 }
