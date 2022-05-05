@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react'
 import MainLayout from '../../components/layout'
-import CreatePost from './elements/CreatePost'
+import CreatePost from '../../components/createPost'
 import PostList from "../../components/elements/PostList"
 import CommunityCard from "../../components/elements/CommunityCard"
-// import {callAPI} from '../../helpers/network'
+
 import { usePostDispatcher } from '../../redux/reducers/posts/slice'
 
 const HomeContainer = () =>{
  
     const {posting: {posts}, makePost} = usePostDispatcher()
-    
+
     useEffect(() => {
         try {
             makePost()

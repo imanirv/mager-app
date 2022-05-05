@@ -2,7 +2,7 @@ import PostItem from "./PostItem"
 import moment from 'moment';
 
 const PostList = ({datas, limitComment}) =>{
-
+    
     return (
         <div>
             
@@ -11,6 +11,7 @@ const PostList = ({datas, limitComment}) =>{
                     <div className="w-full mt-3" key={i}>
                        <PostItem
                         id ={item.id}
+                        idUser = {item.createdBy.id}
                         displayName = {item.createdBy ? item.createdBy.nama : ""}
                         userName =  {item.createdBy ? item.createdBy.username : ""}
                         date={moment(item.created_date).format('MMMM Do')}

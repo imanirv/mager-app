@@ -30,6 +30,7 @@ const initialValues = {
 const PostItem = (
     {
         id=0,
+        idUser="",
         displayName = "unknown", 
         userName = "unknown", 
         date = "unknown", 
@@ -108,6 +109,7 @@ const PostItem = (
             {
               posterType === "user" ? (
                   <HeaderUser 
+                    idUser={idUser}
                     userName={userName} 
                     displayName={displayName} 
                     date={date} 
@@ -119,6 +121,7 @@ const PostItem = (
                   />
                 ):(
                   <HeaderKomunitas 
+                    idUser = {idUser}
                     userName={userName} 
                     communityName={communityName} 
                     date={date} 

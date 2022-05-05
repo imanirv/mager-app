@@ -1,6 +1,6 @@
 import {useRouter} from 'next/router'
 import { Fragment, useState } from 'react'
-import {  PencilIcon, FlagIcon, TrashIcon, GlobeIcon, LinkIcon } from '@heroicons/react/solid'
+import {  PencilIcon, FlagIcon, TrashIcon, GlobeIcon, LinkIcon, XIcon, ArrowLeftIcon } from '@heroicons/react/solid'
 import { Menu, Transition, Dialog } from '@headlessui/react'
 import { Subtitle1, Subtitle2, Body1, Caption, Button} from '../../../typography'
 import Image from 'next/image'
@@ -8,6 +8,7 @@ import Image from 'next/image'
 import { useFormik, getIn } from 'formik'
 import * as Yup from 'yup'
 import { callAPI } from '../../../../helpers/network'
+import {getUser} from "../../../../helpers/auth"
 
 const validationSchema = Yup.object({
   title: Yup.string(),
@@ -17,6 +18,115 @@ const validationSchema = Yup.object({
 
 });
 
+
+const ModalReport = ({status, close}) => {
+  const [toggle, setToggle] = useState(false)
+  return (
+    <Transition appear show={status} as={Fragment}>
+    <Dialog
+      as="div"
+      className="fixed inset-0 z-10 overflow-y-auto"
+      onClose={close}
+    >
+      <div className="min-h-screen bg-darkmode-opacity text-center">
+        <Transition.Child
+          as={Fragment}
+          enter="ease-out duration-300"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="ease-in duration-200"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <Dialog.Overlay className="fixed inset-0" />
+        </Transition.Child>
+
+        {/* This element is to trick the browser into centering the modal contents. */}
+        <span
+          className="inline-block h-screen align-middle"
+          aria-hidden="true"
+        >
+          &#8203;
+        </span>
+        <Transition.Child
+          as={Fragment}
+          enter="ease-out duration-300"
+          enterFrom="opacity-0 scale-95"
+          enterTo="opacity-100 scale-100"
+          leave="ease-in duration-200"
+          leaveFrom="opacity-100 scale-100"
+          leaveTo="opacity-0 scale-95"
+        >
+          <div className="inline-block w-full md:w-[700px] p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-darkmode-1 shadow-xl rounded-2xl">
+            <Dialog.Title
+                as="h3"
+                className="text-lg font-medium leading-6 text-white text-center p-1 mb-3 flex items-center justify-between"
+            >
+              <div  onClick={()=>setToggle(!toggle)}>
+                <ArrowLeftIcon className={`${!toggle && "hidden"} w-4 text-white`} />
+              </div>
+                Laporan
+              <div onClick={() => close()}>
+                <XIcon className='w-4 h-4 text-white' />
+              </div>
+            </Dialog.Title>
+            <hr />
+            <div className="mt-4 relative">
+              <form action="" className='mt-3'>
+                <div className={`${toggle && "hidden"}`}>
+                <Body1 bold>Kenapa kamu laporkan post ini ?</Body1>
+                <Body1 disabled>Laporan kamu akan dikirim ke sistem Markas Gamer</Body1>
+                  <div className="mt-4">
+
+                      <div className="mb-2">
+                        <label htmlFor="reportSpam">
+                          <input type="radio" name="reportItem" id="reportSpam" value="spam" />
+                          <span className='ml-2 text-white'>Spam</span>
+                        </label>
+                      </div>
+                      <div className="mb-2">
+                        <label htmlFor="reportToxic">
+                          <input type="radio" name="reportItem" id="reportToxic" value="spam" />
+                          <span className='ml-2 text-white'>Kata-kata kasar</span>
+                        </label>
+                      </div>
+                      <div className="mb-2">
+                        <label htmlFor="reportHarrasment">
+                          <input type="radio" name="reportItem" id="reportHarrasment" value="spam" />
+                          <span className='ml-2 text-white'>Bully atau pelecehan</span>
+                        </label>
+                      </div>
+                      <div className="mb-2">
+                        <label htmlFor="reportPenipuan">
+                          <input type="radio" name="reportItem" id="reportPenipuan" value="spam" />
+                          <span className='ml-2 text-white'>Penipuan</span>
+                        </label>
+                      </div>
+                      <div className="mb-2">
+                        <label htmlFor="reportViolence">
+                          <input type="radio" name="reportItem" id="reportViolence" value="spam" />
+                          <span className='ml-2 text-white'>Kekerasan</span>
+                        </label>
+                      </div>
+                    <div className=" mb-4 cursor-pointer" onClick={() => setToggle(!toggle)}>
+                      <Body1>Lainnya</Body1>
+                    </div>
+                  </div>
+                </div>
+                <div className={`${!toggle && "hidden"} bg-darkmode-1 w-full h-full top-0 left-0`}>
+                  <Body1>Lainnya</Body1>
+                  <textarea className='my-4 w-full h-32 bg-darkmode-3 rounded-lg'></textarea>
+                </div>
+                <button type='submit' className='w-full p-2 rounded-md bottom-0 bg-blue-600 text-white'>Kirim</button>
+              </form>
+            </div>
+          </div>
+        </Transition.Child>
+      </div>
+    </Dialog>
+  </Transition>
+  )
+}
 
 const FormTipe = ({tipe = "teks", text = "", linkLiveStream, media, idPost}) => {
   const [preview, setPreview] = useState(media)
@@ -237,9 +347,11 @@ function Modal({idPost, status, close, tipe, text, linkLiveStream, media}) {
     </>
   )
 }
-function Dropdown({idPost, tipe, text, linkLiveStream, media}) {
+function Dropdown({idUser, idPost, tipe, text, linkLiveStream, media}) {
+  const {id} = getUser()
     const {push} = useRouter()
     let [isOpen, setIsOpen] = useState(false)
+    let [isOpenReport, setIsOpenReport] = useState(false)
 
     function closeModal() {
       setIsOpen(false)
@@ -247,6 +359,13 @@ function Dropdown({idPost, tipe, text, linkLiveStream, media}) {
 
     function openModal() {
       setIsOpen(true)
+    }
+    function closeModalReport() {
+      setIsOpenReport(false)
+    }
+
+    function openModalReport() {
+      setIsOpenReport(true)
     }
 
     return (
@@ -272,29 +391,32 @@ function Dropdown({idPost, tipe, text, linkLiveStream, media}) {
           >
             <Menu.Items className="absolute right-0 w-56 mt-2 origin-top-right bg-darkmode-2 border border-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
               <div className="px-1 py-1 ">
-                <Menu.Item>
-                  {({ active }) => (
-                    <button
-                      className={`${
-                        active ? 'bg-darkmode-hover ' : '' 
-                      }  text-white group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                      onClick={() => openModal()}
-                    >
-                        <PencilIcon
-                          className="w-5 h-5 mr-2"
-                          aria-hidden="true"
-                        />
-                      
-                      Edit
-                    </button>
-                  )}
-                </Menu.Item>
+                {idUser == id && (
+                  <Menu.Item>
+                    {({ active }) => (
+                      <button
+                        className={`${
+                          active ? 'bg-darkmode-hover ' : '' 
+                        }  text-white group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                        onClick={() => openModal()}
+                      >
+                          <PencilIcon
+                            className="w-5 h-5 mr-2"
+                            aria-hidden="true"
+                          />
+                        
+                        Edit
+                      </button>
+                    )}
+                  </Menu.Item>
+                ) }
                 <Menu.Item>
                   {({ active }) => (
                     <button
                       className={`${
                         active ? 'bg-darkmode-hover ' : ''
                       } text-white group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                      onClick={() => openModalReport()}
                     >
                        <FlagIcon
                           className="w-5 h-5 mr-2"
@@ -304,31 +426,34 @@ function Dropdown({idPost, tipe, text, linkLiveStream, media}) {
                     </button>
                   )}
                 </Menu.Item>
-                <Menu.Item>
-                  {({ active }) => (
-                    <button
-                      className={`${
-                        active ? 'bg-darkmode-hover ' : ''
-                      } text-white group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                    >
-                       <TrashIcon
-                          className="w-5 h-5 mr-2"
-                          aria-hidden="true"
-                        />
-                      Hapus
-                    </button>
-                  )}
-                </Menu.Item>
+                {idUser == id && (
+                  <Menu.Item>
+                    {({ active }) => (
+                      <button
+                        className={`${
+                          active ? 'bg-darkmode-hover ' : ''
+                        } text-white group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                      >
+                        <TrashIcon
+                            className="w-5 h-5 mr-2"
+                            aria-hidden="true"
+                          />
+                        Hapus
+                      </button>
+                    )}
+                  </Menu.Item>
+                )}
               </div>   
             </Menu.Items>
           </Transition>
         </Menu>
         <Modal idPost={idPost} status={isOpen} close={closeModal} tipe={tipe} text={text} linkLiveStream={linkLiveStream} media={media}/>
+        <ModalReport idPost={idPost} status={isOpenReport} close={closeModalReport}/>
       </>
     )
   }
 
-export const HeaderUser = ({displayName , userName , date, idPost, postType, text, linkLiveStream, media}) => {
+export const HeaderUser = ({idUser, displayName , userName , date, idPost, postType, text, linkLiveStream, media}) => {
  
     return (
       <>
@@ -344,7 +469,7 @@ export const HeaderUser = ({displayName , userName , date, idPost, postType, tex
                     <Caption disabled={true}>{date}</Caption>
                 </div>
             </div>
-            <Dropdown idPost={idPost} tipe={postType} text={text} linkLiveStream={linkLiveStream} media={media}/>
+            <Dropdown idUser={idUser} idPost={idPost} tipe={postType} text={text} linkLiveStream={linkLiveStream} media={media}/>
         </div>
         
       </>

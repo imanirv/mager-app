@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 
 import LiveIcon from "../icons/live"
-// import Modal from './CreatePostModal'
+import Modal from './createPostModal'
 
 
 
@@ -18,6 +18,7 @@ const CreatePostItem = ({children}) => (
 )
 
 const CreatePost = () => {
+  
   const [isOpen, setIsOpen] = useState(false)
   const closeModal= () => {
     setIsOpen(false)
@@ -43,7 +44,7 @@ const CreatePost = () => {
             </div>
         </div>
         
-        {/* <Modal status={isOpen} close={closeModal}/> */}
+        <Modal status={isOpen} close={closeModal}/>
         </>
     )
 }

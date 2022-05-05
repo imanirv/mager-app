@@ -8,15 +8,16 @@ import * as Yup from 'yup'
 
 // icons 
 import { PhotographIcon, GlobeIcon, LinkIcon  } from '@heroicons/react/solid'
-import PostAdd from "../../../../public/custom-icon/post-add"
-import ImageAdd from "../../../../public/custom-icon/image-add"
-import LiveIcon from "../../../../public/custom-icon/live"
+import PostAdd from "../icons/post-add"
+import ImageAdd from "../icons/image-add"
+import LiveIcon from "../icons/live"
 
 // typograph 
-import { Subtitle1, Subtitle2, Caption,Button, Body1, Body2 } from '../../../components/typography'
+import { Subtitle1, Subtitle2, Caption,Button, Body1, Body2 } from '../typography'
 
 // api call 
-import { callAPI } from '../../../helpers/network'
+import { callAPI } from '../../helpers/network'
+import { getUser, getJwt } from '../../helpers/auth'
 
 
     const validationSchema = Yup.object({
@@ -31,7 +32,7 @@ import { callAPI } from '../../../helpers/network'
         title: "",
         postText: "",
         draft:false,
-        visibility:true
+        visibility:false
     }
 
     function classNames(...classes) {
@@ -39,6 +40,8 @@ import { callAPI } from '../../../helpers/network'
     }
     
     function Tabs() {
+        const {id} = getUser()
+        const token = getJwt()
         const [preview, setPreview] = useState();
         const onSubmit = async (values) => {
             try {
@@ -61,20 +64,25 @@ import { callAPI } from '../../../helpers/network'
 
                 const payload = {
                     postText: values.postText,
+                    visibility: true,
                     files: fileUrl,
                     linkLivestream: values.liveStream ? values.liveStream : ""
                 };
                 const response = await callAPI({
-                    url:'/postingan?idUser=5',
+                    url:`/postingan?idUser=${id}`,
                     method: 'POST',
-                    data: payload
+                    data: payload,
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
                   });
 
                 const {data} = response;
+                console.log(data)
                 if (data.status === "200") {
-                    window.location.href = "/?success"
+                    window.location.href = "/homepage?success"
                 }else{
-                    window.location.href = "/?error"
+                    window.location.href = "/homepage?error"
                 }
                
             } catch (error) {
@@ -109,6 +117,7 @@ import { callAPI } from '../../../helpers/network'
         <div className="p-2">
             <div className="w-full bg-darkmode-3 rounded-md">
             <Tab.Group>
+                {/* header tab  */}
                 <Tab.List className="flex rounded-xl border-none">
                 
                     <Tab
@@ -230,16 +239,18 @@ import { callAPI } from '../../../helpers/network'
     }
     
     
-    const Header = ({displayName ="unknown" , userName = "unknown"}) => {
+    const Header = () => {
+        const {name, username} = getUser()
+
         return (
             <div className="flex items-center justify-between px-5 mb-3">
                 <div className="flex items-center justify-between">
                     <Image src={"/images/profile.png"} width={42} height={42} alt="profile"/>
                     <div className="mx-3">
                         <div className="flex items-center">
-                            <Subtitle1>{displayName}</Subtitle1>
+                            <Subtitle1>{name}</Subtitle1>
                             <div className="w-1 h-1 rounded-full bg-darkmode-4 mx-3"></div>
-                            <Subtitle2 disabled={true}>{userName}</Subtitle2>
+                            <Subtitle2 disabled={true}>{username}</Subtitle2>
                         </div>
                         <div className="flex items-center">
                             <GlobeIcon className='w-4 h-4 text-darkmode-disabled mr-2' />

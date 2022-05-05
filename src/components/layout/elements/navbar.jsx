@@ -12,7 +12,6 @@ function Profile() {
 
   const {doLogout} = useAuthDispatcher()
   const bio = getUser()
-  console.log(bio)
   return (
     <div className="">
       <Menu as="div" className="relative inline-block text-left">
