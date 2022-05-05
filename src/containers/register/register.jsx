@@ -1,4 +1,5 @@
 import Link from "next/link"
+import {useRouter} from "next/router"
 import { useFormik, getIn } from "formik"
 import * as Yup from 'yup'
 import { useAuthDispatcher } from "../../redux/reducers/auth"
@@ -29,10 +30,11 @@ const initialValues = {
 
 
 const RegisterContainer = () => {
+    const router = useRouter();
     const {auth: {loading}, doRegister} = useAuthDispatcher()
     const onSubmit = async (values) => {
-        // console.log(values)
-        doRegister(values)
+        // doRegister(values)
+        router.push('/auth/favorite-games')
     }
     
 
@@ -48,8 +50,6 @@ const RegisterContainer = () => {
         validationSchema,
         onSubmit
     });
-    // console.log('errors >', errors)
-    // console.log('touched >', touched)
     return (
         <BackgroundLayout>
             <div className="w-screen h-screen overflow-auto flex items-start justify-center" id="register-card">

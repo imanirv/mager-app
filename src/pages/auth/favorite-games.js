@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import FavoriteGamesContainer from '../../containers/favoriteGames'
 
 const RegisterFavPage = () => {
     return (
@@ -6,7 +7,7 @@ const RegisterFavPage = () => {
             <Head>
                 <title>mager - game kesukaan</title>
             </Head>
-            <h1>ini halaman game kesukaan</h1>
+            <FavoriteGamesContainer/>
         </>
     )
 }

@@ -1,8 +1,11 @@
 import { useRouter } from "next/router"
+import Image from "next/image"
 import MainLayout from "../../components/layout"
-import {Header1} from "../../components/typography"
+import AuthProvider from "../../providers/auth"
+import {Header1, Header3, Header4} from "../../components/typography"
 import Card from "../../components/card"
 import PostList from "../../components/elements/PostList"
+import CreatePost from "../../components/createPost"
 
 
 const data = [
@@ -59,29 +62,61 @@ const Komunitas = () => {
     const router = useRouter()
     const {name} = router.query
     return (
-        <MainLayout>
-            {/* header group  */}
-            <div className="w-full h-60 bg-red-300"></div>
-            <div className="w-full  bg-darkmode-3 md:px-40 py-4 flex">
-                <div className="w-60 h-60 bg-red-600 mr-4 border-4 rounded-md"></div>
-                <Header1>{name}</Header1>
-            </div>
-            <div className="pt-24 px-3 lg:px-40 ">
-                <div className="flex items-start justify-center">
-                    <div className=" w-full md:w-8/12 mr-3">
-                        <PostList datas={data} />
+        <AuthProvider>
+            <MainLayout>
+                {/* header group  */}
+                <div className="w-full md:px-40">
+                    <div className="relative w-full h-96">
+                        <Image className="object-cover" src="/images/header/Mobile legends Sampul 1.jpg" alt="header" layout="fill" />
                     </div>
-                    <div className="hidden md:block w-4/12  bg-darkmode-2 rounded-2xl">
-                        
-                        <Card>
-                            <div className="h-40"></div>
-                        </Card>
-                       
-                    </div>
-                
                 </div>
-            </div>
-        </MainLayout>
+                <div className="w-full  bg-darkmode-2 md:px-40 py-4">
+                    <div className="flex">
+                        <div className="w-60 h-60 mr-4 relative">
+                            <Image src="/images/profile/mobile legends 3.jpg" layout="fill" className="object-cover rounded-lg" alt="profile"  />
+                        </div>
+                        <div className="mt-4">
+                            <Header1>{name}</Header1>
+                            <div className="mt-2">
+                                <Header3>Publik</Header3>
+                            </div>
+                            <div className="mt-4">
+                                <Header3>12345 Anggota</Header3>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex mt-4">
+                        <div className="mr-4">
+                            <Header4>Post</Header4>
+                        </div>
+                        <div className="mr-4">
+                            <Header4>Deskripsi</Header4>
+                        </div>
+                        <div className="mr-4">
+                            <Header4>Anggota</Header4>
+                        </div>
+                        <div className="mr-4">
+                            <Header4>Foto/Video</Header4>
+                        </div>
+                    </div>
+                </div>
+                <div className=" px-3 lg:px-40 mt-3">
+                    <div className="flex items-start justify-center">
+                        <div className=" w-full md:w-8/12 mr-3">
+                            <CreatePost />
+                            <PostList datas={data} />
+                        </div>
+                        <div className="hidden md:block w-4/12  bg-darkmode-2 rounded-2xl ">
+                            <Card>
+                                <div className="h-40"></div>
+                            </Card>
+                        
+                        </div>
+                    
+                    </div>
+                </div>
+            </MainLayout>
+        </AuthProvider>
     )
 }
 

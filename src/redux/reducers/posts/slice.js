@@ -32,7 +32,7 @@ export const usePostDispatcher = () => {
     const makePost = async (posts) => {
 
         const response = await callAPI({
-            url:`/postingan?page=0&size=10&sort=desc`,
+            url:`/postingan?page=1&size=15&sort=desc`,
             method: 'get', 
             headers: {
                 Authorization: `Bearer ${token}`
