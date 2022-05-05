@@ -4,6 +4,7 @@ import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon, UserGroupIcon, LocationMarkerIcon } from '@heroicons/react/solid'
 import { Header4, Body2 } from '../../components/typography'
 
+import AuthProvider from "../../providers/auth"
 import MainLayout from "../../components/layout"
 import CommunityCard from "../../components/elements/CommunityCard"
 
@@ -135,6 +136,7 @@ const Item = () => {
 
 const ExploreContainer = () => {
     return(
+      <AuthProvider>
         <MainLayout>
              <div className=" px-3 lg:px-40 pt-20">
                 <div className="flex items-start justify-center">
@@ -170,6 +172,7 @@ const ExploreContainer = () => {
                 </div>
             </div>
         </MainLayout>
+      </AuthProvider>
     )
 }
 
