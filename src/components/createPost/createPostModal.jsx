@@ -16,8 +16,8 @@ import LiveIcon from "../icons/live"
 import { Subtitle1, Subtitle2, Caption,Button, Body1, Body2 } from '../typography'
 
 // api call 
-import { callAPI } from '../../helpers/network'
-import { getUser, getJwt } from '../../helpers/auth'
+import { usePostDispatcher } from '../../redux/reducers/posts'
+import { getUser } from '../../helpers/auth'
 
 
     const validationSchema = Yup.object({
@@ -40,55 +40,10 @@ import { getUser, getJwt } from '../../helpers/auth'
     }
     
     function Tabs() {
-        const {id} = getUser()
-        const token = getJwt()
         const [preview, setPreview] = useState();
+        const {doPost} = usePostDispatcher()
         const onSubmit = async (values) => {
-            try {
-                const fileUrl = "";
-                if (values.files) {
-                    const formData = new FormData();
-                    formData.append("file", values.files)
-
-                    console.log(formData);
-                    
-                    const upload = await callAPI({
-                        url:"/uploadFiles",
-                        method:"post",
-                        data: formData,
-                    })
-
-                    // console.log(upload.data.data)
-                    fileUrl = upload.data.data;
-                }
-
-                const payload = {
-                    postText: values.postText,
-                    visibility: true,
-                    files: fileUrl,
-                    linkLivestream: values.liveStream ? values.liveStream : ""
-                };
-                const response = await callAPI({
-                    url:`/postingan?idUser=${id}`,
-                    method: 'POST',
-                    data: payload,
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                  });
-
-                const {data} = response;
-                console.log(data)
-                if (data.status === "200") {
-                    window.location.href = "/homepage?success"
-                }else{
-                    window.location.href = "/homepage?error"
-                }
-               
-            } catch (error) {
-                console.log(error)
-            }
-
+            doPost(values)
         }
 
         const {
@@ -168,6 +123,7 @@ import { getUser, getJwt } from '../../helpers/auth'
                                 </div>
                             </div>
                             <div className="mt-4 flex align-items-center justify-center">
+                                <input type="hidden" name="tipePost" value="teks" onChange={handleChange} />
                                 <button name='submit' type='submit' className='bg-gradient-to-r from-[#384CFF] to-[#009EF8] w-1/2 mx-2 p-2 rounded-lg'>Kirim</button>
                                 <button type='button' onClick={() => onSubmit({...values, draft: true, visibility: false })} className='bg-darkmode-disabled w-1/2 mx-2 p-2 rounded-lg'>Simpan di Draft</button>
                             </div>
@@ -199,6 +155,7 @@ import { getUser, getJwt } from '../../helpers/auth'
                                 <input type="file" id='files' name="file" className='hidden' onChange={handleChangeFile} accept=".jpg, .png, .jpeg"  />
                             </label>
                             <div className="mt-4 flex align-items-center justify-center">
+                            <input type="hidden" name="tipePost" value="foto" onChange={handleChange} />
                                 <button name='submit' type='submit' className='bg-gradient-to-r from-[#384CFF] to-[#009EF8] w-1/2 mx-2 p-2 rounded-lg'>Kirim</button>
                                 <button className='bg-darkmode-disabled w-1/2 mx-2 p-2 rounded-lg'>Simpan di Draft</button>
                             </div>
@@ -226,6 +183,7 @@ import { getUser, getJwt } from '../../helpers/auth'
                                 </div>
                            
                             <div className="mt-4 flex align-items-center justify-center">
+                                <input type="hidden" name="tipePost" value="livestream" onChange={handleChange}/>
                                 <button name='submit' type='submit' className='bg-gradient-to-r from-[#384CFF] to-[#009EF8] w-1/2 mx-2 p-2 rounded-lg'>Kirim</button>
                                 <button className='bg-darkmode-disabled w-1/2 mx-2 p-2 rounded-lg'>Simpan di Draft</button>
                             </div>

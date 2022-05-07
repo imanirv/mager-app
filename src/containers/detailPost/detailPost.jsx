@@ -6,7 +6,7 @@ import PostItem from "../../components/elements/PostItem"
 import moment from 'moment';
 import AuthProvider from "../../providers/auth"
 
-const DetailPostContainer = ({idPost = 0, data={} }) => {
+const DetailPostContainer = ({ data={} }) => {
     
     return (
         <AuthProvider>
@@ -15,18 +15,8 @@ const DetailPostContainer = ({idPost = 0, data={} }) => {
                     <div className="flex items-start justify-center">
                         <div className=" w-full md:w-8/12 mr-3">
                         <PostItem
-                            id ={idPost}
-                            displayName = {data.createdBy ? data.createdBy.nama : ""}
-                            userName =  {data.createdBy ? data.createdBy.username : ""}
-                            date={moment(data.created_date).format('MMMM Do')}
-                            text={data.postText}
-                            likeCount = {data.jumlahLike}
-                            commentCount = {data.jumlahKomentar}
-                            commentar = {data.komentarBy ? data.komentarBy : []}
-                            media = {data.media ? data.media : ""}
-                            mediaType = {data.mediaType ? data.mediaType : ""}
-                            postType = {data.postedIn ? "komunitas" : "user"}
-                            communityName = {data.postedIn ? data.postedIn.namaKomunitas : "user"}
+                         item={data}
+                         limit={false}
                         />
                         </div>
                         <div className="hidden md:block w-4/12  bg-darkmode-2 rounded-2xl">

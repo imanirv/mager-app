@@ -4,21 +4,19 @@ import CreatePost from '../../components/createPost'
 import PostList from "../../components/elements/PostList"
 import CommunityCard from "../../components/elements/CommunityCard"
 
-import { usePostDispatcher } from '../../redux/reducers/posts/slice'
+import { usePostDispatcher } from '../../redux/reducers/posts'
 
 const HomeContainer = () =>{
  
-    const {posting: {posts}, makePost} = usePostDispatcher()
+    const {posting: {posts}, getPost} = usePostDispatcher()
 
     useEffect(() => {
         try {
-            makePost()
+            getPost()
         } catch (error) {
             console.log(error)
         }
     }, [])
-
-    // console.log(posts)
     return(
        <MainLayout>
             <div className=" px-3 lg:px-40 pt-24">

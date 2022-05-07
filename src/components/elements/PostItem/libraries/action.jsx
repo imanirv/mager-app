@@ -1,31 +1,26 @@
-import { useState } from 'react'
-import {useRouter} from 'next/router'
+import { useState, useEffect } from 'react'
 
 import { ThumbUpIcon as ThumbUpOutline, AnnotationIcon as AnnotationOutline, LinkIcon } from '@heroicons/react/outline'
 import { Body1 } from '../../../typography'
 import { ThumbUpIcon } from '@heroicons/react/solid'
+import {getUser} from "../../../../helpers/auth"
 
-
-const ActionButtons = ({id, setToggle, toggle}) => {
-    const {push} = useRouter();
+import { usePostDispatcher } from '../../../../redux/reducers/posts'
+const ActionButtons = ({id, setToggle, toggle, likedList}) => {
+    const {doLike} = usePostDispatcher()
+    const userData = getUser();
     const [liked, setLiked] = useState(false)
-    const handleLike = async () => {
-      try {
-        const response = await callAPI({
-          url: `/like?idPostingan=${id}&idUser=2`,
-          method: 'post'
-        })
-        if (response) {
-          setLiked(!liked) 
-          window.location.reload()
-        }else{
-          console.log('gabisa')
-        }
-      } catch (error) {
-        console.log(error)
-        
-      }
+    
+    const handleLike = () => {
+      doLike(id)
     }
+
+    useEffect(() => {
+       const isLike = likedList.filter(item => item.user.id === userData.id)
+        if (isLike.length >= 1) {
+          setLiked(true)
+        }
+    })
       return (
           <div className="my-1 flex justify-between items-center md:px-14">
               <button className='flex items-center  py-3 md:px-6 rounded-md hover:bg-darkmode-hover' onClick={handleLike}>

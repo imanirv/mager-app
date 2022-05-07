@@ -1,14 +1,22 @@
-import {useRouter} from 'next/router'
-import { Fragment, useState } from 'react'
-import {  PencilIcon, FlagIcon, TrashIcon, GlobeIcon, LinkIcon, XIcon, ArrowLeftIcon } from '@heroicons/react/solid'
-import { Menu, Transition, Dialog } from '@headlessui/react'
-import { Subtitle1, Subtitle2, Body1, Caption, Button} from '../../../typography'
 import Image from 'next/image'
+import { Fragment, useState } from 'react'
 
-import { useFormik, getIn } from 'formik'
+// dependecies 
+import { useFormik } from 'formik'
 import * as Yup from 'yup'
+// custom func 
 import { callAPI } from '../../../../helpers/network'
 import {getUser} from "../../../../helpers/auth"
+
+// dispatcher 
+import { usePostDispatcher } from '../../../../redux/reducers/posts'
+
+// component 
+import { Subtitle1, Subtitle2, Body1, Caption, Button} from '../../../typography'
+
+// icon 
+import {  PencilIcon, FlagIcon, TrashIcon, GlobeIcon, LinkIcon, XIcon, ArrowLeftIcon } from '@heroicons/react/solid'
+import { Menu, Transition, Dialog } from '@headlessui/react'
 
 const validationSchema = Yup.object({
   title: Yup.string(),
@@ -128,62 +136,25 @@ const ModalReport = ({status, close}) => {
   )
 }
 
-const FormTipe = ({tipe = "teks", text = "", linkLiveStream, media, idPost}) => {
-  const [preview, setPreview] = useState(media)
+const FormTipe = () => {
+  const {posting:{detailPost}, putPost} = usePostDispatcher() 
+  const [preview, setPreview] = useState(detailPost.files)
   const initialValues = {
     title: "",
-    postText: text,
-    livestream: linkLiveStream,
+    postText: detailPost.postText,
+    livestream: detailPost.linkLiveStream,
     draft:false,
     visibility:false
   }
   
   const onSubmit = async (values) => {
-    const fileUrl = "";
-    if (values.files) {
-        const formData = new FormData();
-        formData.append("file", values.files)
-
-        console.log(formData);
-        
-        const upload = await callAPI({
-            url:"/uploadFiles",
-            method:"post",
-            data: formData,
-        })
-
-        
-        fileUrl = upload.data.data;
-    }
-
-    const payload = {
-      linkLivestream: values.livestream,
-      postText: values.postText,
-      files: fileUrl,
-      visibility: false,
-    }
-    console.log('payload >', payload)
-    
-    const response = await callAPI({
-      url:`/postingan/${idPost}?idUser=2`,
-      method:"put",
-      data: payload
-    })
-    if (response.status == 200) {
-      window.location.reload()
-      // console.log('updated')
-    }
-
+      putPost(values, detailPost.id)
   }
 
   const {
     handleChange,
-    handleBlur,
     handleSubmit,
     setFieldValue,
-    values,
-    errors,
-    touched,
 } = useFormik({
     initialValues,
     validationSchema,
@@ -198,13 +169,13 @@ const handleChangeFile = (e) => {
   }
 }
 
-  if (tipe === "teks") {
+  if (detailPost.tipePost === "teks") {
     return(
       <form  onSubmit={handleSubmit}>
           <div className="relative bg-darkmode-2 rounded-lg text-white p-4">
               <div className="absolute left-3 top-0">
               </div>
-              <textarea type="text" name="postText" id="" placeholder='Text'className='w-full h-full bg-transparent outline-none px-3 mb-5' onChange={handleChange}>{text}</textarea>
+              <textarea type="text" name="postText" id="" placeholder='Text'className='w-full h-full bg-transparent outline-none px-3 mb-5' onChange={handleChange}>{detailPost.postText}</textarea>
               <div className="absolute right-3 bottom-3">
                   <Caption disabled>0/200</Caption>
               </div>
@@ -214,13 +185,13 @@ const handleChangeFile = (e) => {
           </div>
       </form>
     )
-  }else if (tipe === "livestream") {
+  }else if (detailPost.tipePost === "livestream") {
     return(
       <form  onSubmit={handleSubmit}>
           <div className="relative bg-darkmode-2 rounded-lg text-white p-4">
               <div className="absolute left-3 top-0">
               </div>
-              <textarea type="text" name="postText" id="" placeholder='Text' className='w-full h-full bg-transparent outline-none px-3 mb-5' onChange={handleChange} defaultValue={text} />
+              <textarea type="text" name="postText" id="" placeholder='Text' className='w-full h-full bg-transparent outline-none px-3 mb-5' onChange={handleChange} defaultValue={detailPost.postText} />
               <div className="absolute right-3 bottom-3">
                   <Caption disabled>0/200</Caption>
               </div>
@@ -231,7 +202,7 @@ const handleChangeFile = (e) => {
                   <Button>Link</Button>
               </div>
               <div className="h-full w-full">
-                  <input type="text" name='livestream' className='pl-4 bg-transparent h-full w-full outline-none' defaultValue={linkLiveStream} onChange={handleChange}/>
+                  <input type="text" name='livestream' className='pl-4 bg-transparent h-full w-full outline-none' defaultValue={detailPost.linkLivestream} onChange={handleChange}/>
               </div>
           </div>
           <div className="mt-4 flex align-items-center justify-center">
@@ -245,7 +216,7 @@ const handleChangeFile = (e) => {
           <div className="relative bg-darkmode-2 rounded-lg text-white p-4">
               <div className="absolute left-3 top-0">
               </div>
-              <textarea type="text" name="postText" id="" placeholder='Text' defaultValue={text} onChange={handleChange} className='w-full h-full bg-transparent outline-none px-3 mb-5' />
+              <textarea type="text" name="postText" id="" placeholder='Text' defaultValue={detailPost.postText} onChange={handleChange} className='w-full h-full bg-transparent outline-none px-3 mb-5' />
               <div className="absolute right-3 bottom-3">
                   <Caption disabled>0/200</Caption>
               </div>
@@ -253,7 +224,7 @@ const handleChangeFile = (e) => {
           <div className="  flex items-center text-white mt-2 rounded-lg  ">
             <label htmlFor="files">
                 <div className=" bg-darkmode-2 p-3 text-white mt-2 rounded-lg border border-dashed border-gray-500">
-                    {preview ? (
+                    {detailPost.files ? (
                       <div className="h-full  relative">
                           <img src={preview} alt={preview} width={100} height={120} /> 
                             {/* <Image alt='post image' src={preview} layout='fill' className='object-cover' /> */}
@@ -275,7 +246,7 @@ const handleChangeFile = (e) => {
   }
 }
 
-function Modal({idPost, status, close, tipe, text, linkLiveStream, media}) {
+function Modal({idPost, status, close}) {
   return (
     <>
       <Transition appear show={status} as={Fragment}>
@@ -338,7 +309,7 @@ function Modal({idPost, status, close, tipe, text, linkLiveStream, media}) {
                       </div>
                      
                   </div>
-                 <FormTipe idPost={idPost} tipe={tipe} text={text} linkLiveStream={linkLiveStream} media={media}/>
+                 <FormTipe />
               </div>
             </Transition.Child>
           </div>
@@ -347,9 +318,9 @@ function Modal({idPost, status, close, tipe, text, linkLiveStream, media}) {
     </>
   )
 }
-function Dropdown({idUser, idPost, tipe, text, linkLiveStream, media}) {
-  const {id} = getUser()
-    const {push} = useRouter()
+function Dropdown({idUser, idPost}) {
+    const {id} = getUser()
+    const {getPostDetail, clearPostDetail} = usePostDispatcher()
     let [isOpen, setIsOpen] = useState(false)
     let [isOpenReport, setIsOpenReport] = useState(false)
 
@@ -359,6 +330,7 @@ function Dropdown({idUser, idPost, tipe, text, linkLiveStream, media}) {
 
     function openModal() {
       setIsOpen(true)
+      getPostDetail(idPost)
     }
     function closeModalReport() {
       setIsOpenReport(false)
@@ -447,14 +419,14 @@ function Dropdown({idUser, idPost, tipe, text, linkLiveStream, media}) {
             </Menu.Items>
           </Transition>
         </Menu>
-        <Modal idPost={idPost} status={isOpen} close={closeModal} tipe={tipe} text={text} linkLiveStream={linkLiveStream} media={media}/>
+        <Modal idPost={idPost} status={isOpen} close={closeModal} />
         <ModalReport idPost={idPost} status={isOpenReport} close={closeModalReport}/>
       </>
     )
   }
 
-export const HeaderUser = ({idUser, displayName , userName , date, idPost, postType, text, linkLiveStream, media}) => {
- 
+export const HeaderUser = ({data, date, idPost}) => {
+  const {id, nama, username}= data
     return (
       <>
         <div className="flex items-center justify-between">
@@ -462,34 +434,36 @@ export const HeaderUser = ({idUser, displayName , userName , date, idPost, postT
                 <Image src={"/images/profile.png"} width={40} height={40} alt="profile"/>
                 <div className="mx-3">
                     <div className="flex items-center">
-                        <Subtitle1>{displayName}</Subtitle1>
+                        <Subtitle1>{nama}</Subtitle1>
                         <div className="w-1 h-1 rounded-full bg-darkmode-4 mx-2 mt-1 md:mx-3"></div>
-                        <Subtitle2 disabled={true}>{userName}</Subtitle2>
+                        <Subtitle2 disabled={true}>{username}</Subtitle2>
                     </div>
                     <Caption disabled={true}>{date}</Caption>
                 </div>
             </div>
-            <Dropdown idUser={idUser} idPost={idPost} tipe={postType} text={text} linkLiveStream={linkLiveStream} media={media}/>
+            <Dropdown idUser={id} idPost={idPost}/>
         </div>
         
       </>
     )
 }
-export const HeaderKomunitas = ({communityName , userName , date, idPost, postType, text, linkLiveStream, media}) => {
+export const HeaderKomunitas = ({dataUser, dataKomunitas, date}) => {
+  const {id, username}= dataUser
+  // const {}
     return (
         <div className="flex items-center justify-between">
             <div className="flex items-center">
                 <Image src={"/images/profile.png"} width={40} height={40} alt="profile"/>
                 <div className="mx-3">
-                    <Subtitle1>{communityName}</Subtitle1>
+                    <Subtitle1>komunitas page</Subtitle1>
                     <div className="flex items-center">
-                        <Subtitle2 disabled={true}>{userName}</Subtitle2>
+                        <Subtitle2 disabled={true}>{username}</Subtitle2>
                         <div className="w-1 h-1 rounded-full bg-darkmode-4 mx-2 mt-1 md:mx-3"></div>
                         <Caption disabled={true}>{date}</Caption>
                     </div>
                 </div>
             </div>
-            <Dropdown idPost={idPost} tipe={postType} text={text} linkLiveStream={linkLiveStream} media={media}/>
+            {/* <Dropdown idPost={idPost} tipe={postType} text={text} linkLiveStream={linkLiveStream} media={media}/> */}
         </div>
     )
 }
