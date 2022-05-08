@@ -43,7 +43,7 @@ export const usePostDispatcher = () => {
     const dispatch = useDispatch();
     const token = getJwt();
     const getPost = async (posts) => {
-      
+      dispatch(setLoading(true))
       const response = await callAPI({
         url:`/postingan?page=0&size=5&sort=desc`,
         method: 'get', 
@@ -54,7 +54,8 @@ export const usePostDispatcher = () => {
         })
         const data = response.data.data
         dispatch(setPosts(data))
-      }
+      dispatch(setLoading(false))
+    }
     const getPostDetail = async (id) => {
         dispatch(setLoading(true))
         const response = await callAPI({
