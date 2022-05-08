@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from "next/link"
+import {SpinnerCircular} from 'spinners-react'
 import {  Subtitle2, Body2 } from '../../../typography'
 import SendIcon from '../../../icons/send'
 import Card from "../../../card"
@@ -12,7 +13,7 @@ import { usePostDispatcher } from '../../../../redux/reducers/posts'
 
 const Comment = ({idPost, commentar, toggle, limit=true}) => {
   
-  const {doComment} = usePostDispatcher()
+  const {posting:{loadingComment}, doComment} = usePostDispatcher()
 
   const onSubmit = (values) => {
       doComment(idPost, values)
@@ -31,13 +32,15 @@ const Comment = ({idPost, commentar, toggle, limit=true}) => {
         <div className="w-full px-2 relative">
           <form onSubmit={handleSubmit}>
             <input type="text" name='isiKomentar' className='bg-darkmode-3 text-white rounded-lg p-1 pl-4 w-full ml-2' placeholder='Tulis Komentar' onChange={handleChange} />
-            <button name='submit' type='submit' className='absolute top-1 right-3 '><SendIcon /></button>
+            <button name='submit' type='submit' className='absolute top-1 right-3 '>
+              {loadingComment ? <SpinnerCircular size={20} color='#E4E6EB' secondaryColor="#242526" /> :  <SendIcon />}
+             </button>
           </form>
         </div>
       </div>
       {/* comment section  */}
-      {commentar.length >= 1 && <CommentItem comment={commentar} limit/>}
-      {commentar.length > 1 && <Link href={`/posts/${idPost}`}><a className='text-white ml-12 mt-3'>lihat komentar lainnya</a></Link>}
+      {commentar.length >= 1 && <CommentItem comment={commentar} limit={limit}/>}
+      {commentar.length > 1 && limit && <Link href={`/posts/${idPost}`}><a className='text-white ml-12 mt-3'>lihat komentar lainnya</a></Link>}
       
     </div>
   )

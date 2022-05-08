@@ -7,7 +7,8 @@ import { getUser } from "../../../helpers/auth";
 const initialState = {
     posts:[],
     detailPost:{},
-    loading: false
+    loading: false,
+    loadingComment:false
 }
 
 
@@ -33,10 +34,16 @@ const slices = createSlice({
                 loading: action.payload
             })
         },
+        setLoadingComment(state, action){
+            Object.assign(state, {
+                ...state,
+                loadingComment: action.payload
+            })
+        },
     }
 })
 
-const {setPosts, setDetailPost, setLoading} = slices.actions
+const {setPosts, setDetailPost, setLoading, setLoadingComment} = slices.actions
 
 export const usePostDispatcher = () => {
     const {posting} = useSelector((state) => state);
@@ -71,6 +78,7 @@ export const usePostDispatcher = () => {
       return response.data.data
     }
     const doComment = async (idPost, values) => {
+      dispatch(setLoadingComment(true))
         const {id} = getUser()
         const payload = values
         const response = await callAPI({
@@ -85,6 +93,7 @@ export const usePostDispatcher = () => {
         if (response.status == 200) {
           window.location.reload()
         }
+      dispatch(setLoadingComment(false))
     }
     const doLike = async (idPost) => {
         const {id} = getUser()

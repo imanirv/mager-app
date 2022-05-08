@@ -1,13 +1,10 @@
 import { useEffect } from 'react'
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
 import MainLayout from '../../components/layout'
 import CreatePost from '../../components/createPost'
 import PostList from "../../components/elements/PostList"
 import CommunityCard from "../../components/elements/CommunityCard"
-
+import { LoadingPost } from '../../components/loading'
 import { usePostDispatcher } from '../../redux/reducers/posts'
-import Card from '../../components/card'
 
 const HomeContainer = () =>{
  
@@ -30,34 +27,8 @@ const HomeContainer = () =>{
                         </div>
                         {loading ? (
                             <>
-                                <div className='mb-3'>
-                                    <Card>
-                                        <div className="flex">
-                                            <div className="inline">
-                                                <Skeleton circle width={50} height={50} baseColor="#3A3B3C" highlightColor="#242526" />
-                                            </div>
-                                            <div className="inline w-full ml-2">
-                                                <Skeleton height={20} width={200}  baseColor="#3A3B3C" highlightColor="#242526" />
-                                                <Skeleton height={20} width={400}  baseColor="#3A3B3C" highlightColor="#242526" />
-                                            </div>
-                                        </div>
-                                        <Skeleton  height={200} baseColor="#3A3B3C" highlightColor="#242526" />
-                                    </Card>
-                                </div>
-                                <div className='mb-3'>
-                                    <Card>
-                                        <div className="flex">
-                                            <div className="inline">
-                                                <Skeleton circle width={50} height={50} baseColor="#3A3B3C" highlightColor="#242526" />
-                                            </div>
-                                            <div className="inline w-full ml-2">
-                                                <Skeleton height={20} width={200}  baseColor="#3A3B3C" highlightColor="#242526" />
-                                                <Skeleton height={20} width={400}  baseColor="#3A3B3C" highlightColor="#242526" />
-                                            </div>
-                                        </div>
-                                        <Skeleton  height={200} baseColor="#3A3B3C" highlightColor="#242526" />
-                                    </Card>
-                                </div>
+                               <LoadingPost />
+                               <LoadingPost />
                             </>
 
                         ): (

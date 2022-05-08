@@ -19,19 +19,12 @@ export default function Home() {
       }
     },[router.isReady])
 
-    console.log(detailPost)
-    if (loading) {
-      return(
-        <p>now loading</p>
-      )
-    }else{
-      return (
-        <>
-          <Head>
-            <title>mager - Detail Postingan</title>
-          </Head>
-            <DetailPostContainer data={detailPost} /> 
-        </>
-      )
-    }
+    return (
+      <>
+        <Head>
+          <title>mager - Detail Postingan</title>
+        </Head>
+          <DetailPostContainer data={detailPost} isLoading={loading}/> 
+      </>
+    )
 }
