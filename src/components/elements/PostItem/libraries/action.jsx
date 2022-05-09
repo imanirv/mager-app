@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 import { ThumbUpIcon as ThumbUpOutline, AnnotationIcon as AnnotationOutline, LinkIcon } from '@heroicons/react/outline'
 import { Body1 } from '../../../typography'
@@ -10,9 +11,20 @@ const ActionButtons = ({id, setToggle, toggle, likedList}) => {
     const {doLike} = usePostDispatcher()
     const userData = getUser();
     const [liked, setLiked] = useState(false)
+    const [copy, setCopy] = useState("Salin Link")
+    const [linkUrl, setLinkUrl] = useState("")
     
     const handleLike = () => {
       doLike(id)
+    }
+
+    const handleCopy = (id) => {
+      setCopy("Disalin")
+      setLinkUrl(`https://mager-app.vercel.app/posts/${id}`)
+      
+      setTimeout(() => {
+        setCopy("Salin Link")
+      }, 2000);
     }
 
     useEffect(() => {
@@ -37,10 +49,12 @@ const ActionButtons = ({id, setToggle, toggle, likedList}) => {
                   <AnnotationOutline className='text-white w-5 h-5 mr-3'/>
                   <Body1 disabled={true}>Komentar</Body1>
               </button>
-              <button className='flex items-center  py-3 px-2 rounded-md hover:bg-darkmode-hover'>
-                  <LinkIcon className='text-white w-5 h-5 mr-3'/>
-                  <Body1 disabled>Salin Link</Body1>
-              </button>
+              <CopyToClipboard text={linkUrl}>
+                <button onClick={() => handleCopy(id)} className='flex items-center  py-3 px-2 rounded-md hover:bg-darkmode-hover'>
+                    <LinkIcon className='text-white w-5 h-5 mr-3'/>
+                    <Body1 disabled>{copy}</Body1>
+                </button>
+              </CopyToClipboard>
           </div>
       )
   }
