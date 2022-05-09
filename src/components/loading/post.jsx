@@ -13,7 +13,9 @@ const LoadingPost = () => {
                 </div>
                 <div className="inline w-full ml-2">
                     <Skeleton height={20} width={200}  baseColor="#3A3B3C" highlightColor="#242526" />
-                    <Skeleton height={20} width={400}  baseColor="#3A3B3C" highlightColor="#242526" />
+                    <div className="max-w-full">
+                    <Skeleton height={20}  baseColor="#3A3B3C" highlightColor="#242526" />
+                    </div>
                 </div>
             </div>
             <Skeleton  height={200} baseColor="#3A3B3C" highlightColor="#242526" />

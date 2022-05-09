@@ -320,7 +320,7 @@ function Modal({idPost, status, close}) {
 }
 function Dropdown({idUser, idPost}) {
     const {id} = getUser()
-    const {getPostDetail, clearPostDetail} = usePostDispatcher()
+    const {getPostDetail, delPost} = usePostDispatcher()
     let [isOpen, setIsOpen] = useState(false)
     let [isOpenReport, setIsOpenReport] = useState(false)
 
@@ -405,6 +405,7 @@ function Dropdown({idUser, idPost}) {
                         className={`${
                           active ? 'bg-darkmode-hover ' : ''
                         } text-white group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                        onClick={() =>delPost(idPost) }
                       >
                         <TrashIcon
                             className="w-5 h-5 mr-2"

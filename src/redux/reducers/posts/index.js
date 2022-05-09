@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { callAPI } from "../../../helpers/network";
 import { getJwt } from "../../../helpers/auth";
 import { getUser } from "../../../helpers/auth";
-
+import Swal from 'sweetalert2'
 const initialState = {
     posts:[],
     detailPost:{},
     loading: false,
-    loadingComment:false
+    loadingComment:false,
+    loadingDetailPost: false
 }
 
 
@@ -40,10 +41,16 @@ const slices = createSlice({
                 loadingComment: action.payload
             })
         },
+        setLoadingDetailPost(state, action){
+            Object.assign(state, {
+                ...state,
+                loadingDetailPost: action.payload
+            })
+        },
     }
 })
 
-const {setPosts, setDetailPost, setLoading, setLoadingComment} = slices.actions
+const {setPosts, setDetailPost, setLoading, setLoadingComment, setLoadingDetailPost} = slices.actions
 
 export const usePostDispatcher = () => {
     const {posting} = useSelector((state) => state);
@@ -64,7 +71,7 @@ export const usePostDispatcher = () => {
       dispatch(setLoading(false))
     }
     const getPostDetail = async (id) => {
-        dispatch(setLoading(true))
+        dispatch(setLoadingDetailPost(true))
         const response = await callAPI({
           url:`postingan/${id}`,
           method:'get',
@@ -74,7 +81,7 @@ export const usePostDispatcher = () => {
          
       })
       dispatch(setDetailPost(response.data.data))
-      dispatch(setLoading(false))
+      dispatch(setLoadingDetailPost(false))
       return response.data.data
     }
     const doComment = async (idPost, values) => {
@@ -162,12 +169,13 @@ export const usePostDispatcher = () => {
             }
           });
           
-        const {data} = response;
-        if (data.status === "200") {
-            window.location.href = "/homepage?success"
-        }else{
-            window.location.href = "/homepage?error"
-        }
+          
+        // const {data} = response;
+        // if (data.status === "200") {
+        //     window.location.href = "/homepage?success"
+        // }else{
+        //     window.location.href = "/homepage?error"
+        // }
        
     } catch (error) {
         console.log(error)
@@ -214,6 +222,27 @@ export const usePostDispatcher = () => {
         // console.log('updated')
       }
     }
+    const delPost = async (id) => {
+      const res = await Swal.fire({
+        title: 'Yakin?',
+        text: 'Post yang dihapus tidak akan balik lagi lho',
+        icon: 'warning',
+    });
+    
+    if (res.isConfirmed) {
+      const response = await callAPI({
+        url: `/postingan/${id}`,
+        method:'delete',
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+
+      window.location.reload()      
+       
+    }
+
+    }
 
     return {
         posting,
@@ -222,7 +251,8 @@ export const usePostDispatcher = () => {
         doComment,
         doLike,
         doPost,
-        putPost
+        putPost,
+        delPost
     }
 }
 

@@ -30,11 +30,11 @@ const initialValues = {
 
 
 const RegisterContainer = () => {
-    const router = useRouter();
+    // const router = useRouter();
     const {auth: {loading}, doRegister} = useAuthDispatcher()
     const onSubmit = async (values) => {
-        // doRegister(values)
-        router.push('/auth/favorite-games')
+        doRegister(values)
+        // router.push('/auth/favorite-games')
     }
     
 

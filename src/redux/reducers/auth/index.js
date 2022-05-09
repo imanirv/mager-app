@@ -155,7 +155,7 @@ export const useAuthDispatcher = () => {
             });
             
             if (res.isConfirmed) {
-                window.location.href = "/auth/login"
+                window.location.href = "/auth/favorite-games"
             }
             dispatch(setLoading(false))
         } catch (error) {

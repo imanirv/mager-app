@@ -29,6 +29,8 @@ const HomeContainer = () =>{
                             <>
                                <LoadingPost />
                                <LoadingPost />
+                               <LoadingPost />
+                               <LoadingPost />
                             </>
 
                         ): (

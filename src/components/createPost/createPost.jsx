@@ -20,13 +20,15 @@ const CreatePostItem = ({children}) => (
 const CreatePost = () => {
   
   const [isOpen, setIsOpen] = useState(false)
+  const [modalDefault, setModalDefault] = useState(0)
   const closeModal= () => {
     setIsOpen(false)
   }
-
-  function openModal() {
+  
+  function openModal(i) {
     setIsOpen(true)
-    // console.log(isOpen)
+    setModalDefault(i)
+    // console.log(modalDefault)
   }
 
     return(
@@ -36,15 +38,15 @@ const CreatePost = () => {
             <CreatePostItem>
                 <Image src={"/images/profile.png"} width={50} height={50} alt="profile"/>
             </CreatePostItem>
-            <div className={`bg-darkmode-3 hover:bg-darkmode-hover text-gray-200 w-full h-10 rounded-lg mx-2 flex items-center px-4` }  onClick={openModal}>Buat post</div>
+            <div className={`bg-darkmode-3 hover:bg-darkmode-hover text-gray-200 w-full h-10 rounded-lg mx-2 flex items-center px-4` }  onClick={ () => openModal(0)}>Buat post</div>
           </div>
             <div className="flex md:flex">
-              <CreatePostItem><PhotographIcon className={`bg-darkmode-3 w-4 h-4`} onClick={openModal} /></CreatePostItem>
-              <CreatePostItem><LiveIcon onClick={openModal} /></CreatePostItem>
+              <CreatePostItem><PhotographIcon className={`bg-darkmode-3 w-4 h-4`} onClick={() => openModal(1)} /></CreatePostItem>
+              <CreatePostItem><LiveIcon onClick={() => openModal(2)} /></CreatePostItem>
             </div>
         </div>
         
-        <Modal status={isOpen} close={closeModal}/>
+        <Modal status={isOpen} close={closeModal} index={modalDefault}/>
         </>
     )
 }

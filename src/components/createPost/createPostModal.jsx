@@ -39,7 +39,7 @@ import { getUser } from '../../helpers/auth'
         return classes.filter(Boolean).join(' ')
     }
     
-    function Tabs() {
+    function Tabs({index}) {
         const [preview, setPreview] = useState();
         const {doPost} = usePostDispatcher()
         const onSubmit = async (values) => {
@@ -71,7 +71,7 @@ import { getUser } from '../../helpers/auth'
         return (
         <div className="p-2">
             <div className="w-full bg-darkmode-3 rounded-md">
-            <Tab.Group>
+            <Tab.Group defaultIndex={index}>
                 {/* header tab  */}
                 <Tab.List className="flex rounded-xl border-none">
                 
@@ -221,7 +221,7 @@ import { getUser } from '../../helpers/auth'
         )
     }
   
-    const Modal = ({status, close}) => {
+    const Modal = ({status, close, index}) => {
         return (
         <>
             <Transition appear show={status} as={Fragment}>
@@ -271,7 +271,7 @@ import { getUser } from '../../helpers/auth'
                         <Header />
                     </div>
                     <div className="">
-                        <Tabs />
+                        <Tabs index={index}/>
                         
                     </div>
                     </div>
