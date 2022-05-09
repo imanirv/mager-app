@@ -169,13 +169,13 @@ export const usePostDispatcher = () => {
             }
           });
           
-          
-        // const {data} = response;
-        // if (data.status === "200") {
-        //     window.location.href = "/homepage?success"
-        // }else{
-        //     window.location.href = "/homepage?error"
-        // }
+            
+          const {data} = response;
+          if (data.status === "200") {
+              window.location.href = "/homepage?success"
+          }else{
+              window.location.href = "/homepage?error"
+          }
        
     } catch (error) {
         console.log(error)
