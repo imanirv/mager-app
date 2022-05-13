@@ -21,6 +21,7 @@ const CreatePost = () => {
   
   const [isOpen, setIsOpen] = useState(false)
   const [modalDefault, setModalDefault] = useState(0)
+  
   const closeModal= () => {
     setIsOpen(false)
   }

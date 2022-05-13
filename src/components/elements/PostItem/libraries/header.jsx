@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 
 // dependecies 
 import { useFormik } from 'formik'
@@ -137,20 +137,30 @@ const ModalReport = ({status, close}) => {
 }
 
 const FormTipe = () => {
+
   const {posting:{detailPost}, putPost} = usePostDispatcher() 
+  const [initialValues, setInitialValues] = useState()
   const [preview, setPreview] = useState(detailPost.files)
-  const initialValues = {
-    title: "",
-    postText: detailPost.postText,
-    livestream: detailPost.linkLiveStream,
-    draft:false,
-    visibility:false
-  }
+
+  useEffect(() => {
+    if (detailPost && detailPost.postText) {
+      setInitialValues(
+        {
+            title: "",
+            postText: detailPost.postText,
+            livestream: detailPost.linkLiveStream,
+            draft:false,
+            visibility:false
+        }
+      )
+      console.log(detailPost)
+    }
+  }, [detailPost])
   
   const onSubmit = async (values) => {
-      putPost(values, detailPost.id)
+    putPost(values, detailPost.id)
   }
-
+  
   const {
     handleChange,
     handleSubmit,
@@ -158,7 +168,8 @@ const FormTipe = () => {
 } = useFormik({
     initialValues,
     validationSchema,
-    onSubmit
+    onSubmit,
+    enableReinitialize:true
 });
 
 const handleChangeFile = (e) => {
@@ -175,7 +186,7 @@ const handleChangeFile = (e) => {
           <div className="relative bg-darkmode-2 rounded-lg text-white p-4">
               <div className="absolute left-3 top-0">
               </div>
-              <textarea type="text" name="postText" id="" placeholder='Text'className='w-full h-full bg-transparent outline-none px-3 mb-5' onChange={handleChange}>{detailPost.postText}</textarea>
+              <textarea type="text" name="postText" id="" placeholder='Text'className='w-full h-full bg-transparent outline-none px-3 mb-5' onChange={handleChange} defaultValue={detailPost.postText}></textarea>
               <div className="absolute right-3 bottom-3">
                   <Caption disabled>0/200</Caption>
               </div>
@@ -318,6 +329,7 @@ function Modal({idPost, status, close}) {
     </>
   )
 }
+
 function Dropdown({idUser, idPost}) {
     const {id} = getUser()
     const {getPostDetail, delPost} = usePostDispatcher()
@@ -331,6 +343,7 @@ function Dropdown({idUser, idPost}) {
     function openModal() {
       setIsOpen(true)
       getPostDetail(idPost)
+      console.log(idPost)
     }
     function closeModalReport() {
       setIsOpenReport(false)

@@ -41,7 +41,7 @@ import { getUser } from '../../helpers/auth'
     
     function Tabs({index}) {
         const [preview, setPreview] = useState();
-        const {doPost} = usePostDispatcher()
+        const {posting:{loadingPost},doPost} = usePostDispatcher()
         const onSubmit = async (values) => {
             doPost(values)
         }
@@ -124,8 +124,8 @@ import { getUser } from '../../helpers/auth'
                             </div>
                             <div className="mt-4 flex align-items-center justify-center">
                                 <input type="hidden" name="tipePost" value="teks" onChange={handleChange} />
-                                <button name='submit' type='submit' className='bg-gradient-to-r from-[#384CFF] to-[#009EF8] w-1/2 mx-2 p-2 rounded-lg'>Kirim</button>
-                                <button type='button' onClick={() => onSubmit({...values, draft: true, visibility: false })} className='bg-darkmode-disabled w-1/2 mx-2 p-2 rounded-lg'>Simpan di Draft</button>
+                                <button type='button' onClick={() => onSubmit({...values, draft: true, visibility: false })} className='text-white font-bold bg-darkmode-3 w-1/2 mx-2 p-2 rounded-lg'>Simpan di Draft</button>
+                                <button name='submit' type='submit' className='bg-gradient-to-r text-white font-bold  from-[#384CFF] to-[#009EF8] w-1/2 mx-2 p-2 rounded-lg'>{loadingPost ? 'Mengirim Post': 'Kirim'}</button>
                             </div>
                         </form>
                     </Tab.Panel>
@@ -156,8 +156,8 @@ import { getUser } from '../../helpers/auth'
                             </label>
                             <div className="mt-4 flex align-items-center justify-center">
                             <input type="hidden" name="tipePost" value="foto" onChange={handleChange} />
-                                <button name='submit' type='submit' className='bg-gradient-to-r from-[#384CFF] to-[#009EF8] w-1/2 mx-2 p-2 rounded-lg'>Kirim</button>
-                                <button className='bg-darkmode-disabled w-1/2 mx-2 p-2 rounded-lg'>Simpan di Draft</button>
+                                <button type='button' onClick={() => onSubmit({...values, draft: true, visibility: false })} className='text-white font-bold bg-darkmode-3 w-1/2 mx-2 p-2 rounded-lg'>Simpan di Draft</button>
+                                <button name='submit' type='submit' className='bg-gradient-to-r text-white font-bold  from-[#384CFF] to-[#009EF8] w-1/2 mx-2 p-2 rounded-lg'>{loadingPost ? 'Mengirim Post': 'Kirim'}</button>
                             </div>
                         </form>
                     </Tab.Panel>
@@ -184,8 +184,8 @@ import { getUser } from '../../helpers/auth'
                            
                             <div className="mt-4 flex align-items-center justify-center">
                                 <input type="hidden" name="tipePost" value="livestream" onChange={handleChange}/>
-                                <button name='submit' type='submit' className='bg-gradient-to-r from-[#384CFF] to-[#009EF8] w-1/2 mx-2 p-2 rounded-lg'>Kirim</button>
-                                <button className='bg-darkmode-disabled w-1/2 mx-2 p-2 rounded-lg'>Simpan di Draft</button>
+                                <button type='button' onClick={() => onSubmit({...values, draft: true, visibility: false })} className='text-white font-bold bg-darkmode-3 w-1/2 mx-2 p-2 rounded-lg'>Simpan di Draft</button>
+                                <button name='submit' type='submit' className='bg-gradient-to-r text-white font-bold  from-[#384CFF] to-[#009EF8] w-1/2 mx-2 p-2 rounded-lg'>{loadingPost ? 'Mengirim Post': 'Kirim'}</button>
                             </div>
                         </form>
                     </Tab.Panel>

@@ -6,8 +6,11 @@ import { getUser } from "../../../helpers/auth";
 import Swal from 'sweetalert2'
 const initialState = {
     posts:[],
+    page: 0,
+    hasMore: true,
     detailPost:{},
     loading: false,
+    loadingPost:false,
     loadingComment:false,
     loadingDetailPost: false
 }
@@ -23,6 +26,18 @@ const slices = createSlice({
                 posts: action.payload
             })
         },
+        setPage(state, action){
+            Object.assign(state, {
+                ...state,
+                page: action.payload
+            })
+        },
+        setHasMore(state, action){
+            Object.assign(state, {
+                ...state,
+                hasMore: action.payload
+            })
+        },
         setDetailPost(state, action){
             Object.assign(state, {
                 ...state,
@@ -33,6 +48,12 @@ const slices = createSlice({
             Object.assign(state, {
                 ...state,
                 loading: action.payload
+            })
+        },
+        setLoadingPost(state, action){
+            Object.assign(state, {
+                ...state,
+                loadingPost: action.payload
             })
         },
         setLoadingComment(state, action){
@@ -50,24 +71,32 @@ const slices = createSlice({
     }
 })
 
-const {setPosts, setDetailPost, setLoading, setLoadingComment, setLoadingDetailPost} = slices.actions
+const {setPosts, setPage, setHasMore, setDetailPost, setLoading, setLoadingPost, setLoadingComment, setLoadingDetailPost} = slices.actions
 
 export const usePostDispatcher = () => {
     const {posting} = useSelector((state) => state);
     const dispatch = useDispatch();
     const token = getJwt();
-    const getPost = async (posts) => {
+    const getPost = async (page = 0) => {
       dispatch(setLoading(true))
       const response = await callAPI({
-        url:`/postingan?page=0&size=5&sort=desc`,
+        url:`/postingan?page=${page}&size=15`,
         method: 'get', 
         headers: {
           Authorization: `Bearer ${token}`
         }
         
-        })
-        const data = response.data.data
-        dispatch(setPosts(data))
+      })
+      const data = response.data.data
+      console.log(response.data.totalPages)
+      if (page == response.data.totalPages) {
+        dispatch(setLoading(false))
+        dispatch(setHasMore(false))
+        return
+      }
+      const payload = [...posting.posts, ...data]
+      dispatch(setPage(response.data.currentPage))
+      dispatch(setPosts(payload))
       dispatch(setLoading(false))
     }
     const getPostDetail = async (id) => {
@@ -123,6 +152,7 @@ export const usePostDispatcher = () => {
           }
     }
     const doPost = async (values) => {
+      dispatch(setLoadingPost(true))
       try {
         
         const {id} = getUser()
@@ -170,16 +200,18 @@ export const usePostDispatcher = () => {
           });
           
           
-        // const {data} = response;
-        // if (data.status === "200") {
-        //     window.location.href = "/homepage?success"
-        // }else{
-        //     window.location.href = "/homepage?error"
-        // }
+        dispatch(setLoading(false))
+        const {data} = response;
+        if (data.status === "200") {
+            window.location.href = "/homepage?success"
+        }else{
+            window.location.href = "/homepage?error"
+        }
        
     } catch (error) {
         console.log(error)
     }
+    dispatch(setLoading(false))
     }
     const putPost = async (values, idPost) => {
       const {id} = getUser()
