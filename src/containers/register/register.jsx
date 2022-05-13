@@ -10,10 +10,10 @@ import FemaleIcon from "../../components/icons/female"
 
 
 const validationSchema = Yup.object({
-    nama: Yup.string().required('Nama tidak boleh kosong'),
-    email: Yup.string().email('email harus valid').max(255).required('Email tidak boleh kosong'),
-    username: Yup.string().required('Username tidak boleh kosong'),
-    password: Yup.string().min(8, 'Kata sandi tidak boleh kurang dari 8 karakter').matches(/[0-9]/, 'Kata sandi harus perpaduan huruf dan angka' ).required('Kata sandi tidak boleh kosong'),
+    nama: Yup.string().required('Nama tidak boleh kosong').min(3, 'Minimal 3 karakter'),
+    email: Yup.string().email('Email harus valid').required('Email tidak boleh kosong'),
+    username: Yup.string().required('Username tidak boleh kosong').min(3, 'Minimal 3 karakter').max(15, 'Maximal 15 karakter'),
+    password: Yup.string().min(8, 'Kata sandi tidak boleh kurang dari 8 karakter').max(12, 'Kata sandi tidak boleh lebih dari 12 karakter').matches(/(?=.*\d)(?=.*([a-z]|[A-Z]))([\x20-\x7E])/, 'Kata sandi harus perpaduan huruf dan angka' ).required('Kata sandi tidak boleh kosong'),
     confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Kata sandi tidak sama').required('Konfirmasi kata sandi tidak boleh kosong'),
     gender: Yup.string().required()
 })
