@@ -33,6 +33,7 @@ const RegisterContainer = () => {
     // const router = useRouter();
     const {auth: {loading}, doRegister} = useAuthDispatcher()
     const onSubmit = async (values) => {
+        // console.log(values)
         doRegister(values)
         // router.push('/auth/favorite-games')
     }
