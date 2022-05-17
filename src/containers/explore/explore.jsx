@@ -6,7 +6,7 @@ import { Header4, Body2 } from '../../components/typography'
 
 import AuthProvider from "../../providers/auth"
 import MainLayout from "../../components/layout"
-import CommunityCard from "../../components/elements/CommunityCard"
+import CommunityCard from "../../components/posts/CommunityCard"
 
 import Card from "../../components/card"
 
