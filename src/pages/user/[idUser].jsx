@@ -19,11 +19,9 @@ const User = () => {
     }
     
     useEffect(() => {
-        if (router.isReady) {
-            setId(idUser)    
-            getUser(idUser)    
-        }
-    },[router.isReady])
+        setId(idUser)    
+        getUser(idUser)    
+    },[idUser])
 
     return(
         <h1>ini user {id} page</h1>
