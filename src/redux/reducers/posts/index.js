@@ -10,6 +10,7 @@ const initialState = {
     hasMore: true,
     detailPost:{},
     loading: false,
+    loadMore: false,
     loadingPost:false,
     loadingComment:false,
     loadingDetailPost: false
@@ -50,6 +51,12 @@ const slices = createSlice({
                 loading: action.payload
             })
         },
+        setLoadMore(state, action){
+            Object.assign(state, {
+                ...state,
+                loadMore: action.payload
+            })
+        },
         setLoadingPost(state, action){
             Object.assign(state, {
                 ...state,
@@ -71,7 +78,7 @@ const slices = createSlice({
     }
 })
 
-const {setPosts, setPage, setHasMore, setDetailPost, setLoading, setLoadingPost, setLoadingComment, setLoadingDetailPost} = slices.actions
+const {setPosts, setPage, setHasMore, setLoadMore, setDetailPost, setLoading, setLoadingPost, setLoadingComment, setLoadingDetailPost} = slices.actions
 
 export const usePostDispatcher = () => {
     const {posting} = useSelector((state) => state);
@@ -80,7 +87,7 @@ export const usePostDispatcher = () => {
     const getPost = async (page = 0) => {
       dispatch(setLoading(true))
       const response = await callAPI({
-        url:`/postingan?page=${page}&size=15`,
+        url:`/postingan?page=${page}&size=5&sort=desc`,
         method: 'get', 
         headers: {
           Authorization: `Bearer ${token}`
@@ -98,6 +105,28 @@ export const usePostDispatcher = () => {
       dispatch(setPage(response.data.currentPage))
       dispatch(setPosts(payload))
       dispatch(setLoading(false))
+    }
+    const getUpdatePost = async (page = 0) => {
+      dispatch(setLoadMore(true))
+      const response = await callAPI({
+        url:`/postingan?page=${page}&size=5&sort=desc`,
+        method: 'get', 
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+        
+      })
+      const data = response.data.data
+      console.log(response.data.totalPages)
+      if (page == response.data.totalPages) {
+        dispatch(setLoading(false))
+        dispatch(setHasMore(false))
+        return
+      }
+      const payload = [...posting.posts, ...data]
+      dispatch(setPage(response.data.currentPage))
+      dispatch(setPosts(payload))
+      dispatch(setLoadMore(false))
     }
     const getPostDetail = async (id) => {
         dispatch(setLoadingDetailPost(true))
@@ -279,6 +308,7 @@ export const usePostDispatcher = () => {
     return {
         posting,
         getPost,
+        getUpdatePost,
         getPostDetail,
         doComment,
         doLike,

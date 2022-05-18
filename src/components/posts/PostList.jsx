@@ -1,27 +1,13 @@
 import PostItem from "./PostItem"
-import { useCallback, useRef, useState } from "react"
-import { usePostDispatcher } from "../../redux/reducers/posts"
+import usePost from "./hooks/usePost"
+
 
 
 const PostList = ({datas}) =>{
-    const {posting: {loading, hasMore, page}, getPost} = usePostDispatcher()
+    
+    const {loadMore, lastPostRef} = usePost()
 
-    const observer = useRef()
-    const lastPostRef = useCallback(node => {
-        if (loading) return
-        if (!hasMore) return
-        if (observer.current) observer.current.disconnect()
-        observer.current = new IntersectionObserver(entries => {
-            if (entries[0].isIntersecting) {
-                updatePosts(page + 1)
-            }
-        })
-        if (node) observer.current.observe(node)
-    }, [loading])
-
-    const updatePosts = (i) => {
-        getPost(i)
-    }
+   
     return (
         <div>
             {
@@ -41,7 +27,6 @@ const PostList = ({datas}) =>{
                     }
                     })
             }
-           
         </div>
     )
 }
