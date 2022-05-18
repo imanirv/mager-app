@@ -9,7 +9,7 @@ import {useAuthDispatcher} from '../../../redux/reducers/auth'
 import {getUser} from '../../../helpers/auth'
 
 function Profile() {
-
+  const {push} = useRouter()
   const {doLogout} = useAuthDispatcher()
   const bio = getUser()
   return (
@@ -43,6 +43,7 @@ function Profile() {
                     className={`${
                       active ? 'bg-darkmode-hover text-white' : 'text-white'
                     } font-nunito group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                    onClick={() => push(`/user/${bio.id}`)}
                   >
                   <RoundProfile />
                   <span className='ml-2'>Profile</span>

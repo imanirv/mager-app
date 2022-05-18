@@ -138,6 +138,7 @@ export const useAuthDispatcher = () => {
             username: values.username,
             email: values.email,
             password:values.password,
+            gender:values.gender,
             biodata: ''
         }
 
@@ -166,12 +167,65 @@ export const useAuthDispatcher = () => {
 
 
     }
+    const doForgetPass = async(values) => {
+        dispatch(setLoading(true))
+        const payload = {
+            email: values.email
+        }
+        const response = await callAPI({
+            url: `/forget-password/register-tymeleaf`,    
+            method: 'post',
+            data: payload 
+
+        })
+        
+        dispatch(setLoading(false))
+        if (response) {
+            localStorage.setItem('emailToReset', values.email)
+            const res = await Swal.fire({
+                title: 'Berhasil',
+                text: 'Silahkan cek email anda untuk tahap selanjutnya',
+                icon: 'success',
+            });
+        }
+    }
+    const doResetPass = async (values) => {
+        dispatch(setLoading(true))
+
+        const payload= {
+            email: localStorage.getItem('emailToReset'),
+            newPassword: values.password,
+            confirmPassword: values.confirmPassword
+        }
+
+        const response = await callAPI({
+            url: `/forget-password/reset`,    
+            method: 'post',
+            data: payload 
+
+        })
+        dispatch(setLoading(false))
+        if (response) {
+            localStorage.removeItem('emailToReset')
+            const res = await Swal.fire({
+                title: 'Berhasil',
+                text: 'Password telah di reset',
+                icon: 'success',
+            });
+            
+            if (res.isConfirmed) {
+                window.location.href = "/auth/login"
+            }
+        }
+    }
 
     return {
         auth,
         doLogin,
         doLogout,
-        doRegister
+        doRegister, 
+        doResetPass,
+        doForgetPass
     }
 
 }

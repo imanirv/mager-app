@@ -1,5 +1,6 @@
 import Image from 'next/image'
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 
 // dependecies 
 import { useFormik } from 'formik'
@@ -137,20 +138,41 @@ const ModalReport = ({status, close}) => {
 }
 
 const FormTipe = () => {
+
   const {posting:{detailPost}, putPost} = usePostDispatcher() 
-  const [preview, setPreview] = useState(detailPost.files)
-  const initialValues = {
-    title: "",
-    postText: detailPost.postText,
-    livestream: detailPost.linkLiveStream,
-    draft:false,
-    visibility:false
+  const [initialValues, setInitialValues] = useState(
+    {
+      title: "",
+      postText: '',
+      livestream: "",
+      draft:false,
+      visibility:false, 
+      files: ""
   }
+  )
+  const [preview, setPreview] = useState(detailPost.files)
+
+
+  useEffect(() => {
+    console.log(detailPost)
+    setPreview(detailPost.files)
+    setInitialValues(
+      {
+          title: "",
+          postText: detailPost.postText,
+          livestream: detailPost.linkLiveStream,
+          draft:false,
+          visibility:false,
+          files: detailPost.files
+      }
+    )
+  }, [detailPost])
+
   
   const onSubmit = async (values) => {
-      putPost(values, detailPost.id)
+    putPost(values, detailPost.id)
   }
-
+  
   const {
     handleChange,
     handleSubmit,
@@ -158,16 +180,9 @@ const FormTipe = () => {
 } = useFormik({
     initialValues,
     validationSchema,
-    onSubmit
+    onSubmit,
+    enableReinitialize:true
 });
-
-const handleChangeFile = (e) => {
-  const files = e.target.files;
-  if (files) {
-      setPreview(URL.createObjectURL(files[0]));
-      setFieldValue("files", files[0]);
-  }
-}
 
   if (detailPost.tipePost === "teks") {
     return(
@@ -175,7 +190,7 @@ const handleChangeFile = (e) => {
           <div className="relative bg-darkmode-2 rounded-lg text-white p-4">
               <div className="absolute left-3 top-0">
               </div>
-              <textarea type="text" name="postText" id="" placeholder='Text'className='w-full h-full bg-transparent outline-none px-3 mb-5' onChange={handleChange}>{detailPost.postText}</textarea>
+              <textarea type="text" name="postText" id="" placeholder='Text'className='w-full h-full bg-transparent outline-none px-3 mb-5' onChange={handleChange} defaultValue={initialValues.postText}></textarea>
               <div className="absolute right-3 bottom-3">
                   <Caption disabled>0/200</Caption>
               </div>
@@ -191,7 +206,7 @@ const handleChangeFile = (e) => {
           <div className="relative bg-darkmode-2 rounded-lg text-white p-4">
               <div className="absolute left-3 top-0">
               </div>
-              <textarea type="text" name="postText" id="" placeholder='Text' className='w-full h-full bg-transparent outline-none px-3 mb-5' onChange={handleChange} defaultValue={detailPost.postText} />
+              <textarea type="text" name="postText" id="" placeholder='Text' className='w-full h-full bg-transparent outline-none px-3 mb-5' onChange={handleChange} defaultValue={initialValues.postText} />
               <div className="absolute right-3 bottom-3">
                   <Caption disabled>0/200</Caption>
               </div>
@@ -216,18 +231,18 @@ const handleChangeFile = (e) => {
           <div className="relative bg-darkmode-2 rounded-lg text-white p-4">
               <div className="absolute left-3 top-0">
               </div>
-              <textarea type="text" name="postText" id="" placeholder='Text' defaultValue={detailPost.postText} onChange={handleChange} className='w-full h-full bg-transparent outline-none px-3 mb-5' />
+              <textarea type="text" name="postText" id="" placeholder='Text' defaultValue={initialValues.postText} onChange={handleChange} className='w-full h-full bg-transparent outline-none px-3 mb-5' />
               <div className="absolute right-3 bottom-3">
                   <Caption disabled>0/200</Caption>
               </div>
           </div>
-          <div className="  flex items-center text-white mt-2 rounded-lg  ">
+          <div className="  flex items-center text-white mt-2 rounded-lg h-32 relative">
             <label htmlFor="files">
-                <div className=" bg-darkmode-2 p-3 text-white mt-2 rounded-lg border border-dashed border-gray-500">
-                    {detailPost.files ? (
-                      <div className="h-full  relative">
-                          <img src={preview} alt={preview} width={100} height={120} /> 
-                            {/* <Image alt='post image' src={preview} layout='fill' className='object-cover' /> */}
+                <div className=" bg-darkmode-2 p-3 text-white mt-2 rounded-lg border border-dashed border-gray-500 h-32 w-full">
+                    {initialValues.files ? (
+                      <div className="">
+                          {/* <img src={preview} alt={preview} width={100} height={120} />  */}
+                            <Image alt='post image' src={preview} layout='fill' className='object-cover rounded-md' />
                         </div>
                     ): (
                         <div className="flex items-center justify-center w-full h-full">
@@ -235,7 +250,6 @@ const handleChangeFile = (e) => {
                         </div> 
                     )}
                 </div>
-                <input type="file" id='files' name="file" className='hidden' onChange={handleChangeFile} accept=".jpg, .png, .jpeg"  />
             </label>
           </div>
           <div className="mt-4 flex align-items-center justify-center">
@@ -318,6 +332,7 @@ function Modal({idPost, status, close}) {
     </>
   )
 }
+
 function Dropdown({idUser, idPost}) {
     const {id} = getUser()
     const {getPostDetail, delPost} = usePostDispatcher()
@@ -331,6 +346,7 @@ function Dropdown({idUser, idPost}) {
     function openModal() {
       setIsOpen(true)
       getPostDetail(idPost)
+      // console.log(idPost)
     }
     function closeModalReport() {
       setIsOpenReport(false)
@@ -428,13 +444,14 @@ function Dropdown({idUser, idPost}) {
 
 export const HeaderUser = ({data, date, idPost}) => {
   const {id, nama, username}= data
+  const {push} = useRouter()
     return (
       <>
         <div className="flex items-center justify-between">
             <div className="flex items-center">
                 <Image src={"/images/profile.png"} width={40} height={40} alt="profile"/>
                 <div className="mx-3">
-                    <div className="flex items-center">
+                    <div className="flex items-center" onClick={() => push(`/user/${id}`)}>
                         <Subtitle1>{nama}</Subtitle1>
                         <div className="w-1 h-1 rounded-full bg-darkmode-4 mx-2 mt-1 md:mx-3"></div>
                         <Subtitle2 disabled={true}>{username}</Subtitle2>

@@ -1,3 +1,4 @@
+import Link from 'next/link'
 
 import { useFormik, getIn } from "formik"
 import * as Yup from 'yup'
@@ -79,12 +80,13 @@ const LoginContainer = () => {
                                 )
                             }
                             <div className="flex justify-between">
-                                <label htmlFor="rememberMe">
+                                {/* <label htmlFor="rememberMe">
                                     <input type="checkbox" name="remember me" onChange={handleChange} />
                                     <span className="ml-2 text-darkmode-disabled">Ingat saya</span>
-                                </label>
-
-                                <a href="" className="text-primary">Lupa kata sandi?</a>
+                                </label> */}
+                                <Link href="/auth/forgot-password">
+                                    <a className="text-primary">Lupa kata sandi?</a>
+                                </Link>
                             </div>
                             {!errors.username && !errors.password ? (
                                 <button type="submit" className="bg-blue-500 p-2 px-10 w-full mt-5 text-white rounded-lg">

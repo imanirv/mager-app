@@ -2,113 +2,72 @@ import { useRouter } from "next/router"
 import Image from "next/image"
 import MainLayout from "../../components/layout"
 import AuthProvider from "../../providers/auth"
-import {Header1, Header3, Header4} from "../../components/typography"
+import {Body1, Header2, Header3, Header4} from "../../components/typography"
 import Card from "../../components/card"
-import PostList from "../../components/elements/PostList"
+import PostList from "../../components/posts/PostList"
 import CreatePost from "../../components/createPost"
-
-
-const data = [
-    {
-        displayName : "Ganang Rizkijaya",
-        userName : "ganangrz",
-        date:"1 Jam",
-        text:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate, natus nemo! Reprehenderit totam rem quis animi autem saepe quibusdam molestiae numquam fugit, delectus tenetur dolor repellendus, quas ut in, quidem omnis asperiores accusantium. Sint, voluptatum. Autem maxime, quidem quibusdam facilis dolorem quod mollitia.",
-        likeCount : "123",
-        commentCount : "321"
-    },
-    {
-        displayName : "Moch Rafii",
-        userName : "mochrafii",
-        date:"1 april, pukul 20.13",
-        text:"Dicari Teman Mabar Wildrift, minimal rank platinum 4, langsung komen IGN di komen ya ges",
-        likeCount : "123",
-        commentCount : "321"
-    },
-    {
-        displayName : "Atthala Salsabila",
-        userName : "athallasls",
-        date:"8 Jam",
-        text:"Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-        media:"/images/posts/image-001.jpg",
-        mediaType: "image",
-        likeCount : "123",
-        commentCount : "321"
-    },
-    {
-        displayName : "Abdullah Akram",
-        userName : "AAkrams",
-        date:"1 Jam",
-        text:"Jangan lupa like ya gays",
-        media:"/videos/test.mp4",
-        mediaType:"video",
-        likeCount : "123",
-        commentCount : "321"
-    },
-    {
-        displayName : "Iman irvansyah",
-        userName : "imanirv",
-        date:"1 Jam",
-        text:"Jangan lupa like ya gays",
-        media:"https://youtu.be/ZKXolU_ooco",
-        mediaType:"video",
-        likeCount : "123",
-        commentCount : "321"
-    },
-]
-
+import { useEffect } from "react"
+import {useKomunitasDispatcher} from "../../redux/reducers/komunitas"
+import { UserGroupIcon, LocationMarkerIcon } from "@heroicons/react/solid"
+import EsportIcon from "../../components/icons/sport-esport"
 const Komunitas = () => {
-
     const router = useRouter()
     const {name} = router.query
+    const {komunitas:{detailKomunitas, postinganKomunitas}, getDetailKomunitas, getPostinganKomunitas} = useKomunitasDispatcher()
+
+    useEffect(()=>{
+        getDetailKomunitas(name)
+        getPostinganKomunitas(name)
+    }, [name])
     return (
         <AuthProvider>
             <MainLayout>
-                {/* header group  */}
-                <div className="w-full md:px-40">
-                    <div className="relative w-full h-96">
-                        <Image className="object-cover" src="/images/header/Mobile legends Sampul 1.jpg" alt="header" layout="fill" />
-                    </div>
-                </div>
-                <div className="w-full  bg-darkmode-2 md:px-40 py-4">
-                    <div className="flex">
-                        <div className="w-60 h-60 mr-4 relative">
+
+                <div className="w-full  bg-darkmode-2 md:px-40 pt-24 pb-4">
+                    <div className="flex flex-col items-center text-center">
+                        <div className="w-52 h-52 mr-4 relative">
                             <Image src="/images/profile/mobile legends 3.jpg" layout="fill" className="object-cover rounded-lg" alt="profile"  />
                         </div>
                         <div className="mt-4">
-                            <Header1>{name}</Header1>
-                            <div className="mt-2">
-                                <Header3>Publik</Header3>
-                            </div>
-                            <div className="mt-4">
-                                <Header3>12345 Anggota</Header3>
+                            <Header2>{detailKomunitas.namaKomunitas}</Header2>
+                            <div className="mt-2 flex items-center justify-center">
+                                <UserGroupIcon className="w-6 h-6 mr-3 mb-2 text-darkmode-disabled" /><Header4 disabled>{detailKomunitas.jumlahAnggota} Anggota</Header4>
                             </div>
                         </div>
-                    </div>
-                    <div className="flex mt-4">
-                        <div className="mr-4">
-                            <Header4>Post</Header4>
-                        </div>
-                        <div className="mr-4">
-                            <Header4>Deskripsi</Header4>
-                        </div>
-                        <div className="mr-4">
-                            <Header4>Anggota</Header4>
-                        </div>
-                        <div className="mr-4">
-                            <Header4>Foto/Video</Header4>
-                        </div>
+                        <button className="bg-darkmode-3 mt-4 px-32 py-2 text-white rounded-md">Edit Profile</button>
                     </div>
                 </div>
                 <div className=" px-3 lg:px-40 mt-3">
                     <div className="flex items-start justify-center">
                         <div className=" w-full md:w-8/12 mr-3">
                             <CreatePost />
-                            <PostList datas={data} />
+                            {
+                                postinganKomunitas.length > 0 ? (
+                                    <>
+                                        <PostList datas={postinganKomunitas} />
+                                    </>
+                                ):(
+                                    <div className="text-white">
+                                        <p>tidak ada postingan</p>
+                                    </div>
+                                )
+                            }
                         </div>
                         <div className="hidden md:block w-4/12  bg-darkmode-2 rounded-2xl ">
                             <Card>
-                                <div className="h-40"></div>
+                                <div className="">
+                                    <Header4>Tentang</Header4>
+                                    {/* <Body1>{detailKomunitas.deskripsi}</Body1> */}
+                                    <Body1 disabled>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatum sed nemo veritatis illo officiis dolorem. Impedit est corrupti repellat dolorum!</Body1>
+                                    <div className="flex mt-4">
+                                        <LocationMarkerIcon className="w-5 h-5 mr-2 text-white" />
+                                        <Body1>{detailKomunitas.lokasi}</Body1>
+                                    </div>
+                                    <div className="flex mt-1">
+                                        <EsportIcon className="w-5 h-5 mt-1 mr-2 text-white" />
+                                        <Body1>genre komunitas</Body1>
+                                    </div>
+                                </div>
                             </Card>
                         
                         </div>

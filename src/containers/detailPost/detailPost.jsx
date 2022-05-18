@@ -2,7 +2,7 @@
 
 import MainLayout from "../../components/layout/"
 import CommunityCard from "../../components/elements/CommunityCard"
-import PostItem from "../../components/elements/PostItem"
+import PostItem from "../../components/posts/PostItem"
 import AuthProvider from "../../providers/auth"
 
 import { LoadingPost, LoadingItem } from "../../components/loading"

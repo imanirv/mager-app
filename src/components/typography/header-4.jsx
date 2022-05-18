@@ -1,5 +1,5 @@
-const Header4 = ({children}) => (
-    <h4 className="text-xl font-nunito text-darkmode-4 font-bold">{children}</h4>
+const Header4 = ({children, disabled = false}) => (
+    <h4 className={`text-xl font-nunito  font-bold  ${disabled ? 'text-darkmode-disabled': 'text-darkmode-4'}`}>{children}</h4>
 
 )
 
