@@ -1,7 +1,7 @@
 
 
 import MainLayout from "../../components/layout/"
-import CommunityCard from "../../components/elements/CommunityCard"
+import CommunityCard from "../../components/posts/CommunityCard"
 import PostItem from "../../components/posts/PostItem"
 import AuthProvider from "../../providers/auth"
 
