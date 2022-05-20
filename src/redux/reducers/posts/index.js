@@ -12,6 +12,7 @@ const initialState = {
     loading: false,
     loadMore: false,
     loadingPost:false,
+    loadingReport: false,
     loadingComment:false,
     loadingDetailPost: false
 }
@@ -63,6 +64,12 @@ const slices = createSlice({
                 loadingPost: action.payload
             })
         },
+        setLoadingReport(state, action){
+            Object.assign(state, {
+                ...state,
+                loadingReport: action.payload
+            })
+        },
         setLoadingComment(state, action){
             Object.assign(state, {
                 ...state,
@@ -78,7 +85,7 @@ const slices = createSlice({
     }
 })
 
-const {setPosts, setPage, setHasMore, setLoadMore, setDetailPost, setLoading, setLoadingPost, setLoadingComment, setLoadingDetailPost} = slices.actions
+const {setPosts, setPage, setHasMore, setLoadMore, setDetailPost, setLoading, setLoadingPost,setLoadingReport, setLoadingComment, setLoadingDetailPost} = slices.actions
 
 export const usePostDispatcher = () => {
     const {posting} = useSelector((state) => state);
@@ -311,6 +318,31 @@ export const usePostDispatcher = () => {
     }
 
     }
+    const doReport = async (values, idPost) => {
+      const {id} = getUser()
+      const payload = values
+      dispatch(setLoadingReport(true))
+      try {
+        const response = await callAPI({
+          url: `/report/postingan/${idPost}?idUser=${id}`,
+          method: "post",
+          data: payload,
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+        if (response) {
+          dispatch(setLoadingReport(false))
+          const res = await Swal.fire({
+            title: 'Berhasil',
+            text: 'Kami akan segera memproses laporan anda!',
+            icon: 'success',
+          });
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
 
     return {
         posting,
@@ -321,7 +353,8 @@ export const usePostDispatcher = () => {
         doLike,
         doPost,
         putPost,
-        delPost
+        delPost,
+        doReport
     }
 }
 

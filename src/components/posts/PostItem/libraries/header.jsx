@@ -28,8 +28,24 @@ const validationSchema = Yup.object({
 });
 
 
-const ModalReport = ({status, close}) => {
+const ModalReport = ({status, close, idPost}) => {
   const [toggle, setToggle] = useState(false)
+  const {posting:{loadingReport}, doReport} = usePostDispatcher()
+  const onSubmit = (values) =>{
+    doReport(values, idPost)
+  }
+  const initialValues = {
+    isiReport: "ini report"
+  }
+  const {
+    handleSubmit,
+    handleChange,
+    handleBlur
+  } = useFormik({
+    initialValues, 
+    onSubmit
+  })
+
   return (
     <Transition appear show={status} as={Fragment}>
     <Dialog
@@ -81,7 +97,7 @@ const ModalReport = ({status, close}) => {
             </Dialog.Title>
             <hr />
             <div className="mt-4 relative">
-              <form action="" className='mt-3'>
+              <form action="" className='mt-3' onSubmit={handleSubmit}>
                 <div className={`${toggle && "hidden"}`}>
                 <Body1 bold>Kenapa kamu laporkan post ini ?</Body1>
                 <Body1 disabled>Laporan kamu akan dikirim ke sistem Markas Gamer</Body1>
@@ -89,31 +105,31 @@ const ModalReport = ({status, close}) => {
 
                       <div className="mb-2">
                         <label htmlFor="reportSpam">
-                          <input type="radio" name="reportItem" id="reportSpam" value="spam" />
+                          <input type="radio" name="isiReport" onChange={handleChange} id="reportSpam" value="spam" />
                           <span className='ml-2 text-white'>Spam</span>
                         </label>
                       </div>
                       <div className="mb-2">
                         <label htmlFor="reportToxic">
-                          <input type="radio" name="reportItem" id="reportToxic" value="spam" />
+                          <input type="radio" name="isiReport" onChange={handleChange} id="reportToxic" value="reportToxic" />
                           <span className='ml-2 text-white'>Kata-kata kasar</span>
                         </label>
                       </div>
                       <div className="mb-2">
                         <label htmlFor="reportHarrasment">
-                          <input type="radio" name="reportItem" id="reportHarrasment" value="spam" />
+                          <input type="radio" name="isiReport" onChange={handleChange} id="reportHarrasment" value="reportHarrasment" />
                           <span className='ml-2 text-white'>Bully atau pelecehan</span>
                         </label>
                       </div>
                       <div className="mb-2">
                         <label htmlFor="reportPenipuan">
-                          <input type="radio" name="reportItem" id="reportPenipuan" value="spam" />
+                          <input type="radio" name="isiReport" onChange={handleChange} id="reportPenipuan" value="reportPenipuan" />
                           <span className='ml-2 text-white'>Penipuan</span>
                         </label>
                       </div>
                       <div className="mb-2">
                         <label htmlFor="reportViolence">
-                          <input type="radio" name="reportItem" id="reportViolence" value="spam" />
+                          <input type="radio" name="isiReport" onChange={handleChange} id="reportViolence" value="reportViolence" />
                           <span className='ml-2 text-white'>Kekerasan</span>
                         </label>
                       </div>
@@ -124,9 +140,10 @@ const ModalReport = ({status, close}) => {
                 </div>
                 <div className={`${!toggle && "hidden"} bg-darkmode-1 w-full h-full top-0 left-0`}>
                   <Body1>Lainnya</Body1>
-                  <textarea className='my-4 w-full h-32 bg-darkmode-3 rounded-lg'></textarea>
+                  <textarea name='isiReport' onChange={handleChange} className='my-4 w-full h-32 bg-darkmode-3 rounded-lg text-white p-3'></textarea>
                 </div>
-                <button type='submit' className='w-full p-2 rounded-md bottom-0 bg-blue-600 text-white'>Kirim</button>
+                <button type={!loadingReport ? "submit" : "button" }  className='w-full p-2 rounded-md bottom-0 bg-blue-600 text-white'>{!loadingReport ? "Kirim" : "Sedang Mengirim" }</button>
+                
               </form>
             </div>
           </div>
