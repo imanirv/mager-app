@@ -17,7 +17,7 @@ const CreatePostItem = ({children}) => (
     </div>
 )
 
-const CreatePost = () => {
+const CreatePost = ({komunitas, idKomunitas}) => {
   
   const [isOpen, setIsOpen] = useState(false)
   const [modalDefault, setModalDefault] = useState(0)
@@ -47,7 +47,7 @@ const CreatePost = () => {
             </div>
         </div>
         
-        <Modal status={isOpen} close={closeModal} index={modalDefault}/>
+        <Modal status={isOpen} close={closeModal} index={modalDefault} komunitas={komunitas} idKomunitas={idKomunitas}/>
         </>
     )
 }

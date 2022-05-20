@@ -86,7 +86,7 @@ export const useUserDispatcher = () => {
 
         try {
             const response = await callAPI({
-                url:`/postingan?size=10&page=0&idUser=${id}`,
+                url:`/postingan?size=10&page=0&idUser=${id}&tipeData=following`,
                 method:'get',
                 headers:{
                     Authorization: `Bearer ${token}`

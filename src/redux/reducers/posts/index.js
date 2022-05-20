@@ -180,13 +180,14 @@ export const usePostDispatcher = () => {
             
           }
     }
-    const doPost = async (values) => {
+    const doPost = async (values, komunitas=false, idKomunitas=0) => {
       dispatch(setLoadingPost(true))
       try {
         
         const {id} = getUser()
         const tipePost = "";
         const fileUrl = "";
+        const linkUrl = ""
        
         if (values.files) {
             const formData = new FormData();
@@ -219,8 +220,14 @@ export const usePostDispatcher = () => {
             tipePost: tipePost
         };
         console.log(payload)
+
+        if (komunitas) {
+          linkUrl = `/postingan?idUser=${id}&idKomunitas=${idKomunitas}`
+        }else{
+          linkUrl = `/postingan?idUser=${id}`
+        }
         const response = await callAPI({
-            url:`/postingan?idUser=${id}`,
+            url:linkUrl,
             method: 'POST',
             data: payload,
             headers: {

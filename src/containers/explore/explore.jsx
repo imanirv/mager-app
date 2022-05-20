@@ -141,7 +141,7 @@ const ExploreContainer = () => {
              <div className=" px-3 lg:px-40 pt-20">
                 <div className="flex items-start justify-center">
                     <div className=" w-full md:w-8/12 mr-3">
-                        <Filter />
+                        {/* <Filter /> */}
                         <Item />
                         <Item />
                         <Item />
@@ -154,18 +154,7 @@ const ExploreContainer = () => {
                         <Item />
                     </div>
                     <div className="hidden md:block w-4/12   rounded-2xl">
-                        {/* card komunitas taro sini */}
-                        <div className="mb-3">
-                            <Card>
-                                <div className="text-center p-2">
-                                    <Header4>
-                                        Tulisannya apa belom tau
-                                    </Header4>
-                                    <button className="w-full bg-gradient-to-r from-[#384CFF] to-[#009EF8] font-nunito font-bold text-white p-1 px-3 rounded-md mt-7">Buat Komunitas</button>
-                                </div>
-                            </Card>
-
-                        </div>
+                        
                         <CommunityCard />
                     </div>
                 

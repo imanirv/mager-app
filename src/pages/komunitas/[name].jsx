@@ -13,7 +13,7 @@ import EsportIcon from "../../components/icons/sport-esport"
 const Komunitas = () => {
     const router = useRouter()
     const {name} = router.query
-    const {komunitas:{detailKomunitas, postinganKomunitas}, getDetailKomunitas, getPostinganKomunitas} = useKomunitasDispatcher()
+    const {komunitas:{detailKomunitas, postinganKomunitas}, getDetailKomunitas, getPostinganKomunitas, doJoinKomunitas} = useKomunitasDispatcher()
 
     useEffect(()=>{
         getDetailKomunitas(name)
@@ -34,13 +34,13 @@ const Komunitas = () => {
                                 <UserGroupIcon className="w-6 h-6 mr-3 mb-2 text-darkmode-disabled" /><Header4 disabled>{detailKomunitas.jumlahAnggota} Anggota</Header4>
                             </div>
                         </div>
-                        <button className="bg-darkmode-3 mt-4 px-32 py-2 text-white rounded-md">Edit Profile</button>
+                        <button onClick={() => doJoinKomunitas(detailKomunitas.id)} className="bg-darkmode-3 mt-4 px-32 py-2 text-white rounded-md">Gabung</button>
                     </div>
                 </div>
                 <div className=" px-3 lg:px-40 mt-3">
                     <div className="flex items-start justify-center">
                         <div className=" w-full md:w-8/12 mr-3">
-                            <CreatePost />
+                            <CreatePost komunitas={true} idKomunitas={detailKomunitas.id} />
                             {
                                 postinganKomunitas.length > 0 ? (
                                     <>

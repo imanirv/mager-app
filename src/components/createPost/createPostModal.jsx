@@ -32,18 +32,19 @@ import { getUser } from '../../helpers/auth'
         title: "",
         postText: "",
         draft:false,
-        visibility:false
+        visibility:false,
+        tipePost:""
     }
 
     function classNames(...classes) {
         return classes.filter(Boolean).join(' ')
     }
     
-    function Tabs({index}) {
+    function Tabs({index, komunitas = false, idKomunitas=0}) {
         const [preview, setPreview] = useState();
         const {posting:{loadingPost},doPost} = usePostDispatcher()
         const onSubmit = async (values) => {
-            doPost(values)
+            doPost(values, komunitas, idKomunitas)
         }
 
         const {
@@ -123,7 +124,7 @@ import { getUser } from '../../helpers/auth'
                                 </div>
                             </div>
                             <div className="mt-4 flex align-items-center justify-center">
-                                <input type="hidden" name="tipePost" value="teks" onChange={handleChange} />
+                                <input type="text" name="tipePost" defaultValue="teks" onChange={handleChange} className="hidden" />
                                 <button type='button' onClick={() => onSubmit({...values, draft: true, visibility: false })} className='text-white font-bold bg-darkmode-3 w-1/2 mx-2 p-2 rounded-lg'>Simpan di Draft</button>
                                 <button name='submit' type='submit' className='bg-gradient-to-r text-white font-bold  from-[#384CFF] to-[#009EF8] w-1/2 mx-2 p-2 rounded-lg'>{loadingPost ? 'Mengirim Post': 'Kirim'}</button>
                             </div>
@@ -221,7 +222,7 @@ import { getUser } from '../../helpers/auth'
         )
     }
   
-    const Modal = ({status, close, index}) => {
+    const Modal = ({status, close, index, idKomunitas, komunitas}) => {
         return (
         <>
             <Transition appear show={status} as={Fragment}>
@@ -271,7 +272,7 @@ import { getUser } from '../../helpers/auth'
                         <Header />
                     </div>
                     <div className="">
-                        <Tabs index={index}/>
+                        <Tabs index={index} idKomunitas={idKomunitas} komunitas={komunitas}/>
                         
                     </div>
                     </div>

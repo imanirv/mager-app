@@ -466,14 +466,16 @@ export const HeaderUser = ({data, date, idPost}) => {
     )
 }
 export const HeaderKomunitas = ({dataUser, dataKomunitas, date}) => {
+  const {push} = useRouter()
   const {id, username}= dataUser
+  const {idKomunitas=id, namaKomunitas} = dataKomunitas
   // const {}
     return (
         <div className="flex items-center justify-between">
             <div className="flex items-center">
-                <Image src={"/images/profile.png"} width={40} height={40} alt="profile"/>
-                <div className="mx-3">
-                    <Subtitle1>komunitas page</Subtitle1>
+                <Image src={"/images/profile/default-1.png"} width={40} height={40} alt="profile"/>
+                <div className="mx-3" onClick={() => push(`/komunitas/${idKomunitas}`)}>
+                    <Subtitle1>{namaKomunitas}</Subtitle1>
                     <div className="flex items-center">
                         <Subtitle2 disabled={true}>{username}</Subtitle2>
                         <div className="w-1 h-1 rounded-full bg-darkmode-4 mx-2 mt-1 md:mx-3"></div>

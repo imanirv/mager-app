@@ -14,3 +14,7 @@
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
   }
+
+.react-select-container, .react-select__control{
+  background-color: pink;
+}

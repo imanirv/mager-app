@@ -20,7 +20,7 @@ const ItemList = ({name,id, src}) => {
 
 const CommunityCard = () => {
     const {komunitas: {listKomunitas}, getListKomunitas} = useKomunitasDispatcher()
-    
+    const {push} = useRouter()
     useEffect(()=> {
         getListKomunitas()
     }, [])
@@ -29,8 +29,9 @@ const CommunityCard = () => {
         <div className="bg-darkmode-2 p-4 rounded-lg">
             <div className="flex justify-between items-center text-white ">
                 <Header3>Komunitasmu</Header3>
-                <GroupAdd />
+                {/* <GroupAdd /> */}
             </div>
+            <button className="w-full bg-gradient-to-r from-[#384CFF] to-[#009EF8] font-nunito font-bold text-white py-2 px-3 rounded-md mt-7" onClick={() => push('/komunitas/buat-komunitas')}>+ Buat Komunitas</button>
             <div className="my-3">
                 {listKomunitas.map((item, i) => (
                     <ItemList key={i} id={item.id} name={item.namaKomunitas} src="/images/profile/default-1.png" />
