@@ -4,7 +4,7 @@ import { useFormik, getIn } from "formik"
 import * as Yup from 'yup'
 import { useAuthDispatcher } from "../../redux/reducers/auth"
 import { BackgroundLayout } from "../../components/layout"
-import Input from "../../components/input/"
+import {Input} from "../../components/input/"
 import {useRouter} from "next/router"
 
 const validationSchema = Yup.object({

@@ -4,7 +4,7 @@ import * as Yup from 'yup'
 import { BackgroundLayout } from "../../components/layout"
 import Card from "../../components/card"
 import {Header2, Subtitle1} from "../../components/typography"
-import Input from "../../components/input"
+import {Input} from "../../components/input"
 import { ArrowLeftIcon } from "@heroicons/react/solid"
 import { useAuthDispatcher } from "../../redux/reducers/auth"
 const validationSchema = Yup.object({
