@@ -1,4 +1,5 @@
 import { useState, useEffect  } from "react"
+import Image from "next/image"
 import {  ArrowLeftIcon } from '@heroicons/react/solid'
 import { Header4, Body2, Header3, Subtitle1, Subtitle2 } from '../../components/typography'
 
@@ -38,7 +39,7 @@ const game = [
 
 const BuatKomunitasContainer = () => {
     const [lokasi, setLokasi] = useState([])
-
+    const [preview, setPreview] = useState()
 
     const provinsi = async () => {
         try {
@@ -60,6 +61,7 @@ const BuatKomunitasContainer = () => {
         handleSubmit,
         handleChange,
         handleBlur,
+        setFieldValue
     } = useFormik({
         initialValues: {
             nama: "",
@@ -73,6 +75,14 @@ const BuatKomunitasContainer = () => {
     useEffect(() =>{
         provinsi()
     }, [])
+
+    const handleChangeFile = (e) => {
+        const file = e.target.files
+        if (file) {
+            setPreview(URL.createObjectURL(file[0]))
+            setFieldValue('profilePicture', file[0])
+        }
+    }
     
     return(
       <AuthProvider>
@@ -104,7 +114,7 @@ const BuatKomunitasContainer = () => {
                                 <SelectInput 
                                     data={game} 
                                     placeholder={'Pilih kategori'} 
-                                    onChange={handleChange}
+                                    onChange={(val) => { setFieldValue('kategoriGame',val) }}
                                     title="Nama Komunitas"
                                     name="kategori"
                                     id="kategoriGame"
@@ -121,26 +131,36 @@ const BuatKomunitasContainer = () => {
                                 <SelectInput 
                                     data={lokasi} 
                                     placeholder={'Pilih Lokasi'}
-                                    onChange={handleChange}
+                                    onChange={(val) => { setFieldValue('lokasi',val) }}
                                     title="lokasi"
                                     name="lokasi"
                                     id="lokasi  "
                                     />
                             </div>
                             <div className="mt-2">
-                                <span className="block text-white mb-2">Deskripsi Komunitas</span>
-                                <div className="w-60 h-60 bg-darkmode-3 border-dashed border border-darkmode-4 rounded-md flex-col flex items-center justify-center">
-                                    <div className="">
-                                        <div className="flex items-center">
-                                            <ImageAdd />
-                                            <Subtitle1 >Upload Foto</Subtitle1>
-                                        </div>    
-                                        <Subtitle2 disabled>Maks Size Foto = 5 MB</Subtitle2>
-                                    </div>
-                                </div>  
-                                <div className="w-60">
-                                    <button className="w-full p-2 bg-darkmode-3 text-white rounded-md mt-2">Pilih Foto</button>
-                                </div>  
+                                <label htmlFor="profilePic" onChange={handleChangeFile}>
+                                    <span className="block text-white mb-2">Deskripsi Komunitas</span>
+                                    {!preview ? (
+                                    <div className="w-60 h-60 bg-darkmode-3 border-dashed border border-darkmode-4 rounded-md flex-col flex items-center justify-center">
+                                        <div className="">
+                                            <div className="flex items-center">
+                                                <ImageAdd />
+                                                <Subtitle1 >Upload Foto</Subtitle1>
+                                            </div>    
+                                            <Subtitle2 disabled>Maks Size Foto = 5 MB</Subtitle2>
+                                        </div>
+                                    </div>  
+
+                                    ): (
+                                        <div className="w-60 h-60 relative">
+                                            <Image src={preview} alt="profile-pict" layout="fill" className="object-cover"/>
+                                        </div>
+                                    )}
+                                    <div className="w-60">
+                                        <div className="w-full p-2 bg-darkmode-3 text-white rounded-md mt-2 text-center" >Pilih Foto</div>
+                                    </div>  
+                                    <input type="file" name="profilePic" id="profilePic" className="hidden" />
+                                </label>
                             </div>
                             <div className="mt-2 mb-5">
                                 <button className="w-full p-2 bg-darkmode-disabled text-white font-semibold rounded-md mt-2">Buat</button>

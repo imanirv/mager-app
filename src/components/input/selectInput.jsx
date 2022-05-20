@@ -16,13 +16,13 @@ function ComboboxItem({data, placeholder, onChange, title,  name, id}) {
                 .includes(query.toLowerCase().replace(/\s+/g, ''))
             )
     
-    const handle = () => {
-        setSelected(),
-        onChange()
+    const handleChange = (value) => {
+        setSelected(value);
+        onChange(value);
     }
 
     return (
-        <Combobox value={selected} onChange={setSelected}>
+        <Combobox value={selected} onChange={(val) => handleChange(val)}>
             <div className="relative mt-1">
             <div className="relative w-full cursor-default overflow-hidden rounded-lg  text-left shadow-md  sm:text-sm">
                 <Combobox.Input
