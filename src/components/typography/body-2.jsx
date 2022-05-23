@@ -1,6 +1,6 @@
 const Body2 = ({children, disabled = false}) =>(
-    <p className={`font-nunito text-sm text-darkmode-4
-     ${disabled ? 'text-darkmode-disabled': ''}`}>{children}</p>
+    <p className={`font-nunito text-sm 
+     ${disabled ? 'text-darkmode-disabled': 'text-darkmode-4'}`}>{children}</p>
 )
 
 

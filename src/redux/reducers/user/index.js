@@ -1,13 +1,15 @@
+import {useRouter} from "next/router"
 import { createSlice } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import { callAPI } from "../../../helpers/network";
 import Swal from 'sweetalert2'
-import { getJwt } from "../../../helpers/auth";
-
+import { getJwt, getUser } from "../../../helpers/auth";
 const initialState = {
     listUser : [],
     detailUser: [],
     postinganUser: [],
+    follower: [],
+    following: [],
     loading : false,
 }
 
@@ -33,6 +35,18 @@ const slices = createSlice({
                 postinganUser: action.payload
             })
         },
+        setFollower(state, action) {
+            Object.assign(state, {
+                ...state,
+                follower: action.payload
+            })
+        },
+        setFollowing(state, action) {
+            Object.assign(state, {
+                ...state,
+                following: action.payload
+            })
+        },
         setLoading(state, action) {
             Object.assign(state, {
                 ...state,
@@ -42,7 +56,7 @@ const slices = createSlice({
     }
 })
 
-const {setListUser, setDetailUser, setPostinganUser, setLoading} = slices.actions
+const {setListUser, setDetailUser, setPostinganUser, setFollower, setFollowing, setLoading} = slices.actions
 
 export const useUserDispatcher = () => {
     const {user} = useSelector((state) => state);
@@ -97,12 +111,61 @@ export const useUserDispatcher = () => {
             
         }
     }
+    const getFollower = async (id) => {
+        try {
+            const response = await callAPI({
+                url: `/user/${id}/follower?size=10&page=0`,
+                method:'get',
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            dispatch(setFollower(response.data.data.content))
+            // console.log(response.data.content)
+        } catch (error) {
+            
+        }
+    }
+    const getFollowing = async (id) => {
+        try {
+            const response = await callAPI({
+                url: `/user/${id}/following?size=10&page=0`,
+                method:'get',
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            dispatch(setFollowing(response.data.data.content))
+            // console.log(response.data.content)
+        } catch (error) {
+            
+        }
+    }
+    const doFollow = async (idFollow) => {
+        const {id} = getUser()
+        // const {push} = useRouter()
+        try {
+            const response = await callAPI({
+                url:`/user/${id}/follow/${idFollow}`,
+                method: "post",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            window.location.reload()
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
 
     return {
         getListUser,
         getDetailUser,
         getPostinganUser,
+        getFollower,
+        getFollowing,
+        doFollow,
         user
     }
 

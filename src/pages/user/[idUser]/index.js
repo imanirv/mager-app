@@ -1,33 +1,48 @@
 import {useRouter} from "next/router"
 import { useEffect, useState } from "react"
-import { useUserDispatcher } from "../../redux/reducers/user";
+import { useUserDispatcher } from "../../../redux/reducers/user";
 
 import Image from "next/image"
-import AuthProvider from "../../providers/auth"
-import MainLayout from "../../components/layout"
-import {Body1, Header2, Header4} from "../../components/typography"
-// import CreatePost from "../../components/createPost"
-import PostList from "../../components/posts/PostList"
-import Card from "../../components/card"
+import AuthProvider from "../../../providers/auth"
+import MainLayout from "../../../components/layout"
+import {Body1, Header2, Header4} from "../../../components/typography"
+// import CreatePost from "../../../components/createPost"
+import PostList from "../../../components/posts/PostList"
+import Card from "../../../components/card"
 import { UserGroupIcon, LocationMarkerIcon } from "@heroicons/react/solid"
-
+import { getUser } from "../../../helpers/auth";
 const User = () => {
     const router = useRouter();
     const {idUser} = router.query
-
-    const {user: {detailUser, postinganUser},getDetailUser, getPostinganUser} = useUserDispatcher()
+    const [follow, setFollow] = useState(false)
+    const account = getUser()
+    const {
+        user: {detailUser, postinganUser, follower, following},
+        getDetailUser, 
+        getPostinganUser,
+        getFollower, 
+        getFollowing,
+        doFollow} = useUserDispatcher()
 
 
     useEffect(() => {  
         getDetailUser(idUser) 
-        getPostinganUser(idUser)   
+        getPostinganUser(idUser) 
+        getFollower(idUser)  
+        getFollowing(idUser)  
     },[idUser])
 
-    console.log(detailUser)
+    useEffect(() => {
+        const isFollowed =  follower.filter(user => user.userFollower.id === account.id)
+        // console.log(id)
+        if (isFollowed.length >= 1) {
+            setFollow(true)
+        }
+    }, [follower])
+
     return(
         <AuthProvider>
             <MainLayout>
-
                 <div className="w-full  bg-darkmode-2 md:px-40 pt-24 pb-4">
                     <div className="flex flex-col items-center text-center">
                         <div className="w-44  h-44  mr-4 relative">
@@ -36,12 +51,16 @@ const User = () => {
                         <div className="mt-6">
                             <Header2>{detailUser.nama}</Header2>
                             <div className="mt-2 flex items-center justify-center">
-                                <Header4 disabled>100 Pengikut</Header4>
+                                <div className="cursor-pointer" onClick={() => router.push(`/user/${idUser}/follower`)}>
+                                    <Header4 disabled>{follower.length} Pengikut</Header4>
+                                </div>
                                 <div className="mx-3"></div>
-                                <Header4 disabled>100 Mengikuti</Header4>
+                                <div className="cursor-pointer" onClick={() => router.push(`/user/${idUser}/follower`)}>
+                                    <Header4 disabled>{following.length} Mengikuti</Header4>
+                                </div>
                             </div>
                         </div>
-                        <button className="bg-darkmode-3 mt-4 px-32 py-2 text-white rounded-md">Mengikuti</button>
+                        <button className="bg-darkmode-3 mt-4 px-32 py-2 text-white rounded-md" onClick={() => doFollow(idUser)}>{follow ? "mengikuti" : "ikuti"}</button>
                     </div>
                 </div>
                 <div className=" px-3 lg:px-40 mt-3">
