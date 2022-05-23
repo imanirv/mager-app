@@ -17,7 +17,7 @@ function classNames(...classes) {
 }
 
 
-const FollowsContainer = () => {
+const FollowsContainer = ({index}) => {
     const router = useRouter()
     const {idUser} = router.query
 
@@ -44,14 +44,14 @@ const FollowsContainer = () => {
                             <div className=" w-full md:w-8/12 mr-3">
                                 <Card>
                                     <div className="flex items-center px-4">
-                                        <ArrowLeftIcon className="w-6 h-6 text-white mr-4" />
+                                        <ArrowLeftIcon className="w-6 h-6 text-white mr-4 cursor-pointer" onClick={() => router.push(`/user/${idUser}`)} />
                                         <div>
                                             <Subtitle1>{detailUser.nama}</Subtitle1> 
                                             <br />
                                             <Subtitle2 disabled>{detailUser.username}</Subtitle2>
                                         </div>
                                     </div>
-                                    <Tab.Group>
+                                    <Tab.Group defaultIndex={index}>
                                         <Tab.List className="flex space-x-1 rounded-xl bg-transparent">
                                             <Tab
                                             key="follower"

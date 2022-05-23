@@ -51,11 +51,11 @@ const User = () => {
                         <div className="mt-6">
                             <Header2>{detailUser.nama}</Header2>
                             <div className="mt-2 flex items-center justify-center">
-                                <div className="cursor-pointer" onClick={() => router.push(`/user/${idUser}/follower`)}>
+                                <div className="cursor-pointer" onClick={() => router.push(`/user/${idUser}/followers`)}>
                                     <Header4 disabled>{follower.length} Pengikut</Header4>
                                 </div>
                                 <div className="mx-3"></div>
-                                <div className="cursor-pointer" onClick={() => router.push(`/user/${idUser}/follower`)}>
+                                <div className="cursor-pointer" onClick={() => router.push(`/user/${idUser}/following`)}>
                                     <Header4 disabled>{following.length} Mengikuti</Header4>
                                 </div>
                             </div>
