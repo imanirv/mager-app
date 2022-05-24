@@ -17,10 +17,20 @@ import * as Yup from "yup"
 import ImageAdd from "../../components/icons/image-add"
 
 import axios from "axios"
+import { useKomunitasDispatcher } from "../../redux/reducers/komunitas"
 
+const initialValues = {
+    namaKomunitas: "",
+    kategori: "",
+    deskripsi: "",
+    lokasi: "",
+}
 
-
-
+const validationSchema = Yup.object({
+    namaKomunitas : Yup.string().required(),
+    kategori : Yup.object().required(),
+    lokasi: Yup.object().required()
+})
 
 const game = [
     {id: 1, name: 'adventure'},
@@ -40,6 +50,7 @@ const game = [
 const BuatKomunitasContainer = () => {
     const [lokasi, setLokasi] = useState([])
     const [preview, setPreview] = useState()
+    const {komunitas: {loading}, doCreateKomunitas} = useKomunitasDispatcher()
 
     const provinsi = async () => {
         try {
@@ -54,21 +65,18 @@ const BuatKomunitasContainer = () => {
     }
 
     const onSubmit =(values) => {
-        console.log(values)
+        doCreateKomunitas(values)
     }
 
     const {
         handleSubmit,
         handleChange,
         handleBlur,
-        setFieldValue
+        setFieldValue,
+        errors
     } = useFormik({
-        initialValues: {
-            nama: "",
-            kategori: "moba",
-            deskripsi: "",
-            lokasi: "jakarta",
-        },
+        initialValues,
+        validationSchema,
         onSubmit
     })
 
@@ -80,10 +88,10 @@ const BuatKomunitasContainer = () => {
         const file = e.target.files
         if (file) {
             setPreview(URL.createObjectURL(file[0]))
-            setFieldValue('profilePicture', file[0])
+            setFieldValue('files', file[0])
         }
     }
-    
+    console.log(errors)
     return(
       <AuthProvider>
         <MainLayout>
@@ -100,7 +108,7 @@ const BuatKomunitasContainer = () => {
                             <div className="mt-2">
                                 <Input
                                     title="Nama Komunitas"
-                                    name="nama"
+                                    name="namaKomunitas"
                                     id="namaKomunitas"
                                     type="text"
                                     placeholder="Masukkan nama komunitas"
@@ -114,7 +122,7 @@ const BuatKomunitasContainer = () => {
                                 <SelectInput 
                                     data={game} 
                                     placeholder={'Pilih kategori'} 
-                                    onChange={(val) => { setFieldValue('kategoriGame',val) }}
+                                    onChange={(val) => { setFieldValue('kategori',val) }}
                                     title="Nama Komunitas"
                                     name="kategori"
                                     id="kategoriGame"
@@ -123,7 +131,7 @@ const BuatKomunitasContainer = () => {
                             <div className="mt-2">
                                 <label>
                                     <span className="block text-white">Deskripsi Komunitas</span>
-                                    <textarea type="text" name="deskripsiKomunitas" onChange={handleChange} onBlur={handleBlur} id="" placeholder='Masukkan deskripsi komunitas' className='w-full h-full bg-darkmode-3 text-white outline-none p-3 rounded-md' />
+                                    <textarea type="text" name="deskripsi" onChange={handleChange} onBlur={handleBlur} id="" placeholder='Masukkan deskripsi komunitas' className='w-full h-full bg-darkmode-3 text-white outline-none p-3 rounded-md' />
                                 </label>
                             </div>
                             <div className="mt-2">
@@ -138,7 +146,7 @@ const BuatKomunitasContainer = () => {
                                     />
                             </div>
                             <div className="mt-2">
-                                <label htmlFor="profilePic" onChange={handleChangeFile}>
+                                <label htmlFor="file" >
                                     <span className="block text-white mb-2">Deskripsi Komunitas</span>
                                     {!preview ? (
                                     <div className="w-60 h-60 bg-darkmode-3 border-dashed border border-darkmode-4 rounded-md flex-col flex items-center justify-center">
@@ -159,11 +167,17 @@ const BuatKomunitasContainer = () => {
                                     <div className="w-60">
                                         <div className="w-full p-2 bg-darkmode-3 text-white rounded-md mt-2 text-center" >Pilih Foto</div>
                                     </div>  
-                                    <input type="file" name="profilePic" id="profilePic" className="hidden" />
+                                    <input type="file" name="file" onChange={handleChangeFile} id="file" className="hidden" />
                                 </label>
                             </div>
                             <div className="mt-2 mb-5">
-                                <button className="w-full p-2 bg-darkmode-disabled text-white font-semibold rounded-md mt-2">Buat</button>
+                                {
+                                    !errors.namaKomunitas || !errors.lokasi || !errors.kategori ? (
+                                        <button type="submit" className="w-full p-2 bg-blue-500 text-white font-semibold rounded-md mt-2">{loading ? 'Sedang mengirim': 'Buat'}</button>
+                                    ):(
+                                        <button disabled className="w-full p-2 bg-darkmode-disabled text-white font-semibold rounded-md mt-2">Buat</button>
+                                    )
+                                }
                             </div>
 
                         </form>

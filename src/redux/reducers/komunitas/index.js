@@ -4,12 +4,14 @@ import { callAPI } from "../../../helpers/network";
 import Swal from 'sweetalert2'
 import { getJwt, getUser } from "../../../helpers/auth";
 import {useRouter} from "next/router"
+
 const initialState = {
     listKomunitas : [],
     detailKomunitas: [],
     postinganKomunitas: [],
     loading : false,
 }
+
 
 const slices = createSlice({
     initialState,
@@ -97,18 +99,51 @@ export const useKomunitasDispatcher = () => {
         }
     }
     const doCreateKomunitas = async (values) => {
+        console.log(values)
+        const {id} = getUser()
+        const fileUrl = "";
+
         dispatch(setLoading(true))
-            console.log(values)
-            try {
-                const response = callAPI({
-                    url:"",
-                    method: "post",
+            if (values.files) {
+                const formData = new FormData();
+                formData.append("file", values.files)
+    
+                console.log(formData);
+                
+                const upload = await callAPI({
+                    url:"/uploadFiles",
+                    method:"post",
+                    data: formData,
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 })
+    
+                fileUrl = upload.data.data;
+            }
+
+            const payload = {
+                namaKomunitas: values.namaKomunitas,
+                kategori: values.kategori.name,
+                deskripsi: values.deskripsi,
+                banner: fileUrl,
+                lokasi: values.lokasi.name
+            }
+            try {
+                const response = callAPI({
+                    url:`/komunitas?idUser=${id}`,
+                    method: "post",
+                    data: payload,
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+
+                if (response) {
+                    window.location.href = "/homepage"
+                }
             } catch (error) {
-                
+                console.log(error)
             }
         dispatch(setLoading(false))
     }
@@ -137,6 +172,7 @@ export const useKomunitasDispatcher = () => {
         getListKomunitas,
         getDetailKomunitas,
         getPostinganKomunitas,
+        doCreateKomunitas,
         komunitas
     }
 

@@ -4,7 +4,7 @@ const Media = ({src, type}) => {
     if (type === "image") {
         return(
             <div className="mt-3 flex justify-center">
-                <img src={src} alt={src} className='w-full rounded-2xl max-h-[640px]'/>
+                <img src={src} alt="post images" className='w-full rounded-2xl max-h-[640px]'/>
             </div>
         )
     } else {
