@@ -100,7 +100,7 @@ export const useUserDispatcher = () => {
 
         try {
             const response = await callAPI({
-                url:`/postingan?size=10&page=0&idUser=${id}&tipeData=following`,
+                url:`/postingan?size=10&page=0&idUser=${id}&tipeData=user&sort=desc`,
                 method:'get',
                 headers:{
                     Authorization: `Bearer ${token}`

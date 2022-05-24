@@ -13,7 +13,8 @@ const ItemList = ({name,id, src}) => {
             <div className="w-10 h-10 mr-4 rounded-md relative">
                 <Image alt="community" className="rounded-md" layout="fill" src={src}/>
             </div>
-            <Body1 bold>{name}</Body1>
+            <p className="font-semibold text-white capitalize">{name}</p>
+            {/* <Body1 bold>{name}</Body1> */}
         </div>
     )
 }
@@ -34,9 +35,8 @@ const CommunityCard = () => {
             <button className="w-full bg-gradient-to-r from-[#384CFF] to-[#009EF8] font-nunito font-bold text-white py-2 px-3 rounded-md mt-7" onClick={() => push('/komunitas/buat-komunitas')}>+ Buat Komunitas</button>
             <div className="my-3">
                 {listKomunitas.map((item, i) => (
-                    <ItemList key={i} id={item.id} name={item.namaKomunitas} src="/images/profile/default-1.png" />
+                    <ItemList key={i} id={item.id} name={item.namaKomunitas} src={item.banner ? item.banner : "/astro-2.png"} />
                 ))}
-            {/* <ItemList name="Mobile Legends Indonesia" src="/images/mobile legends 1.png" /> */}
             </div>
         </div>
     )

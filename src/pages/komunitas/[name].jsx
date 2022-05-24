@@ -19,14 +19,15 @@ const Komunitas = () => {
         getDetailKomunitas(name)
         getPostinganKomunitas(name)
     }, [name])
+    console.log(detailKomunitas)
     return (
         <AuthProvider>
             <MainLayout>
 
                 <div className="w-full  bg-darkmode-2 md:px-40 pt-24 pb-4">
                     <div className="flex flex-col items-center text-center">
-                        <div className="w-52 h-52 mr-4 relative">
-                            <Image src="/images/profile/mobile legends 3.jpg" layout="fill" className="object-cover rounded-lg" alt="profile"  />
+                        <div className="w-52 h-52 mr-4 relative bg-red-500 rounded-lg">
+                            <Image src={detailKomunitas.banner ? detailKomunitas.banner : "/astro-2.png"} layout="fill" className="object-cover rounded-lg" alt="profile"  />
                         </div>
                         <div className="mt-4">
                             <Header2>{detailKomunitas.namaKomunitas}</Header2>
@@ -57,15 +58,15 @@ const Komunitas = () => {
                             <Card>
                                 <div className="">
                                     <Header4>Tentang</Header4>
-                                    {/* <Body1>{detailKomunitas.deskripsi}</Body1> */}
-                                    <Body1 disabled>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatum sed nemo veritatis illo officiis dolorem. Impedit est corrupti repellat dolorum!</Body1>
+                                    <Body1>{detailKomunitas.deskripsi}</Body1>
+                                    {/* <Body1 disabled>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatum sed nemo veritatis illo officiis dolorem. Impedit est corrupti repellat dolorum!</Body1> */}
                                     <div className="flex mt-4">
                                         <LocationMarkerIcon className="w-5 h-5 mr-2 text-white" />
                                         <Body1>{detailKomunitas.lokasi}</Body1>
                                     </div>
                                     <div className="flex mt-1">
                                         <EsportIcon className="w-5 h-5 mt-1 mr-2 text-white" />
-                                        <Body1>genre komunitas</Body1>
+                                        <Body1>{detailKomunitas.kategori}</Body1>
                                     </div>
                                 </div>
                             </Card>
