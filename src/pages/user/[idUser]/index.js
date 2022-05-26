@@ -15,7 +15,9 @@ const User = () => {
     const router = useRouter();
     const {idUser} = router.query
     const [follow, setFollow] = useState(false)
+    const [myId, setMyId] = useState(0)
     const account = getUser()
+
     const {
         user: {detailUser, postinganUser, follower, following},
         getDetailUser, 
@@ -30,6 +32,9 @@ const User = () => {
         getPostinganUser(idUser) 
         getFollower(idUser)  
         getFollowing(idUser)  
+        setMyId(
+            account.id
+        )
     },[idUser])
 
     useEffect(() => {
@@ -39,7 +44,6 @@ const User = () => {
             setFollow(true)
         }
     }, [follower])
-
     return(
         <AuthProvider>
             <MainLayout>
@@ -60,7 +64,11 @@ const User = () => {
                                 </div>
                             </div>
                         </div>
-                        <button className="bg-darkmode-3 mt-4 px-32 py-2 text-white rounded-md" onClick={() => doFollow(idUser)}>{follow ? "mengikuti" : "ikuti"}</button>
+                            {
+                            myId == idUser ? (<div className="mb-5"></div>): (
+                                <button className="bg-darkmode-3 mt-4 px-32 py-2 text-white rounded-md" onClick={() => doFollow(idUser)}>{follow ? "mengikuti" : "ikuti"}</button>
+                                )
+                            }   
                     </div>
                 </div>
                 <div className=" px-3 lg:px-40 mt-3">

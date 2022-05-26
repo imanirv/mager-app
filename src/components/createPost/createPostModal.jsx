@@ -45,6 +45,7 @@ import { getUser } from '../../helpers/auth'
         const {posting:{loadingPost},doPost} = usePostDispatcher()
         const onSubmit = async (values) => {
             doPost(values, komunitas, idKomunitas)
+            // alert('hi')
         }
 
         const {
@@ -144,7 +145,7 @@ import { getUser } from '../../helpers/auth'
                             <label htmlFor="files">
                                 <div className="h-36 bg-darkmode-2 p-3 text-white mt-2 rounded-lg border border-dashed border-gray-500">
                                     {preview ? (
-                                        <div className="h-full w-60 bg-red-200 relative">
+                                        <div className="h-full w-full bg-red-200 relative">
                                             <Image alt='post image' src={preview} layout='fill' className='object-cover' />
                                         </div>
                                     ): (
@@ -153,7 +154,7 @@ import { getUser } from '../../helpers/auth'
                                         </div> 
                                     )}
                                 </div>
-                                <input type="file" id='files' name="file" className='hidden' onChange={handleChangeFile} accept=".jpg, .png, .jpeg"  />
+                                <input type="file" id='files' name="file" className='hidden' onChange={handleChangeFile} accept="image/*, video/*"  />
                             </label>
                             <div className="mt-4 flex align-items-center justify-center">
                             <input type="hidden" name="tipePost" value="foto" onChange={handleChange} />

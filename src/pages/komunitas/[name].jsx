@@ -19,14 +19,13 @@ const Komunitas = () => {
         getDetailKomunitas(name)
         getPostinganKomunitas(name)
     }, [name])
-    console.log(detailKomunitas)
     return (
         <AuthProvider>
             <MainLayout>
 
                 <div className="w-full  bg-darkmode-2 md:px-40 pt-24 pb-4">
                     <div className="flex flex-col items-center text-center">
-                        <div className="w-52 h-52 mr-4 relative bg-red-500 rounded-lg">
+                        <div className="w-52 h-52 mr-4 relative bg-red-300 rounded-lg">
                             <Image src={detailKomunitas.banner ? detailKomunitas.banner : "/astro-2.png"} layout="fill" className="object-cover rounded-lg" alt="profile"  />
                         </div>
                         <div className="mt-4">
@@ -66,7 +65,7 @@ const Komunitas = () => {
                                     </div>
                                     <div className="flex mt-1">
                                         <EsportIcon className="w-5 h-5 mt-1 mr-2 text-white" />
-                                        <Body1>{detailKomunitas.kategori}</Body1>
+                                        <Body1>{detailKomunitas.kategori ? detailKomunitas.kategori.namaGame : "" }</Body1>
                                     </div>
                                 </div>
                             </Card>

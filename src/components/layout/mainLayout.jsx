@@ -4,7 +4,7 @@ const MainLayout = ({children}) => {
     return(
         <>
             <Navbar />
-            <div className="bg-black  min-h-screen">
+            <div className="bg-darkmode-1  min-h-screen">
                 {children}
             </div>
         </>

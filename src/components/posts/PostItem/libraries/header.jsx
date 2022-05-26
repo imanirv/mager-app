@@ -466,14 +466,14 @@ export const HeaderUser = ({data, date, idPost}) => {
       <>
         <div className="flex items-center justify-between">
             <div className="flex items-center">
-                <Image src={"/images/profile.png"} width={40} height={40} alt="profile"/>
+                <Image src={"/images/profile.png"} width={40} height={40} alt="profile" className='cursor-pointer'/>
                 <div className="mx-3">
                     <div className="flex items-center" onClick={() => push(`/user/${id}`)}>
-                        <Subtitle1>{nama}</Subtitle1>
+                        <Subtitle1 cursor={true}>{nama}</Subtitle1>
                         <div className="w-1 h-1 rounded-full bg-darkmode-4 mx-2 mt-1 md:mx-3"></div>
-                        <Subtitle2 disabled={true}>{username}</Subtitle2>
+                        <Subtitle2 disabled={true} cursor={true}>{username}</Subtitle2>
                     </div>
-                    <Caption disabled={true}>{date}</Caption>
+                    <Caption disabled={true} cursor={true}>{date}</Caption>
                 </div>
             </div>
             <Dropdown idUser={id} idPost={idPost}/>
@@ -485,18 +485,19 @@ export const HeaderUser = ({data, date, idPost}) => {
 export const HeaderKomunitas = ({dataUser, dataKomunitas, date}) => {
   const {push} = useRouter()
   const {id, username}= dataUser
-  const {idKomunitas=id, namaKomunitas} = dataKomunitas
+  const {idKomunitas=id, namaKomunitas, banner} = dataKomunitas
   // const {}
     return (
         <div className="flex items-center justify-between">
             <div className="flex items-center">
-                <Image src={"/images/profile/default-1.png"} width={40} height={40} alt="profile"/>
+                <Image src={banner ? banner : "/astro-2.png"} width={40} height={40} alt="profile" className='bg-red-300 rounded-md cursor-pointer'/>
                 <div className="mx-3" onClick={() => push(`/komunitas/${idKomunitas}`)}>
-                    <Subtitle1>{namaKomunitas}</Subtitle1>
+                    <Subtitle1 cursor={true}>{namaKomunitas}</Subtitle1>
                     <div className="flex items-center">
-                        <Subtitle2 disabled={true}>{username}</Subtitle2>
+                      
+                        <Subtitle2 disabled={true} cursor={true}>{username}</Subtitle2>
                         <div className="w-1 h-1 rounded-full bg-darkmode-4 mx-2 mt-1 md:mx-3"></div>
-                        <Caption disabled={true}>{date}</Caption>
+                        <Caption disabled={true} cursor={true}>{date}</Caption>
                     </div>
                 </div>
             </div>

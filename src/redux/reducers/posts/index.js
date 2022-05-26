@@ -188,6 +188,7 @@ export const usePostDispatcher = () => {
           }
     }
     const doPost = async (values, komunitas=false, idKomunitas=0) => {
+      // console.log(values)
       dispatch(setLoadingPost(true))
       try {
         
@@ -251,10 +252,10 @@ export const usePostDispatcher = () => {
             window.location.href = "/homepage?error"
         }
        
-    } catch (error) {
-        console.log(error)
-    }
-    dispatch(setLoading(false))
+      } catch (error) {
+          console.log(error)
+      }
+      dispatch(setLoading(false))
     }
     const putPost = async (values, idPost) => {
       const {id} = getUser()

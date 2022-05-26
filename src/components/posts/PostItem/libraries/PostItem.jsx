@@ -29,8 +29,8 @@ const PostItem = ({item, limit=true}) => {
     <Card>
       {/* header  */}
       {postedIn ? (
-        <HeaderKomunitas dataUser={createdBy} dataKomunitas={postedIn} date={moment(created_date).format('MMMM Do')}  />
-      ): (<HeaderUser data={createdBy} date={moment(created_date).format('MMMM Do')} idPost={id} />)}
+        <HeaderKomunitas dataUser={createdBy} dataKomunitas={postedIn} date={moment(created_date).fromNow()}  />
+      ): (<HeaderUser data={createdBy} date={moment(created_date).fromNow()} idPost={id} />)}
       {/* caption */}
       <Content text={postText}/>
       {/* media  */}
