@@ -9,6 +9,7 @@ const initialState = {
     listKomunitas : [],
     detailKomunitas: [],
     postinganKomunitas: [],
+    memberKomunitas: [],
     loading : false,
 }
 
@@ -35,6 +36,12 @@ const slices = createSlice({
                 postinganKomunitas: action.payload
             })
         },
+        setMemberKomunitas(state, action) {
+            Object.assign(state, {
+                ...state,
+                memberKomunitas: action.payload
+            })
+        },
         setLoading(state, action) {
             Object.assign(state, {
                 ...state,
@@ -44,7 +51,7 @@ const slices = createSlice({
     }
 })
 
-const {setListKomunitas, setDetailKomunitas, setPostinganKomunitas, setLoading} = slices.actions
+const {setListKomunitas, setDetailKomunitas, setPostinganKomunitas, setMemberKomunitas, setLoading} = slices.actions
 
 export const useKomunitasDispatcher = () => {
     const {komunitas} = useSelector((state) => state);
@@ -97,6 +104,17 @@ export const useKomunitasDispatcher = () => {
         } catch (error) {
             
         }
+    }
+    const getMemberKomunitas = async (id) => {
+        const response = await callAPI({
+            url: `/komunitas/member/${id}?size=10&page=0`,
+            method: 'get',
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+
+        console.log(response)
     }
     const doCreateKomunitas = async (values) => {
         console.log(values)
@@ -172,6 +190,7 @@ export const useKomunitasDispatcher = () => {
         getListKomunitas,
         getDetailKomunitas,
         getPostinganKomunitas,
+        getMemberKomunitas,
         doCreateKomunitas,
         komunitas
     }

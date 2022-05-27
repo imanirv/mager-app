@@ -13,11 +13,12 @@ import EsportIcon from "../../components/icons/sport-esport"
 const Komunitas = () => {
     const router = useRouter()
     const {name} = router.query
-    const {komunitas:{detailKomunitas, postinganKomunitas}, getDetailKomunitas, getPostinganKomunitas, doJoinKomunitas} = useKomunitasDispatcher()
+    const {komunitas:{detailKomunitas, postinganKomunitas}, getDetailKomunitas, getPostinganKomunitas, getMemberKomunitas, doJoinKomunitas} = useKomunitasDispatcher()
 
     useEffect(()=>{
         getDetailKomunitas(name)
         getPostinganKomunitas(name)
+        getMemberKomunitas(name)
     }, [name])
     return (
         <AuthProvider>
@@ -58,7 +59,6 @@ const Komunitas = () => {
                                 <div className="">
                                     <Header4>Tentang</Header4>
                                     <Body1>{detailKomunitas.deskripsi}</Body1>
-                                    {/* <Body1 disabled>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatum sed nemo veritatis illo officiis dolorem. Impedit est corrupti repellat dolorum!</Body1> */}
                                     <div className="flex mt-4">
                                         <LocationMarkerIcon className="w-5 h-5 mr-2 text-white" />
                                         <Body1>{detailKomunitas.lokasi}</Body1>
