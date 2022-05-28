@@ -79,7 +79,7 @@ const Navbar = () => {
             <div className="w-1/3 flex items-center cursor-pointer ">
                 <div className="flex items-center mr-10" onClick={() => push('/homepage')}>
                     <div className="w-10 h-10">
-                      <Image alt="logo" src="/images/Logo Mager-01.png" width={40} height={40} layout="responsive" />
+                      <Image alt="logo" src="/images/Logo Mager-02.png" width={40} height={40} layout="responsive" />
                     </div>
                     {/* <img /> */}
                     <h1 className="text-white font-nunito font-extrabold text-xl mt-1 ml-1">Mager</h1>
