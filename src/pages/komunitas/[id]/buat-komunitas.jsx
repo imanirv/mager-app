@@ -1,4 +1,4 @@
-import BuatKomunitasContainer from "../../containers/buatKomunitas"
+import BuatKomunitasContainer from "../../../containers/buatKomunitas"
 
 const BuatKomunitasPage = () => {
     return(

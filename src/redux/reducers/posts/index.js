@@ -102,7 +102,7 @@ export const usePostDispatcher = () => {
         
       })
       const data = response.data.data
-      console.log(response.data.totalPages)
+      // console.log(response.data.totalPages)
       if (page == response.data.totalPages) {
         dispatch(setLoading(false))
         dispatch(setHasMore(false))
@@ -201,7 +201,7 @@ export const usePostDispatcher = () => {
             const formData = new FormData();
             formData.append("file", values.files)
 
-            console.log(formData);
+            // console.log(formData);
             
             const upload = await callAPI({
                 url:"/uploadFiles",
@@ -227,7 +227,7 @@ export const usePostDispatcher = () => {
             linkLivestream: values.liveStream ? values.liveStream : "",
             tipePost: tipePost
         };
-        console.log(payload)
+        // console.log(payload)
 
         if (komunitas) {
           linkUrl = `/postingan?idUser=${id}&idKomunitas=${idKomunitas}`
@@ -264,7 +264,7 @@ export const usePostDispatcher = () => {
           const formData = new FormData();
           formData.append("file", values.files)
   
-          console.log(formData);
+          // console.log(formData);
           
           const upload = await callAPI({
               url:"/uploadFiles",

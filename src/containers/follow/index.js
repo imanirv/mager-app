@@ -166,7 +166,9 @@ const Followers = ({idFolls, nama, username}) => {
     return (
         <div  className='flex items-center justify-between mb-4 rounded-lg hover:border hover:border-darkmode-3 p-3'>
             <div className='flex items-center'>
-                <div className='w-10 h-10 bg-red-500 rounded-md relative mr-4'></div>
+                <div className='w-10 h-10 rounded-md relative mr-4'>
+                    <Image src="/images/profile/default-2.png" width={10} height={10} layout="responsive" alt="" />
+                </div>
                 <div>
                     <Body1>{nama}</Body1>
                     <Body2 disabled>{username}</Body2>

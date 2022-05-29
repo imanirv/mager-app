@@ -106,15 +106,21 @@ export const useKomunitasDispatcher = () => {
         }
     }
     const getMemberKomunitas = async (id) => {
-        const response = await callAPI({
-            url: `/komunitas/member/${id}?size=10&page=0`,
-            method: 'get',
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
-
-        console.log(response)
+        dispatch(setLoading(true))
+        try {
+            const response = await callAPI({
+                url: `/komunitas/member/${id}?size=10&page=0`,
+                method: 'get',
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            dispatch(setMemberKomunitas(response.data.data.content))
+            // console.log(response.data.data.content)
+        } catch (error) {
+            console.log(error)
+        }
+        dispatch(setLoading(false))
     }
     const doCreateKomunitas = async (values) => {
         console.log(values)
@@ -177,7 +183,8 @@ export const useKomunitasDispatcher = () => {
                 }
             })
             push(`/komunitas/${idKomunitas}`)
-            console.log('ini respon >', response)
+            // console.log('ini respon >', response)
+            window.location.reload()
         } catch (error) {
             
         }

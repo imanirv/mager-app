@@ -1,25 +1,40 @@
 import { useRouter } from "next/router"
 import Image from "next/image"
-import MainLayout from "../../components/layout"
-import AuthProvider from "../../providers/auth"
-import {Body1, Header2, Header3, Header4} from "../../components/typography"
-import Card from "../../components/card"
-import PostList from "../../components/posts/PostList"
-import CreatePost from "../../components/createPost"
-import { useEffect } from "react"
-import {useKomunitasDispatcher} from "../../redux/reducers/komunitas"
+import MainLayout from "../../../components/layout"
+import AuthProvider from "../../../providers/auth"
+import {Body1, Header2, Header3, Header4} from "../../../components/typography"
+import Card from "../../../components/card"
+import PostList from "../../../components/posts/PostList"
+import CreatePost from "../../../components/createPost"
+import { useEffect, useState } from "react"
+import { getUser } from "../../../helpers/auth"
+import {useKomunitasDispatcher} from "../../../redux/reducers/komunitas"
 import { UserGroupIcon, LocationMarkerIcon } from "@heroicons/react/solid"
-import EsportIcon from "../../components/icons/sport-esport"
+import EsportIcon from "../../../components/icons/sport-esport"
 const Komunitas = () => {
     const router = useRouter()
-    const {name} = router.query
-    const {komunitas:{detailKomunitas, postinganKomunitas}, getDetailKomunitas, getPostinganKomunitas, getMemberKomunitas, doJoinKomunitas} = useKomunitasDispatcher()
+    const {id} = router.query
+    const [follow, setFollow] = useState(false)
+    const account = getUser()
+    const [myId, setMyId] = useState(0)
+    const {komunitas:{detailKomunitas, postinganKomunitas, memberKomunitas}, getDetailKomunitas, getPostinganKomunitas, getMemberKomunitas, doJoinKomunitas} = useKomunitasDispatcher()
 
     useEffect(()=>{
-        getDetailKomunitas(name)
-        getPostinganKomunitas(name)
-        getMemberKomunitas(name)
-    }, [name])
+        getDetailKomunitas(id)
+        getPostinganKomunitas(id)
+        getMemberKomunitas(id)
+        setMyId(
+            account.id
+        )
+    }, [id])
+
+    useEffect(() => {
+        const isFollowed =  memberKomunitas.filter(member => member.user.id === account.id)
+        // console.log(id)
+        if (isFollowed.length >= 1) {
+            setFollow(true)
+        }
+    }, [memberKomunitas])
     return (
         <AuthProvider>
             <MainLayout>
@@ -31,11 +46,15 @@ const Komunitas = () => {
                         </div>
                         <div className="mt-4">
                             <Header2>{detailKomunitas.namaKomunitas}</Header2>
-                            <div className="mt-2 flex items-center justify-center">
+                            <div className="mt-2 flex items-center justify-center cursor-pointer" onClick={() => router.push(`/komunitas/${id}/members`)}>
                                 <UserGroupIcon className="w-6 h-6 mr-3 mb-2 text-darkmode-disabled" /><Header4 disabled>{detailKomunitas.jumlahAnggota} Anggota</Header4>
                             </div>
                         </div>
-                        <button onClick={() => doJoinKomunitas(detailKomunitas.id)} className="bg-darkmode-3 mt-4 px-32 py-2 text-white rounded-md">Gabung</button>
+                        {follow ?(
+                            <button onClick={() => doJoinKomunitas(detailKomunitas.id)} className="bg-darkmode-3 mt-4 px-32 py-2 text-white rounded-md">Bergabung</button>
+                            ): (
+                                <button onClick={() => doJoinKomunitas(detailKomunitas.id)} className="bg-blue-500 mt-4 px-32 py-2 text-white rounded-md">Gabung</button>
+                            )}
                     </div>
                 </div>
                 <div className=" px-3 lg:px-40 mt-3">
