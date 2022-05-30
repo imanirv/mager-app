@@ -48,7 +48,7 @@ const LoginContainer = () => {
                         <p className="mb-2 text-center text-red-500 text-nunito">{errMessage}</p>
                         <form action="" onSubmit={handleSubmit}>
                             <Input
-                                title="Email atau username"
+                                title="Username"
                                 name="username"
                                 id="username"
                                 type="text"
@@ -59,7 +59,7 @@ const LoginContainer = () => {
                             {
                                 getIn(touched, "username") && getIn(errors, "username") && (
                                     <div className="text-xs text-red-500 pb-3" >
-                                        Email atau username tidak boleh kosong
+                                        Username tidak boleh kosong
                                     </div>
                                 )
                             }
