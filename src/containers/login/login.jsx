@@ -95,7 +95,7 @@ const LoginContainer = () => {
                                 ):(
                                     <button className="bg-darkmode-disabled p-2 px-10 w-full mt-5 text-white rounded-lg">Masuk</button>
                             )}
-                            <p className="text-white text-center mt-4">Belum Punya akun ? <span onClick={() => push('/auth/register')} className="text-primary">daftar</span></p>
+                            <p className="text-white text-center mt-4">Belum Punya akun? <span onClick={() => push('/auth/register')} className="text-primary">daftar</span></p>
                         </form>
                     </div>
 
