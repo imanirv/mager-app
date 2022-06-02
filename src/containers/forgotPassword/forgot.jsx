@@ -33,12 +33,12 @@ const ForgotPassword = () => {
     return(
         <BackgroundLayout>
             <div className="w-full h-full flex items-center justify-center">
-                <div className="relative w-[550px] z-10">
+                <div className="relative w-[550px] z-10 p-5">
                     <Card>
                         <div className="absolute top-10 left-10" onClick={() => push('/auth/login')}>
                             <ArrowLeftIcon className="w-6 h- text-white"/>
                         </div>
-                        <div className="text-center mt-10">
+                        <div className="text-center mt-20 lg:mt-10">
                             <Header2>Lupa Kata Sandi</Header2>
                             <Subtitle1 disabled >Masukan email untuk mendapatkan link verifikasi</Subtitle1>
                         </div>

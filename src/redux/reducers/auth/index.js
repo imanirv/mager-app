@@ -156,16 +156,12 @@ export const useAuthDispatcher = () => {
             });
             
             if (res.isConfirmed) {
-                window.location.href = "/auth/favorite-games"
+                window.location.href = `/auth/favorite-games/${register.data.id}`
             }
             dispatch(setLoading(false))
         } catch (error) {
             console.log(error.response.message)   
         }
-        
-
-
-
     }
     const doForgetPass = async(values) => {
         dispatch(setLoading(true))
@@ -218,14 +214,24 @@ export const useAuthDispatcher = () => {
             }
         }
     }
-
+    const doAddGamePref = async (idUser, game) => {
+        try {
+            const response = await callAPI({
+                url: `/game/preference/${idUser}?game=${game}`,    
+                method: 'post'
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
     return {
         auth,
         doLogin,
         doLogout,
         doRegister, 
         doResetPass,
-        doForgetPass
+        doForgetPass,
+        doAddGamePref
     }
 
 }

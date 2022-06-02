@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import FavoriteGamesContainer from '../../containers/favoriteGames'
+import FavoriteGamesContainer from '../../../containers/favoriteGames'
 
 const RegisterFavPage = () => {
     return (

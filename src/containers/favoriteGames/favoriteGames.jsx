@@ -1,8 +1,9 @@
-import { Header3,Header4, Button } from "../../components/typography"
+import { Header3, ButtonText } from "../../components/typography"
 import Image from "next/image"
 import { useRouter } from "next/router"
 import { useFormik } from "formik"
 import * as Yup from "yup"
+import { useAuthDispatcher } from "../../redux/reducers/auth"
 
 const validationSchema = Yup.object({
     categories: Yup.array().min(1)
@@ -15,23 +16,32 @@ const initialValues = {
 
 const Item = ({id, name, title, img, active, handleChange}) => {
     return (
-        <label htmlFor={id}>
-            <input type="checkbox" value={id} id={id} name={name} className="hidden" onChange={handleChange}/>
-            <div className={`hover:border-4 hover:border-primary ${active? 'border-4 border-primary': ''} rounded-lg w-64 h-64 m-3 flex-none relative transition-all`}>
-                <Image className="rounded-lg" src={img} layout="fill" alt="Battle Royale" />
-                <div className="bg-darkmode-opacity rounded-b-lg absolute w-full h-2/6 p-4 bottom-0 flex items-center justify-center text-center">
-                    <Header4>{title}</Header4>
+        <div className="w-1/2 md:w-1/4 p-2">
+            <label htmlFor={id}>
+                <input type="checkbox" value={id} id={id} name={name} className="hidden" onChange={handleChange}/>
+                <div className={`hover:border-4 hover:border-primary ${active? 'border-4 border-primary': ''} rounded-lg w-full h-full relative`}>
+                    <Image src={img} width={100} height={100} layout="responsive" alt="" className="object-cover" />
+                    <div className="bg-darkmode-opacity rounded-b-lg absolute w-full h-2/6 p-4 bottom-0 flex items-center justify-center text-center">
+                        <p className="text-white text-xs font-bold lg:text-base">{title}</p>
+                    </div>
                 </div>
-            </div>
-        </label>
+            </label>
+        </div>
     )
 }
 
 const FavoriteGamesContainer = () => {
-    const {push} = useRouter()
+    const router = useRouter()
+    const {id} = router.query
+    const {doAddGamePref} = useAuthDispatcher()
+
     const onSubmit = (values) => {
-        console.log(values)
-        push('/auth/login')
+        // for (let i = 0; i < values.categories.length; i++) {
+        //     // console.log(values.categories[i])
+        //     doAddGamePref(id, values.categories[i])   
+        // }
+        // console.log('id user >', id)
+        router.push('/auth/login')
     }
 
     const {
@@ -44,23 +54,22 @@ const FavoriteGamesContainer = () => {
         validationSchema,
         onSubmit
     })
-
-
     return(
-       <div className="w-screen h-screen bg-darkmode-1 py-6 px-40 overflow-auto scrollbar-hide">
+       <div className="w-screen h-screen bg-darkmode-1 py-6 px-5 lg:px-40 overflow-auto scrollbar-hide">
            <div className="bg-darkmode-2 w-full  rounded-2xl">
                 <form action="" onSubmit={handleSubmit}>
-                    <div className="flex justify-between px-6 py-3">
+                    <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center px-6 py-3">
                         <Header3>Pilih 1 atau lebih kategori game kesukaanmu</Header3>
                         {
                             values.categories.length >= 1 ? (
-                                <button type="submit" className="bg-blue-500 py-2 px-11 rounded-xl"><Button>Pilih {values.categories.length}</Button></button>
+                                <button type="submit" className="bg-blue-500 py-2 px-11 rounded-xl"><ButtonText>Pilih {values.categories.length}</ButtonText></button>
                             ) : (
-                                <button className="bg-darkmode-disabled py-2 px-11 rounded-xl"><Button>Pilih {values.categories.length}</Button></button>
+                                <button className="bg-darkmode-disabled py-2 px-11 rounded-xl"><ButtonText>Pilih {values.categories.length}</ButtonText></button>
                             )
                         }
                     </div>
-                    <div className="flex justify-between items-center flex-wrap mt-10 mx-6 ">
+                    <div className="flex justify-between items-center flex-wrap mt-10 ">
+                           
                             <Item
                                 id="battle-royale"
                                 name="categories"

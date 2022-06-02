@@ -5,6 +5,7 @@ import { useUserDispatcher } from "../../../redux/reducers/user";
 import Image from "next/image"
 import AuthProvider from "../../../providers/auth"
 import MainLayout from "../../../components/layout"
+import Button from "../../../components/button"
 import {Body1, Header2, Header4} from "../../../components/typography"
 // import CreatePost from "../../../components/createPost"
 import PostList from "../../../components/posts/PostList"
@@ -65,9 +66,19 @@ const User = () => {
                             </div>
                         </div>
                             {
-                            myId == idUser ? (<div className="mb-5"></div>): (
-                                <button className="bg-darkmode-3 mt-4 px-32 py-2 text-white rounded-md" onClick={() => doFollow(idUser)}>{follow ? "mengikuti" : "ikuti"}</button>
-                                )
+                            myId == idUser ? (
+                                <div className="m-5 px-14 w-full max-w-sm" onClick={() => router.push(`/user/${myId}/edit`)}>
+                                    <Button caption="Edit Profile" />
+                                </div>
+                            ): follow ? (
+                                <div className="m-5 px-14 w-full max-w-sm" onClick={() => doFollow(idUser)}>
+                                        <Button disabled href="#" caption="Mengikuti" />
+                                </div>
+                            ) : (
+                                <div className="m-5 px-14 w-full max-w-sm" onClick={() => doFollow(idUser)}>
+                                    <Button href="#" caption="Ikuti" />
+                                </div>
+                            ) 
                             }   
                     </div>
                 </div>

@@ -1,11 +1,15 @@
-import Link from 'next/link'
+// import Link from 'next/link'
+import {useRouter} from "next/router"
 
 import { useFormik, getIn } from "formik"
 import * as Yup from 'yup'
 import { useAuthDispatcher } from "../../redux/reducers/auth"
+
 import { BackgroundLayout } from "../../components/layout"
-import {Input} from "../../components/input/"
-import {useRouter} from "next/router"
+import {Input} from "../../components/input"
+import Button from '../../components/button'
+import LinkItem from "../../components/link"
+import {Body1, Header2, Subtitle1} from "../../components/typography"
 
 const validationSchema = Yup.object({
     username: Yup.string().required(),
@@ -40,19 +44,18 @@ const LoginContainer = () => {
             <div className="w-screen h-screen  flex items-center justify-center">
                 <div className="bg-[#242526] p-10 w-[550px] rounded-md m-4 z-10">
                     <div className="text-center">
-                        <h1 className="text-3xl text-white font-nunito font-bold">Hi Selamat Datang</h1>
-                        <p className="text-darkmode-disabled">Login, dan temukan komunitasmu</p>
+                        <Header2>Hi Selamat Datang</Header2>
+                        <Subtitle1 disabled>Login, dan temukan komunitasmu</Subtitle1>
                     </div>
-
                     <div className="mt-9">
-                        <p className="mb-2 text-center text-red-500 text-nunito">{errMessage}</p>
-                        <form action="" onSubmit={handleSubmit}>
+                        <Body1 type="danger" align="center">{errMessage}</Body1>
+                        <form action="" onSubmit={handleSubmit} className="mt-3">
                             <Input
                                 title="Username"
                                 name="username"
                                 id="username"
                                 type="text"
-                                placeholder="Masukkan email atau username"
+                                placeholder="Masukkan username"
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                             />
@@ -79,23 +82,16 @@ const LoginContainer = () => {
                                     </div>
                                 )
                             }
-                            <div className="flex justify-between">
-                                {/* <label htmlFor="rememberMe">
-                                    <input type="checkbox" name="remember me" onChange={handleChange} />
-                                    <span className="ml-2 text-darkmode-disabled">Ingat saya</span>
-                                </label> */}
-                                <Link href="/auth/forgot-password">
-                                    <a className="text-primary">Lupa kata sandi?</a>
-                                </Link>
+                            <div className="py-3">
+                                <LinkItem href="/auth/forgot-password" caption="Lupa kata sandi?" />
                             </div>
                             {!errors.username && !errors.password ? (
-                                <button type="submit" className="bg-blue-500 p-2 px-10 w-full mt-5 text-white rounded-lg">
-                                    {!loading ? "Masuk" : "Memuat"}
-                                </button>
+                                <Button type="submit" caption={!loading ? "Masuk" : "Memuat"} />
                                 ):(
-                                    <button className="bg-darkmode-disabled p-2 px-10 w-full mt-5 text-white rounded-lg">Masuk</button>
+                                <Button type="button" caption="Masuk" disabled />
                             )}
-                            <p className="text-white text-center mt-4">Belum Punya akun? <span onClick={() => push('/auth/register')} className="text-primary">daftar</span></p>
+                            <p className="text-white text-center mt-4">Belum Punya akun? <LinkItem href="/auth/register" caption=" Daftar" /></p>
+                            
                         </form>
                     </div>
 

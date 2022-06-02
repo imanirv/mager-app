@@ -23,8 +23,8 @@ const LandingContainer = () => {
                     <p className="text-xl font-semibold text-white mb-1">Ayo Gabung Bersama Ribuan </p>
                     <h1 className="text-4xl lg:text-6xl font-bold text-white mb-10">Komunitas Gamers di Indonesia</h1>
                     <div className="hidden lg:flex items-center justify-center lg:justify-start">
-                        <button><Image src="/google-play-badge.png" width={150} height={60} alt="" /></button>
-                        <button onClick={() => push('/homepage')} className="border border-white text-white rounded-md  bg-darkmode-2 px-5 py-2">Buka Mager di Browser</button>
+                        <button className="relative h-12 w-44"><Image src="/google-play-badge.png" alt="" layout="fill" className="object-cover rounded-md"/></button>
+                        <button onClick={() => push('/homepage')} className="border border-white text-white rounded-md h-12 ml-3  bg-darkmode-2 px-5 ">Buka Mager di Browser</button>
                     </div>
                 </div>
                 <div className="">

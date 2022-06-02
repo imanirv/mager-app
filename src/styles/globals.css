@@ -32,3 +32,7 @@
   margin-bottom: 10px;
   font-family: 'nunito';
 }
+
+.grad-color {
+  background: linear-gradient(77.55deg, #384CFF 0%, #009EF8 100%);
+}
