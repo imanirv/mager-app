@@ -1,5 +1,5 @@
 import Head from "next/head";
-import EditUserContainer from "../../../containers/editUsername";
+import EditUserContainer from "../../../containers/editUser";
 
 const EditUserPage = () => {
     return (

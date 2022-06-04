@@ -70,7 +70,7 @@ export const useAuthDispatcher = () => {
                 id: userData.data.id,
                 username: userData.data.username,
                 name: userData.data.nama,
-                headerPic: userData.data.fotoHeader,
+                biodata: userData.data.biodata,
                 ProfilePic: userData.data.fotoProfile   
             }
             

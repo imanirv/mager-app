@@ -2,7 +2,7 @@ import { useState } from "react"
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid"
 
 
-const Input = ({title, name, id, type, placeholder, onChange, onBlur, error, touched}) => {
+const Input = ({title, name, id, type, placeholder, onChange, onBlur, error, touched, value}) => {
     const [hide, setHide] = useState(true);
 
     return (
@@ -16,6 +16,7 @@ const Input = ({title, name, id, type, placeholder, onChange, onBlur, error, tou
                         name={name} 
                         id={id} 
                         autoComplete="off" 
+                        defaultValue={value}
                         placeholder={placeholder} 
                         onChange={onChange} 
                         onBlur={onBlur} />

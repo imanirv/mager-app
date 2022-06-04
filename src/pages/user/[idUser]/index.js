@@ -51,7 +51,7 @@ const User = () => {
                 <div className="w-full  bg-darkmode-2 md:px-40 pt-24 pb-4">
                     <div className="flex flex-col items-center text-center">
                         <div className="w-44  h-44  mr-4 relative">
-                            <Image src="/images/profile/default-1.png" layout="fill" className="object-cover rounded-lg" alt="profile"  />
+                            <Image src={detailUser.fotoProfile ? detailUser.fotoProfile : '/images/profile/default-1.png' } layout="fill" className="object-cover rounded-lg" alt="profile"  />
                         </div>
                         <div className="mt-6">
                             <Header2>{detailUser.nama}</Header2>
@@ -104,8 +104,8 @@ const User = () => {
                                     <Body1 disabled>{detailUser.username}</Body1>
                                     <div className="mt-2"></div>
                                     <Header4>Bio</Header4>
-                                    {/* <Body1 disabled>{detailUser.biodata}</Body1> */}
-                                    <Body1 disabled>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatum sed nemo veritatis illo officiis dolorem. Impedit est corrupti repellat dolorum!</Body1>
+                                    <Body1 disabled>{detailUser.biodata}</Body1>
+                                    {/* <Body1 disabled>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatum sed nemo veritatis illo officiis dolorem. Impedit est corrupti repellat dolorum!</Body1> */}
                                     <div className="flex mt-4">
                                         <LocationMarkerIcon className="w-5 h-5 mr-2 text-white" />
                                         <Header4>Jakarta</Header4>

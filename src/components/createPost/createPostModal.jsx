@@ -200,17 +200,19 @@ import { getUser } from '../../helpers/auth'
     
     
     const Header = () => {
-        const {name, username} = getUser()
-
+        const userdata = getUser()
+        console.log(userdata)
         return (
             <div className="flex items-center justify-between px-5 mb-3">
                 <div className="flex items-center justify-between">
                     <Image src={"/images/profile.png"} width={42} height={42} alt="profile"/>
                     <div className="mx-3">
                         <div className="flex items-center">
-                            <Subtitle1>{name}</Subtitle1>
+                            <Subtitle1>{userdata.name}</Subtitle1>
+                            {/* <Subtitle1>Iman</Subtitle1> */}
                             <div className="w-1 h-1 rounded-full bg-darkmode-4 mx-3"></div>
-                            <Subtitle2 disabled={true}>{username}</Subtitle2>
+                            <Subtitle2 disabled={true}>{userdata.username}</Subtitle2>
+                            {/* <Subtitle2 disabled={true}>imanirv</Subtitle2> */}
                         </div>
                         <div className="flex items-center">
                             <GlobeIcon className='w-4 h-4 text-darkmode-disabled mr-2' />
@@ -218,7 +220,7 @@ import { getUser } from '../../helpers/auth'
                         </div>
                     </div>
                 </div>
-                <button className='bg-darkmode-3 px-3 py-2 rounded-lg'><Button>Draft (2)</Button></button>
+                {/* <button className='bg-darkmode-3 px-3 py-2 rounded-lg'><Button>Draft (2)</Button></button> */}
             </div>
         )
     }

@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images:{
-    domains:['markas-gamer.herokuapp.com']
+    domains:['mager-apps.s3.us-west-1.amazonaws.com']
   }
 }
 

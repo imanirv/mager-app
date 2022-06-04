@@ -11,6 +11,7 @@ const initialState = {
     follower: [],
     following: [],
     loading : false,
+    loadingEdit: false
 }
 
 const slices = createSlice({
@@ -52,11 +53,17 @@ const slices = createSlice({
                 ...state,
                 loading: action.payload
             })
+        },
+        setLoadingEdit(state, action) {
+            Object.assign(state, {
+                ...state,
+                loadingEdit: action.payload
+            })
         }
     }
 })
 
-const {setListUser, setDetailUser, setPostinganUser, setFollower, setFollowing, setLoading} = slices.actions
+const {setListUser, setDetailUser, setPostinganUser, setFollower, setFollowing, setLoading, setLoadingEdit} = slices.actions
 
 export const useUserDispatcher = () => {
     const {user} = useSelector((state) => state);
@@ -157,6 +164,63 @@ export const useUserDispatcher = () => {
             console.log(error)
         }
     }
+    const updateUser = async (values, id) => {
+        let fileUrl = "";
+        
+        try {
+            dispatch(setLoadingEdit(true))
+            if (values.files) {
+                const formData = new FormData();
+                formData.append("file", values.files)
+    
+                console.log(formData);
+                
+                const upload = await callAPI({
+                    url:"/uploadFiles",
+                    method:"post",
+                    data: formData,
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+    
+                fileUrl = upload.data.data;
+            }
+
+            const payload = {
+                nama : values.nama,
+                username: values.username,
+                biodata: values.biodata,
+                // lokasi: values.lokasi,
+                fotoProfile: fileUrl ? fileUrl : ""
+            }
+            // console.log(payload)
+            const response = await callAPI({
+                url:`/user/${id}`,
+                method: "put",
+                data: payload,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            
+            const user = {
+                id,
+                name : values.nama,
+                username: values.username,
+                biodata: values.biodata,
+                // lokasi: values.lokasi,
+                fotoProfile: fileUrl ? fileUrl : ""
+            }
+
+            localStorage.setItem('user', JSON.stringify(user))
+
+            dispatch(setLoadingEdit(false))
+            window.location.href = `/user/${id}`
+        } catch (error) {
+            
+        }
+    }
 
 
     return {
@@ -166,6 +230,7 @@ export const useUserDispatcher = () => {
         getFollower,
         getFollowing,
         doFollow,
+        updateUser,
         user
     }
 

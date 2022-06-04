@@ -2,7 +2,7 @@ import {useState, Fragment} from "react"
 import { Combobox, Transition } from '@headlessui/react'
 import {  CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 
-function ComboboxItem({data, placeholder, onChange, title,  name, id}) {
+function ComboboxItem({data, placeholder, onChange, title,  name, id, defaultVal }) {
     const [selected, setSelected] = useState({name:""})
     const [query, setQuery] = useState('')
 
@@ -27,7 +27,7 @@ function ComboboxItem({data, placeholder, onChange, title,  name, id}) {
             <div className="relative w-full cursor-default overflow-hidden rounded-lg  text-left shadow-md  sm:text-sm">
                 <Combobox.Input
                 className="w-full border-none p-3 pr-10 text-sm leading-5 bg-darkmode-3 text-white outline-none capitalize"
-                displayValue={(data) => data.name}
+                displayValue={(data) => defaultVal ? defaultVal : data.name}
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder={placeholder}
                 />
