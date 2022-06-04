@@ -36,12 +36,12 @@ const FavoriteGamesContainer = () => {
     const {doAddGamePref} = useAuthDispatcher()
 
     const onSubmit = (values) => {
-        // for (let i = 0; i < values.categories.length; i++) {
-        //     // console.log(values.categories[i])
-        //     doAddGamePref(id, values.categories[i])   
-        // }
+        for (let i = 0; i < values.categories.length; i++) {
+            // console.log(values.categories[i])
+            doAddGamePref(id, values.categories[i])   
+        }
         // console.log('id user >', id)
-        router.push('/auth/login')
+        // router.push('/auth/login')
     }
 
     const {

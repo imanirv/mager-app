@@ -92,7 +92,7 @@ export const useAuthDispatcher = () => {
                 window.location.href = "/homepage"
             }
         } catch (error) {
-            console.log(error.response)
+            console.log(error.response.status)
             const res = await Swal.fire({
                 title: 'Error',
                 text: 'Username atau password anda salah',
@@ -149,7 +149,6 @@ export const useAuthDispatcher = () => {
                 data: payload
             })
 
-            console.log(register)
             const res = await Swal.fire({
                 title: 'Berhasil',
                 icon: 'success',
@@ -161,58 +160,81 @@ export const useAuthDispatcher = () => {
             dispatch(setLoading(false))
         } catch (error) {
             console.log(error.response.message)   
+            const res = await Swal.fire({
+                title: 'hmmm',
+                text: 'Terjadi kesalahan, silahkan coba lagi',
+                icon: 'error',
+            });
         }
     }
     const doForgetPass = async(values) => {
         dispatch(setLoading(true))
-        const payload = {
-            email: values.email
-        }
-        const response = await callAPI({
-            url: `/forget-password/register-tymeleaf`,    
-            method: 'post',
-            data: payload 
-
-        })
-        
-        dispatch(setLoading(false))
-        if (response) {
-            localStorage.setItem('emailToReset', values.email)
+        try {
+            const payload = {
+                email: values.email
+            }
+            const response = await callAPI({
+                url: `/forget-password/register-tymeleaf`,    
+                method: 'post',
+                data: payload 
+    
+            })
+            
+            dispatch(setLoading(false))
+            if (response) {
+                localStorage.setItem('emailToReset', values.email)
+                const res = await Swal.fire({
+                    title: 'Berhasil',
+                    text: 'Silahkan cek email anda untuk tahap selanjutnya',
+                    icon: 'success',
+                });
+            }
+        } catch (error) {
             const res = await Swal.fire({
-                title: 'Berhasil',
-                text: 'Silahkan cek email anda untuk tahap selanjutnya',
-                icon: 'success',
+                title: 'hmmm',
+                text: 'Terjadi kesalahan, silahkan coba lagi',
+                icon: 'error',
             });
         }
+        
     }
     const doResetPass = async (values) => {
         dispatch(setLoading(true))
-
-        const payload= {
-            email: localStorage.getItem('emailToReset'),
-            newPassword: values.password,
-            confirmPassword: values.confirmPassword
-        }
-
-        const response = await callAPI({
-            url: `/forget-password/reset`,    
-            method: 'post',
-            data: payload 
-
-        })
-        dispatch(setLoading(false))
-        if (response) {
-            localStorage.removeItem('emailToReset')
-            const res = await Swal.fire({
-                title: 'Berhasil',
-                text: 'Password telah di reset',
-                icon: 'success',
-            });
-            
-            if (res.isConfirmed) {
-                window.location.href = "/auth/login"
+        try {
+            const payload= {
+                email: localStorage.getItem('emailToReset'),
+                newPassword: values.password,
+                confirmPassword: values.confirmPassword
             }
+    
+            const response = await callAPI({
+                url: `/forget-password/reset`,    
+                method: 'post',
+                data: payload 
+    
+            })
+            dispatch(setLoading(false))
+            if (response) {
+                localStorage.removeItem('emailToReset')
+                const res = await Swal.fire({
+                    title: 'Berhasil',
+                    text: 'Password telah di reset',
+                    icon: 'success',
+                });
+                
+                if (res.isConfirmed) {
+                    window.location.href = "/auth/login"
+                }
+            }
+        } catch (error) {
+            const res = await Swal.fire({
+                title: 'hmmm',
+                text: 'Terjadi kesalahan, silahkan coba lagi',
+                icon: 'error',
+            });
         }
+
+        
     }
     const doAddGamePref = async (idUser, game) => {
         try {
