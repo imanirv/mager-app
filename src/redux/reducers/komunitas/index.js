@@ -97,9 +97,9 @@ export const useKomunitasDispatcher = () => {
     }
 
     const getDetailKomunitas = async (id) => {
-        dispatch(setLoading(true))
-
+        
         try {
+            dispatch(setLoading(true))
             const response = await callAPI({
                 url: `komunitas/${id}`,
                 method:'get',
@@ -108,10 +108,10 @@ export const useKomunitasDispatcher = () => {
                 }
             })
             dispatch(setDetailKomunitas(response.data.data))
+            dispatch(setLoading(false))
         } catch (error) {
             console.log('ini error >', error)
         }
-        dispatch(setLoading(false))
         
     }
     const getPostinganKomunitas = async (id) => {

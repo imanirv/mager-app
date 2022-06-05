@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link"
 import { useEffect } from "react"
 import {useRouter} from "next/router"
 import { Header3, Body2 } from "../typography"
@@ -47,9 +48,13 @@ const CommunityCard = () => {
                 </>: <>
                 <EmptyState text="Kamu belum mengikuti komunitas manapun" />
                 <div className="mt-4 flex">
-                    <Button href='/explore' caption="Cari Komunitas" />
+                    <div onClick={() => push('/explore')} className="w-full">
+                        <Button  caption="Cari Komunitas" />
+                    </div>
                     <div className="mx-1"></div>
-                    <Button href='/komunitas/buat-komunitas' caption="+ Buat Komunitas" secondary/>
+                    <div onClick={() => push('/komunitas/buat-komunitas')} className="w-full">
+                        <Button  caption="+ Buat Komunitas" secondary/>
+                    </div>
                 </div>
                 </>}
             </div>
