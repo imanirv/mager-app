@@ -6,13 +6,15 @@ import posting from "./reducers/posts"
 import auth from "./reducers/auth"
 import komunitas from "./reducers/komunitas";
 import user from "./reducers/user"
+import games from "./reducers/games";
 
 // root reducer 
 const rootreducer = combineReducers({
     posting,
     auth,
     komunitas,
-    user
+    user,
+    games
 });
 
 // store - main storage 

@@ -32,10 +32,7 @@ const FollowsContainer = ({index}) => {
         getDetailUser(idUser)
     }, [idUser])
 
-
-    
-
-
+    console.log(follower)
     return(
         <AuthProvider>
             <MainLayout>
@@ -89,7 +86,7 @@ const FollowsContainer = ({index}) => {
                                             >
                                                 {follower.length > 0 ? <>
                                                     {follower.map((user, i)=>(
-                                                       <Followers key={i} idFolls={user.userFollower.id} nama={user.userFollower.nama} username={user.userFollower.username}/>
+                                                       <Followers key={i} idFolls={user.userFollower.id} nama={user.userFollower.nama} username={user.userFollower.username} foto={user.userFollower.fotoProfile}/>
                                                     ))}
                                                 
                                                 </>
@@ -134,7 +131,7 @@ const FollowsContainer = ({index}) => {
 }
 
 
-const Followers = ({idFolls, nama, username}) => {
+const Followers = ({idFolls, nama, username, foto}) => {
     const [isFollowed, setIsFollowed] = useState(true)
     const {doFollow} = useUserDispatcher()
     const {id} = getUser()
@@ -167,7 +164,7 @@ const Followers = ({idFolls, nama, username}) => {
         <div  className='flex items-center justify-between mb-4 rounded-lg hover:border hover:border-darkmode-3 p-3'>
             <div className='flex items-center'>
                 <div className='w-10 h-10 rounded-md relative mr-4'>
-                    <Image src="/images/profile/default-2.png" width={10} height={10} layout="responsive" alt="" />
+                    <Image src={foto ? foto :"/images/profile/default-2.png"} width={10} height={10} layout="responsive" alt="" className='object-cover rounded-lg' />
                 </div>
                 <div>
                     <Body1>{nama}</Body1>

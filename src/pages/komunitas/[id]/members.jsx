@@ -39,8 +39,8 @@ const MemberKomunitasPage = ({index}) => {
 
 
     
-    console.log(memberKomunitas)
-    console.log(detailKomunitas)
+    // console.log(memberKomunitas)
+    // console.log(detailKomunitas)
 
     return(
         <AuthProvider>
@@ -50,7 +50,7 @@ const MemberKomunitasPage = ({index}) => {
                             <div className=" w-full md:w-8/12 mr-3">
                                 <Card>
                                     <div className="flex items-center px-4">
-                                        <ArrowLeftIcon className="w-6 h-6 text-white mr-4 cursor-pointer" onClick={() => router.push(`/user/${idUser}`)} />
+                                        <ArrowLeftIcon className="w-6 h-6 text-white mr-4 cursor-pointer" onClick={() => router.push(`/komunitas/${id}`)} />
                                         <div>
                                             <Header3>{detailKomunitas.namaKomunitas}</Header3> 
                                         </div>
@@ -62,7 +62,7 @@ const MemberKomunitasPage = ({index}) => {
                                     {memberKomunitas.length > 0 ?
                                         <>
                                             {memberKomunitas.map((member, i)=>(
-                                                    <Followers key={i} idFolls={member.user.id} nama={member.user.nama} username={member.user.username}/>
+                                                    <Followers key={i} idFolls={member.user.id} nama={member.user.nama} username={member.user.username} foto={member.user.fotoProfile}/>
                                             ))}
                                         </>
                                         : <div className='flex flex-col justify-center items-center mb-10'>
@@ -84,7 +84,7 @@ const MemberKomunitasPage = ({index}) => {
 }
 
 
-const Followers = ({idFolls, nama, username}) => {
+const Followers = ({idFolls, nama, username, foto}) => {
     const [isFollowed, setIsFollowed] = useState(false)
     const {doFollow} = useUserDispatcher()
     const {id} = getUser()
@@ -117,7 +117,7 @@ const Followers = ({idFolls, nama, username}) => {
         <div  className='flex items-center justify-between mb-4 rounded-lg hover:border hover:border-darkmode-3 p-3'>
             <div className='flex items-center'>
                 <div className='w-10 h-10 rounded-md relative mr-4'>
-                    <Image src="/images/profile/default-2.png" width={10} height={10} layout="responsive" alt="" />
+                    <Image src={foto? foto : "/images/profile/default-2.png"} width={10} height={10} layout="responsive" alt="" className='object-cover rounded-lg' />
                 </div>
                 <div>
                     <Body1>{nama}</Body1>

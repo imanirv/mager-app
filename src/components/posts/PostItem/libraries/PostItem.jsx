@@ -34,7 +34,7 @@ const PostItem = ({item, limit=true}) => {
       {/* caption */}
       <Content text={postText}/>
       {/* media  */}
-      {tipePost === 'foto' && (<Media src={files} type={'image'} />)}
+      {files && (<Media src={files} type={'image'} />)}
       {/* {tipePost === 'livestream' && (<Media src={linkLivestream} type={'livestream'} />)} */}
       {linkLivestream && (<Media src={linkLivestream} type={'livestream'} />)}
       {/* count  */}

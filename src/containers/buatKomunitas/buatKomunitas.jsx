@@ -18,6 +18,7 @@ import ImageAdd from "../../components/icons/image-add"
 
 import axios from "axios"
 import { useKomunitasDispatcher } from "../../redux/reducers/komunitas"
+import { useGameDispatcher } from "../../redux/reducers/games"
 
 const initialValues = {
     namaKomunitas: "",
@@ -32,26 +33,14 @@ const validationSchema = Yup.object({
     lokasi: Yup.object().required()
 })
 
-const game = [
-    {id: 1, name: 'adventure'},
-    {id: 2, name: 'battle royale'},
-    {id: 3, name: 'casual'},
-    {id: 4, name: 'fighting'},
-    {id: 5, name: 'fps'},
-    {id: 6, name: 'life simulator'},
-    {id: 7, name: 'moba'},
-    {id: 8, name: 'racing'},
-    {id: 9, name: 'rpg'},
-    {id: 10, name: 'rts'},
-    {id: 11, name: 'simulator'},
-    {id: 12, name: 'sports'},
-]
+
 
 const BuatKomunitasContainer = () => {
     const [lokasi, setLokasi] = useState([])
     const [preview, setPreview] = useState()
+    const [game, setGame] = useState()
     const {komunitas: {loading}, doCreateKomunitas} = useKomunitasDispatcher()
-
+    const {games: {loadingGame = loading, listGame}, getListGame} = useGameDispatcher()
     const provinsi = async () => {
         try {
             const response = await axios({
@@ -82,7 +71,9 @@ const BuatKomunitasContainer = () => {
 
     useEffect(() =>{
         provinsi()
+        getListGame()
     }, [])
+
 
     const handleChangeFile = (e) => {
         const file = e.target.files
@@ -91,7 +82,6 @@ const BuatKomunitasContainer = () => {
             setFieldValue('files', file[0])
         }
     }
-    console.log(errors)
     return(
       <AuthProvider>
         <MainLayout>
@@ -120,7 +110,7 @@ const BuatKomunitasContainer = () => {
                             <div className="mt-2">
                                 <span className="block text-white mb-2">Kategori Game</span>
                                 <SelectInput 
-                                    data={game} 
+                                    data={listGame} 
                                     placeholder={'Pilih kategori'} 
                                     onChange={(val) => { setFieldValue('kategori',val) }}
                                     title="Nama Komunitas"

@@ -71,7 +71,7 @@ export const useAuthDispatcher = () => {
                 username: userData.data.username,
                 name: userData.data.nama,
                 biodata: userData.data.biodata,
-                ProfilePic: userData.data.fotoProfile   
+                fotoProfile: userData.data.fotoProfile   
             }
             
             // send to localStorage 
@@ -242,8 +242,24 @@ export const useAuthDispatcher = () => {
                 url: `/game/preference/${idUser}?game=${game}`,    
                 method: 'post'
             })
+
+            if (response) {
+                const res = await Swal.fire({
+                    title: 'Berhasil',
+                    text: 'Silahkan Login kembali',
+                    icon: 'success',
+                });
+                if (res.isConfirmed) {
+                    window.location.href = "/auth/login"
+                }
+            }
         } catch (error) {
             console.log(error)
+            const res = await Swal.fire({
+                title: 'Error',
+                text: 'Hmmm, sepertinya terjadi kesalahan, ayo coba lagi',
+                icon: 'error',
+            });
         }
     }
     return {

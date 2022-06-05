@@ -253,30 +253,30 @@ export const usePostDispatcher = () => {
             linkLivestream: values.liveStream ? values.liveStream : "",
             tipePost: tipePost
         };
-        // console.log(payload)
+        console.log(payload)
 
-        if (komunitas) {
-          linkUrl = `/postingan?idUser=${id}&idKomunitas=${idKomunitas}`
-        }else{
-          linkUrl = `/postingan?idUser=${id}`
-        }
-        const response = await callAPI({
-            url:linkUrl,
-            method: 'POST',
-            data: payload,
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-          });
+        // if (komunitas) {
+        //   linkUrl = `/postingan?idUser=${id}&idKomunitas=${idKomunitas}`
+        // }else{
+        //   linkUrl = `/postingan?idUser=${id}`
+        // }
+        // const response = await callAPI({
+        //     url:linkUrl,
+        //     method: 'POST',
+        //     data: payload,
+        //     headers: {
+        //         Authorization: `Bearer ${token}`
+        //     }
+        //   });
           
           
-        dispatch(setLoading(false))
-        const {data} = response;
-        if (data.status === "200") {
-            window.location.href = "/homepage?success"
-        }else{
-            window.location.href = "/homepage?error"
-        }
+        // dispatch(setLoading(false))
+        // const {data} = response;
+        // if (data.status === "200") {
+        //     window.location.href = "/homepage?success"
+        // }else{
+        //     window.location.href = "/homepage?error"
+        // }
        
       } catch (error) {
           console.log(error)

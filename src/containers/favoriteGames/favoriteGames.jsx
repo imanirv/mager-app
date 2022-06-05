@@ -40,7 +40,7 @@ const FavoriteGamesContainer = () => {
             // console.log(values.categories[i])
             doAddGamePref(id, values.categories[i])   
         }
-        // console.log('id user >', id)
+        // console.log(values)
         // router.push('/auth/login')
     }
 
@@ -71,100 +71,100 @@ const FavoriteGamesContainer = () => {
                     <div className="flex justify-between items-center flex-wrap mt-10 ">
                            
                             <Item
-                                id="battle-royale"
+                                id="Battle Royale"
                                 name="categories"
                                 title="Battle Royale"
                                 img="/images/categories/battle-royale.jpg"
                                 handleChange={handleChange}
-                                active={values.categories.includes('battle-royale') ? true : false}
+                                active={values.categories.includes('Battle Royale') ? true : false}
                             />
                             <Item
-                                id="moba"
+                                id="MOBA"
                                 name="categories"
                                 title="Multiplayer Online Battle Arena (MOBA)"
                                 img="/images/categories/moba.jpg"
                                 handleChange={handleChange}
-                                active={values.categories.includes('moba') ? true : false}
+                                active={values.categories.includes('MOBA') ? true : false}
                             />
                             <Item
-                                id="fps"
+                                id="FPS"
                                 name="categories"
                                 title="First Person Shooter (FPS)"
                                 img="/images/categories/fps.jpg"
                                 handleChange={handleChange}
-                                active={values.categories.includes('fps') ? true : false}
+                                active={values.categories.includes('FPS') ? true : false}
                             />
                             <Item
-                                id="rts"
+                                id="RTS"
                                 name="categories"
                                 title="Real-Time Strategy (RTS)"
                                 img="/images/categories/rts.jpg"
                                 handleChange={handleChange}
-                                active={values.categories.includes('rts') ? true : false}
+                                active={values.categories.includes('RTS') ? true : false}
                             />
                             <Item
-                                id="simulator"
+                                id="Vehicle Simulator"
                                 name="categories"
                                 title="Transportation Simulation"
                                 img="/images/categories/simulator.jpg"
                                 handleChange={handleChange}
-                                active={values.categories.includes('simulator') ? true : false}
+                                active={values.categories.includes('Vehicle Simulator') ? true : false}
                             />
                             <Item
-                                id="casual"
+                                id="Casual"
                                 name="categories"
                                 title="Casual"
                                 img="/images/categories/casual.jpg"
                                 handleChange={handleChange}
-                                active={values.categories.includes('casual') ? true : false}
+                                active={values.categories.includes('Casual') ? true : false}
                             />
                             <Item
-                                id="fighting"
+                                id="Fighting Game"
                                 name="categories"
                                 title="Fighting"
                                 img="/images/categories/fighting.jpg"
                                 handleChange={handleChange}
-                                active={values.categories.includes('fighting') ? true : false}
+                                active={values.categories.includes('Fighting Game') ? true : false}
                             />
                             <Item
-                                id="life-simulator"
+                                id="Live Simulation"
                                 name="categories"
                                 title="Life Simulation"
                                 img="/images/categories/life-simulator.jpg"
                                 handleChange={handleChange}
-                                active={values.categories.includes('life-simulator') ? true : false}
+                                active={values.categories.includes('Live Simulation') ? true : false}
                             />
                             <Item
-                                id="sports"
+                                id="Sport"
                                 name="categories"
                                 title="Sports"
                                 img="/images/categories/sports.jpg"
                                 handleChange={handleChange}
-                                active={values.categories.includes('sports') ? true : false}
+                                active={values.categories.includes('Sport') ? true : false}
                             />
                             <Item
-                                id="rpg"
+                                id="RPG"
                                 name="categories"
                                 title="Role Playing Game (RPG)"
                                 img="/images/categories/rpg.jpg"
                                 handleChange={handleChange}
-                                active={values.categories.includes('rpg') ? true : false}
+                                active={values.categories.includes('RPG') ? true : false}
                             />
                             <Item
-                                id="adventure"
+                                id="Adventure"
                                 name="categories"
                                 title="Adventure"
                                 img="/images/categories/adventure.jpg"
                                 handleChange={handleChange}
-                                active={values.categories.includes('adventure') ? true : false}
+                                active={values.categories.includes('Adventure') ? true : false}
                             />
                             <Item
-                                id="racing"
+                                id="Racing"
                                 name="categories"
                                 title="Racing"
                                 img="/images/categories/racing.jpg"
                                 handleChange={handleChange}
-                                active={values.categories.includes('racing') ? true : false}
+                                active={values.categories.includes('Racing') ? true : false}
                             />
                     </div>
                 </form>

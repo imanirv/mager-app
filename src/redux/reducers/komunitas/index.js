@@ -148,10 +148,11 @@ export const useKomunitasDispatcher = () => {
 
             const payload = {
                 namaKomunitas: values.namaKomunitas,
-                kategori: values.kategori.name,
+                kategori: {id:values.kategori.id},
                 deskripsi: values.deskripsi,
                 banner: fileUrl,
-                lokasi: values.lokasi.name
+                lokasi: values.lokasi.name,
+                acceptance: false
             }
             try {
                 const response = callAPI({
@@ -167,7 +168,7 @@ export const useKomunitasDispatcher = () => {
                 //     window.location.href = "/homepage"
                 // }
             } catch (error) {
-                console.log(error)
+                console.log(error.response)
             }
         dispatch(setLoading(false))
     }
