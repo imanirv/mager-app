@@ -185,6 +185,8 @@ export const useUserDispatcher = () => {
                 })
     
                 fileUrl = upload.data.data;
+            }else if(values.fotoProfile){
+                fileUrl = values.fotoProfile
             }
 
             const payload = {

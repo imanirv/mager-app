@@ -93,61 +93,87 @@ export const usePostDispatcher = () => {
     const token = getJwt();
     const getPost = async (page = 0) => {
       dispatch(setLoading(true))
-      const response = await callAPI({
-        url:`/postingan?page=${page}&size=5&sort=desc`,
-        method: 'get', 
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-        
-      })
-      const data = response.data.data
-      // console.log(response.data.totalPages)
-      if (page == response.data.totalPages) {
-        dispatch(setLoading(false))
-        dispatch(setHasMore(false))
-        return
-      }
-      const payload = [...posting.posts, ...data]
-      dispatch(setPage(response.data.currentPage))
-      dispatch(setPosts(payload))
-      dispatch(setLoading(false))
-    }
-    const getUpdatePost = async (page = 0) => {
-      dispatch(setLoadMore(true))
-      const response = await callAPI({
-        url:`/postingan?page=${page}&size=5&sort=desc`,
-        method: 'get', 
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-        
-      })
-      const data = response.data.data
-      console.log(response.data.totalPages)
-      if (page == response.data.totalPages) {
-        dispatch(setLoading(false))
-        dispatch(setHasMore(false))
-        return
-      }
-      const payload = [...posting.posts, ...data]
-      dispatch(setPage(response.data.currentPage))
-      dispatch(setPosts(payload))
-      dispatch(setLoadMore(false))
-    }
-    const getPostDetail = async (id) => {
-        dispatch(setLoadingDetailPost(true))
+      try {
         const response = await callAPI({
-          url:`postingan/${id}`,
-          method:'get',
+          url:`/postingan?page=${page}&size=5&sort=desc`,
+          method: 'get', 
           headers: {
             Authorization: `Bearer ${token}`
           }
-         
-      })
-      dispatch(setDetailPost(response.data.data))
-      dispatch(setLoadingDetailPost(false))
-      return response.data.data
+          
+        })
+        const data = response.data.data
+  
+        if (page == response.data.totalPages) {
+          dispatch(setLoading(false))
+          dispatch(setHasMore(false))
+          return
+        }
+        const payload = [...posting.posts, ...data]
+        dispatch(setPage(response.data.currentPage))
+        dispatch(setPosts(payload))
+        dispatch(setLoading(false))
+
+      } catch (error) {
+            const res = await Swal.fire({
+                title: 'hmmm',
+                text: 'Terjadi kesalahan, silahkan coba lagi',
+                icon: 'error',
+            });
+      }
+      
+    }
+    const getUpdatePost = async (page = 0) => {
+      dispatch(setLoadMore(true))
+      try {
+        const response = await callAPI({
+          url:`/postingan?page=${page}&size=5&sort=desc`,
+          method: 'get', 
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+          
+        })
+        const data = response.data.data
+        console.log(response.data.totalPages)
+        if (page == response.data.totalPages) {
+          dispatch(setLoading(false))
+          dispatch(setHasMore(false))
+          return
+        }
+        const payload = [...posting.posts, ...data]
+        dispatch(setPage(response.data.currentPage))
+        dispatch(setPosts(payload))
+        dispatch(setLoadMore(false))
+      } catch (error) {
+        const res = await Swal.fire({
+          title: 'hmmm',
+          text: 'Terjadi kesalahan, silahkan coba lagi',
+          icon: 'error',
+      });
+      }
+    }
+    const getPostDetail = async (id) => {
+        dispatch(setLoadingDetailPost(true))
+        try {
+            const response = await callAPI({
+              url:`postingan/${id}`,
+              method:'get',
+              headers: {
+                Authorization: `Bearer ${token}`
+              }
+            
+          })
+          dispatch(setDetailPost(response.data.data))
+          dispatch(setLoadingDetailPost(false))
+          return response.data.data
+        } catch (error) {
+          // const res = await Swal.fire({
+          //     title: 'hmmm',
+          //     text: 'Terjadi kesalahan, silahkan coba lagi',
+          //     icon: 'error',
+          // });
+        }
     }
     const doComment = async (idPost, values) => {
       dispatch(setLoadingComment(true))

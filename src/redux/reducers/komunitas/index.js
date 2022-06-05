@@ -163,9 +163,9 @@ export const useKomunitasDispatcher = () => {
                     }
                 })
 
-                if (response) {
-                    window.location.href = "/homepage"
-                }
+                // if (response) {
+                //     window.location.href = "/homepage"
+                // }
             } catch (error) {
                 console.log(error)
             }

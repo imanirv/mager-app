@@ -18,8 +18,8 @@ function Profile() {
         <div>
           <Menu.Button>
            <div className="flex items-center">
-                    <div className="w-10 h-10 relative rounded-md bg-gray-600">
-                        <Image src="/images/profile.png" layout="fill" alt="profile-picture"/>
+                    <div className="w-9 h-9 relative rounded-md bg-gray-600">
+                        <Image src={bio.fotoProfile ? bio.fotoProfile :"/images/profile.png"} layout="fill" alt="profile-picture" className='rounded-lg'/>
                     </div>
                     <h1 className="text-white font-nunito font-bold mt-1 ml-2">{bio.name}</h1>
                     <ChevronDownIcon className="w-5 h-5 text-white ml-4 mt-1"/>
@@ -74,6 +74,7 @@ function Profile() {
 }
 const Navbar = () => {
     const {push} = useRouter()
+    
     return (
         <div className="fixed z-50 w-screen h-14 bg-darkmode-2 px-3 lg:px-40 flex items-center justify-between border-b-4 border-darkmode-1">
             <div className="w-1/3 flex items-center justify-between cursor-pointer pr-3">

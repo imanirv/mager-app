@@ -6,19 +6,19 @@ import { useState } from 'react'
 
 import LiveIcon from "../icons/live"
 import Modal from './createPostModal'
-
+import { getUser } from '../../helpers/auth'
 
 
 
 
 const CreatePostItem = ({children}) => (
-    <div className={`bg-darkmode-3 hover:bg-darkmode-hover text-gray-200 h-10 w-12  mr-2 rounded-lg flex items-center justify-center`}>
+    <div className={`bg-darkmode-3 hover:bg-darkmode-hover text-gray-200 h-10 w-12  mr-2 rounded-lg flex items-center justify-center relative`}>
         {children}
     </div>
 )
 
 const CreatePost = ({komunitas, idKomunitas}) => {
-  
+  const user = getUser()
   const [isOpen, setIsOpen] = useState(false)
   const [modalDefault, setModalDefault] = useState(0)
   
@@ -37,7 +37,7 @@ const CreatePost = ({komunitas, idKomunitas}) => {
         <div className={`bg-darkmode-2 w-full rounded-2xl px-3 py-4 flex  md:flex-row items-center justify-center`}>
           <div className="flex w-full">
             <CreatePostItem>
-                <Image src={"/images/profile.png"} width={50} height={50} alt="profile"/>
+                <Image src={user.fotoProfile ? user.fotoProfile :"/images/profile.png"} layout="fill" width={50} height={50} alt="profile" className='object-cover rounded-md'/>
             </CreatePostItem>
             <div className={`bg-darkmode-3 hover:bg-darkmode-hover text-darkmode-disabled w-full h-10 rounded-lg mx-2 flex items-center px-4` }  onClick={ () => openModal(0)}>Buat post</div>
           </div>

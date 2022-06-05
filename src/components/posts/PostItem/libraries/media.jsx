@@ -3,8 +3,8 @@ import ReactPlayer from 'react-player/lazy'
 const Media = ({src, type}) => {
     if (type === "image") {
         return(
-            <div className="mt-3 flex justify-center">
-                <img src={src} alt="post images" className='w-full rounded-2xl max-h-[640px]'/>
+            <div className="mt-3 flex justify-center bg-black rounded-2xl ">
+                <img src={src} alt="post images" className='h-full max-h-[640px]  rounded-2xl '/>
             </div>
         )
     } else {

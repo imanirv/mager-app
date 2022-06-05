@@ -460,13 +460,15 @@ function Dropdown({idUser, idPost}) {
   }
 
 export const HeaderUser = ({data, date, idPost}) => {
-  const {id, nama, username}= data
+  const {id, nama, username, fotoProfile}= data
   const {push} = useRouter()
+
+  console.log(fotoProfile)
     return (
       <>
         <div className="flex items-center justify-between">
             <div className="flex items-center">
-                <Image src={"/images/profile.png"} width={40} height={40} alt="profile" className='cursor-pointer'/>
+                <img src={fotoProfile ? fotoProfile :"/images/profile.png"} width={40} height={40} alt="profile" className='cursor-pointer rounded-lg'/>
                 <div className="mx-3">
                     <div className="flex items-center" onClick={() => push(`/user/${id}`)}>
                         <Subtitle1 cursor={true}>{nama}</Subtitle1>

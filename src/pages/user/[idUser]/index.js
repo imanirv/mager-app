@@ -50,8 +50,8 @@ const User = () => {
             <MainLayout>
                 <div className="w-full  bg-darkmode-2 md:px-40 pt-24 pb-4">
                     <div className="flex flex-col items-center text-center">
-                        <div className="w-44  h-44  mr-4 relative">
-                            <Image src={detailUser.fotoProfile ? detailUser.fotoProfile : '/images/profile/default-1.png' } layout="fill" className="object-cover rounded-lg" alt="profile"  />
+                        <div className={`w-44  h-44  mr-4 relative border-4 rounded-lg ${detailUser.gender === 'P' ? 'border-red-400' : 'border-blue-400'}`}>
+                            <Image src={detailUser.fotoProfile ? detailUser.fotoProfile : '/images/profile/default-1.png' } layout="fill" className={`object-cover rounded-md   `} alt="profile"  />
                         </div>
                         <div className="mt-6">
                             <Header2>{detailUser.nama}</Header2>

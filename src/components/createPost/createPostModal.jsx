@@ -13,7 +13,7 @@ import ImageAdd from "../icons/image-add"
 import LiveIcon from "../icons/live"
 
 // typograph 
-import { Subtitle1, Subtitle2, Caption,Button, Body1, Body2 } from '../typography'
+import { Subtitle1, Subtitle2, Caption,ButtonText, Body1, Body2 } from '../typography'
 
 // api call 
 import { usePostDispatcher } from '../../redux/reducers/posts'
@@ -174,15 +174,15 @@ import { getUser } from '../../helpers/auth'
                                     <Caption disabled>0/200</Caption>
                                 </div>
                             </div>
-                                <div className=" bg-darkmode-2 flex items-center text-white mt-2 rounded-lg  ">
-                                    <div className="p-2 bg-darkmode-hover flex items-center rounded-tl-lg rounded-bl-lg">
-                                        <LinkIcon className='text-white w-5 h-5 mx-3'/>
-                                        <Button>Link</Button>
-                                    </div>
-                                    <div className="h-full w-full">
-                                        <input type="text" name='liveStream' className='pl-4 bg-transparent h-full w-full outline-none' onChange={handleChange} />
-                                    </div>
+                            <div className=" bg-darkmode-2 flex items-center text-white mt-2 rounded-lg  ">
+                                <div className="p-2 bg-darkmode-hover flex items-center rounded-tl-lg rounded-bl-lg">
+                                    <LinkIcon className='text-white w-5 h-5 mx-3'/>
+                                    <ButtonText>Link</ButtonText>
                                 </div>
+                                <div className="h-full w-full">
+                                    <input type="text" name='liveStream' className='pl-4 bg-transparent h-full w-full outline-none' onChange={handleChange} />
+                                </div>
+                            </div>
                            
                             <div className="mt-4 flex align-items-center justify-center">
                                 <input type="hidden" name="tipePost" value="livestream" onChange={handleChange}/>

@@ -34,6 +34,7 @@ const EditUserContainer = () => {
         username: "",
         lokasi: "",
         biodata: "",
+        fotoProfile: ""
     })
     const {user: {detailUser, loadingEdit}, getDetailUser, updateUser} = useUserDispatcher()
     const router = useRouter()
@@ -55,7 +56,11 @@ const EditUserContainer = () => {
                 username: detailUser.username,
                 lokasi: detailUser.lokasi,
                 biodata: detailUser.biodata,
+                fotoProfile: detailUser.fotoProfile
             })
+        }
+        if (detailUser.fotoProfile) {
+            setPreview(detailUser.fotoProfile)
         }
     }, [detailUser])
     
@@ -119,20 +124,6 @@ const EditUserContainer = () => {
 
                                     />
                                 </div>
-
-                                {/* <div className="mt-2">
-                                    <Input
-                                        title="Username"
-                                        name="username"
-                                        value={detailUser.username}
-                                        id="username"
-                                        type="text"
-                                        placeholder="Masukkan username"
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-
-                                    />
-                                </div>  */}
                                 <div className="mt-2">
                                     <label>
                                         <span className="block text-white">Bio</span>
@@ -179,7 +170,6 @@ const EditUserContainer = () => {
                                 <div className="mt-2 mb-5">
                                     {
                                         !errors.namaKomunitas || !errors.lokasi || !errors.kategori ? (
-                                            // <button type="submit" className="w-full p-2 bg-blue-500 text-white font-semibold rounded-md mt-2">Perbarui</button>
                                             <Button type="submit" caption={loadingEdit ? "Mengirim" : "Perbarui"} />
                                         ):(
                                             <button disabled className="w-full p-2 bg-darkmode-disabled text-white font-semibold rounded-md mt-2">Buat</button>

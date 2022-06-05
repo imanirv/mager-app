@@ -14,10 +14,8 @@ export default function Home() {
 
 
     useEffect(() => {
-      if (router.isReady) {
-        getPostDetail(idPost)
-      }
-    },[router.isReady])
+      getPostDetail(idPost)
+    },[idPost])
 
     return (
       <>
