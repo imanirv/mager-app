@@ -117,8 +117,8 @@ const LandingContainer = () => {
                 <div className="w-60 h-60 lg:w-80 lg:h-80">
                     <Image src="/astro-1.png" width={300} height={300} alt="" />
                 </div>
-                <button><Image src="/google-play-badge.png" width={150} height={60} alt="" /></button>
-                <button onClick={() => push('/homepage')} className="border border-white text-white rounded-md  bg-darkmode-2 px-5 py-2">Buka Mager di Browser</button>
+                <button><Image src="/google-play-badge.png" width={150} height={43} alt="" /></button>
+                <button onClick={() => push('/homepage')} className="border border-white text-white rounded-md  bg-darkmode-2 px-5 py-2 mt-4">Buka Mager di Browser</button>
             </div>
             <div className="w-full bg-darkmode-2 flex flex-col lg:flex-row items-center justify-center lg:justify-between px-10 lg:px-36">
                 <div className="max-w-[350px] text-center lg:text-left py-10">
