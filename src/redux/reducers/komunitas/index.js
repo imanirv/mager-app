@@ -65,10 +65,11 @@ export const useKomunitasDispatcher = () => {
     const dispatch = useDispatch();
     const token = getJwt();
     const {push} = useRouter()
-    const getListKomunitas = async () => {
+
+    const getListKomunitas = async (keyword = "") => {
         dispatch(setLoading(true))
         const response = await callAPI({
-            url:'/komunitas/list/terpopuler?size=20&page=0',
+            url:`/komunitas/list?size=20&page=0&nama=${keyword}`,
             method: 'get',
             headers: {
                 Authorization: `Bearer ${token}`

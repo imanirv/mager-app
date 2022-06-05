@@ -85,6 +85,7 @@ function Profile() {
   )
 }
 const Navbar = () => {
+    const [toggle, setToggle] = useState(false)
     const {push} = useRouter()
     const onSubmit = (values) => {
       console.log(values.keyword)
@@ -132,10 +133,14 @@ const Navbar = () => {
             </div>
 
             {/* mobile item  */}
-            <div className="w1/2 flex items-center justify-end lg:hidden">
-                <button className="mr-3">
+            <div className="w1/2 flex items-center justify-end lg:hidden ">
+                <button className={`mr-3 ${toggle ? 'hidden' : 'block'}`} onClick={() => setToggle(!toggle)}>
                     <SearchIcon className="w-6 h-6 text-darkmode-disabled hover:text-white "/>
                 </button>
+                <form action="" className={`w-full mr-4 relative ${!toggle ? 'hidden' : 'block'}`} onSubmit={handleSubmit}>
+                    <SearchIcon className="w-6 h-6 text-white absolute right-4 top-1/4" onClick={() => setToggle(!toggle)}/>
+                    <input type="text" name='keyword' className="p-2 px-4 focus:outline-none  bg-darkmode-3 w-full rounded-lg text-white" placeholder="Cari Di Markas .." onChange={handleChange}/>
+                </form>
                 <button>
                     <BellIcon className="text-darkmode-disabled w-6 h-6"/>
                 </button>
