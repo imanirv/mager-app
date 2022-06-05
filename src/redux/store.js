@@ -7,6 +7,7 @@ import auth from "./reducers/auth"
 import komunitas from "./reducers/komunitas";
 import user from "./reducers/user"
 import games from "./reducers/games";
+import notification from "./reducers/notification";
 
 // root reducer 
 const rootreducer = combineReducers({
@@ -14,7 +15,8 @@ const rootreducer = combineReducers({
     auth,
     komunitas,
     user,
-    games
+    games,
+    notification
 });
 
 // store - main storage 

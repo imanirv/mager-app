@@ -6,6 +6,7 @@ import { Menu, Transition } from '@headlessui/react'
 import {HomeIcon, UserGroupIcon, BellIcon, ChevronDownIcon, SearchIcon, LogoutIcon} from "@heroicons/react/solid"
 import RoundProfile from '../../icons/round-profile';
 import {useAuthDispatcher} from '../../../redux/reducers/auth'
+import { useNotificationDispatcher } from '../../../redux/reducers/notification';
 import {getUser} from '../../../helpers/auth'
 
 import {useFormik} from "formik"
@@ -85,6 +86,7 @@ function Profile() {
   )
 }
 const Navbar = () => {
+    const {notification: {listNotification}} = useNotificationDispatcher() 
     const [toggle, setToggle] = useState(false)
     const {push} = useRouter()
     const onSubmit = (values) => {
@@ -126,8 +128,14 @@ const Navbar = () => {
                     <SearchIcon className="w-6 h-6 text-white absolute right-4 top-1/4"/>
                     <input type="text" name='keyword' className="p-2 pl-4 focus:outline-none  bg-darkmode-3 w-full rounded-lg text-white" placeholder="Cari Di Markas Gamer" onChange={handleChange}/>
                 </form>
-                <button>
+                <button onClick={() => push('/notification')} >
+                  <div className="relative w-6 h-6  mr-4">
+                    {
+                      listNotification.length > 0 && 
+                    <div className="w-2 h-2 bg-red-500 rounded-full absolute top-0 right-0"></div>
+                    }
                     <BellIcon className="text-darkmode-disabled w-6 h-6 mr-4"/>
+                  </div>
                 </button>
                 <Profile />
             </div>
@@ -141,7 +149,7 @@ const Navbar = () => {
                     <SearchIcon className="w-6 h-6 text-white absolute right-4 top-1/4" onClick={() => setToggle(!toggle)}/>
                     <input type="text" name='keyword' className="p-2 px-4 focus:outline-none  bg-darkmode-3 w-full rounded-lg text-white" placeholder="Cari Di Markas .." onChange={handleChange}/>
                 </form>
-                <button>
+                <button onClick={() => push('/notification')}>
                     <BellIcon className="text-darkmode-disabled w-6 h-6"/>
                 </button>
             </div>
