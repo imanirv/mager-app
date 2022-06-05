@@ -5,6 +5,7 @@ import { Header3, Body2 } from "../typography"
 import Button from "../button"
 import { useKomunitasDispatcher } from "../../redux/reducers/komunitas"
 import { UserGroupIcon } from "@heroicons/react/solid"
+import EmptyState from "../emptyState"
 
 const ItemList = ({name,id, src, anggota}) => {
     const {push} = useRouter()
@@ -37,11 +38,20 @@ const CommunityCard = () => {
             <div className="flex justify-between items-center text-white mb-3">
                 <Header3>Komunitasmu</Header3>
             </div>
-            <Button href='/komunitas/buat-komunitas' caption="+ Buat Komunitas" />
             <div className="my-3">
-                {listKomunitasJoined.map((item, i) => (
-                    <ItemList key={i} id={item.komunitas.id} name={item.komunitas.namaKomunitas} src={item.komunitas.banner ? item.komunitas.banner : "/astro-2.png"} anggota={item.komunitas.jumlahAnggota} />
-                ))}
+                {listKomunitasJoined.length > 0 ? <>
+                    <Button href='/komunitas/buat-komunitas' caption="+ Buat Komunitas" />
+                    {listKomunitasJoined.map((item, i) => (
+                        <ItemList key={i} id={item.komunitas.id} name={item.komunitas.namaKomunitas} src={item.komunitas.banner ? item.komunitas.banner : "/astro-2.png"} anggota={item.komunitas.jumlahAnggota} />
+                    ))}
+                </>: <>
+                <EmptyState text="Kamu belum mengikuti komunitas manapun" />
+                <div className="mt-4 flex">
+                    <Button href='/explore' caption="Cari Komunitas" />
+                    <div className="mx-1"></div>
+                    <Button href='/komunitas/buat-komunitas' caption="+ Buat Komunitas" secondary/>
+                </div>
+                </>}
             </div>
         </div>
     )

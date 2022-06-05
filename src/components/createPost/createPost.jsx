@@ -29,7 +29,6 @@ const CreatePost = ({komunitas, idKomunitas}) => {
   function openModal(i) {
     setIsOpen(true)
     setModalDefault(i)
-    // console.log(modalDefault)
   }
 
     return(
