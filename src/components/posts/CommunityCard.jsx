@@ -1,8 +1,8 @@
 import Image from "next/image"
 import { useEffect } from "react"
 import {useRouter} from "next/router"
-import { Header3, Body1, Body2 } from "../typography"
-import GroupAdd from "../icons/group-add"
+import { Header3, Body2 } from "../typography"
+import Button from "../button"
 import { useKomunitasDispatcher } from "../../redux/reducers/komunitas"
 import { UserGroupIcon } from "@heroicons/react/solid"
 
@@ -26,22 +26,21 @@ const ItemList = ({name,id, src, anggota}) => {
 }
 
 const CommunityCard = () => {
-    const {komunitas: {listKomunitas}, getListKomunitas} = useKomunitasDispatcher()
+    const {komunitas: {listKomunitasJoined}, getListKomunitasJoined} = useKomunitasDispatcher()
     const {push} = useRouter()
     useEffect(()=> {
-        getListKomunitas()
+        getListKomunitasJoined()
     }, [])
 
     return(
         <div className="bg-darkmode-2 p-4 rounded-lg">
-            <div className="flex justify-between items-center text-white ">
+            <div className="flex justify-between items-center text-white mb-3">
                 <Header3>Komunitasmu</Header3>
-                {/* <GroupAdd /> */}
             </div>
-            <button className="w-full bg-gradient-to-r from-[#384CFF] to-[#009EF8] font-nunito font-bold text-white py-2 px-3 rounded-md mt-7" onClick={() => push('/komunitas/buat-komunitas')}>+ Buat Komunitas</button>
+            <Button href='/komunitas/buat-komunitas' caption="+ Buat Komunitas" />
             <div className="my-3">
-                {listKomunitas.map((item, i) => (
-                    <ItemList key={i} id={item.id} name={item.namaKomunitas} src={item.banner ? item.banner : "/astro-2.png"} anggota={item.jumlahAnggota} />
+                {listKomunitasJoined.map((item, i) => (
+                    <ItemList key={i} id={item.komunitas.id} name={item.komunitas.namaKomunitas} src={item.komunitas.banner ? item.komunitas.banner : "/astro-2.png"} anggota={item.komunitas.jumlahAnggota} />
                 ))}
             </div>
         </div>

@@ -7,6 +7,7 @@ import {useRouter} from "next/router"
 
 const initialState = {
     listKomunitas : [],
+    listKomunitasJoined: [],
     detailKomunitas: [],
     postinganKomunitas: [],
     memberKomunitas: [],
@@ -22,6 +23,12 @@ const slices = createSlice({
             Object.assign(state, {
                 ...state,
                 listKomunitas: action.payload
+            })
+        },
+        setListKomunitasJoined(state, action) {
+            Object.assign(state, {
+                ...state,
+                listKomunitasJoined: action.payload
             })
         },
         setDetailKomunitas(state, action) {
@@ -51,7 +58,7 @@ const slices = createSlice({
     }
 })
 
-const {setListKomunitas, setDetailKomunitas, setPostinganKomunitas, setMemberKomunitas, setLoading} = slices.actions
+const {setListKomunitas,setListKomunitasJoined, setDetailKomunitas, setPostinganKomunitas, setMemberKomunitas, setLoading} = slices.actions
 
 export const useKomunitasDispatcher = () => {
     const {komunitas} = useSelector((state) => state);
@@ -61,7 +68,7 @@ export const useKomunitasDispatcher = () => {
     const getListKomunitas = async () => {
         dispatch(setLoading(true))
         const response = await callAPI({
-            url:'/komunitas/list?size=5&page=0',
+            url:'/komunitas/list/terpopuler?size=20&page=0',
             method: 'get',
             headers: {
                 Authorization: `Bearer ${token}`
@@ -70,6 +77,22 @@ export const useKomunitasDispatcher = () => {
 
         dispatch(setListKomunitas(response.data.data.content))
         dispatch(setLoading(false))
+    }
+    const getListKomunitasJoined = async () => {
+        const {id} = getUser()
+        try {
+            const response = await callAPI({
+                url: `komunitas/joined/${id}?size=10&page=0`,
+                method: 'get',
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            console.log(response.data.data.content)
+            dispatch(setListKomunitasJoined(response.data.data.content))
+        } catch (error) {
+            
+        }
     }
 
     const getDetailKomunitas = async (id) => {
@@ -196,6 +219,7 @@ export const useKomunitasDispatcher = () => {
     return {
         doJoinKomunitas,
         getListKomunitas,
+        getListKomunitasJoined,
         getDetailKomunitas,
         getPostinganKomunitas,
         getMemberKomunitas,
