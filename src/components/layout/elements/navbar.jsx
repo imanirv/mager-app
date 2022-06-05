@@ -8,6 +8,18 @@ import RoundProfile from '../../icons/round-profile';
 import {useAuthDispatcher} from '../../../redux/reducers/auth'
 import {getUser} from '../../../helpers/auth'
 
+import {useFormik} from "formik"
+import * as Yup from  "yup"
+
+
+const initialValues = {
+  keyword : ""
+}
+
+const validationSchema = Yup.object({
+  keyword: Yup.string()
+})
+
 function Profile() {
   const {push} = useRouter()
   const {doLogout} = useAuthDispatcher()
@@ -74,7 +86,19 @@ function Profile() {
 }
 const Navbar = () => {
     const {push} = useRouter()
-    
+    const onSubmit = (values) => {
+      console.log(values.keyword)
+      push(`/search/${values.keyword}`)
+    }
+    const {
+      handleSubmit,
+      handleChange,
+      handleBlur
+    } = useFormik({
+      initialValues,
+      validationSchema,
+      onSubmit
+    })
     return (
         <div className="fixed z-50 w-screen h-14 bg-darkmode-2 px-3 lg:px-40 flex items-center justify-between border-b-4 border-darkmode-1">
             <div className="w-1/3 flex items-center justify-between cursor-pointer pr-3">
@@ -97,9 +121,9 @@ const Navbar = () => {
                 
             </div>
             <div className="w-2/3 items-center justify-between hidden lg:flex">
-                <form action="" className="w-full mr-4 relative hidden lg:block">
+                <form action="" className="w-full mr-4 relative hidden lg:block" onSubmit={handleSubmit}>
                     <SearchIcon className="w-6 h-6 text-white absolute right-4 top-1/4"/>
-                    <input type="text" className="p-2 pl-4 focus:outline-none  bg-darkmode-3 w-full rounded-lg text-white" placeholder="Cari Di Markas Gamer"/>
+                    <input type="text" name='keyword' className="p-2 pl-4 focus:outline-none  bg-darkmode-3 w-full rounded-lg text-white" placeholder="Cari Di Markas Gamer" onChange={handleChange}/>
                 </form>
                 <button>
                     <BellIcon className="text-darkmode-disabled w-6 h-6 mr-4"/>
