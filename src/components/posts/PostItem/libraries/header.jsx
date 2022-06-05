@@ -13,7 +13,7 @@ import {getUser} from "../../../../helpers/auth"
 import { usePostDispatcher } from '../../../../redux/reducers/posts'
 
 // component 
-import { Subtitle1, Subtitle2, Body1, Caption, Button} from '../../../typography'
+import { Subtitle1, Subtitle2, Body1, Caption, ButtonText} from '../../../typography'
 
 // icon 
 import {  PencilIcon, FlagIcon, TrashIcon, GlobeIcon, LinkIcon, XIcon, ArrowLeftIcon } from '@heroicons/react/solid'
@@ -231,7 +231,7 @@ const FormTipe = () => {
           <div className=" bg-darkmode-2 flex items-center text-white mt-2 rounded-lg  ">
               <div className="p-2 bg-darkmode-hover flex items-center rounded-tl-lg rounded-bl-lg">
                   <LinkIcon className='text-white w-5 h-5 mx-3'/>
-                  <Button>Link</Button>
+                  <ButtonText>Link</ButtonText>
               </div>
               <div className="h-full w-full">
                   <input type="text" name='livestream' className='pl-4 bg-transparent h-full w-full outline-none' defaultValue={detailPost.linkLivestream} onChange={handleChange}/>

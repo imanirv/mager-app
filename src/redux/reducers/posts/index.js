@@ -91,12 +91,12 @@ export const usePostDispatcher = () => {
     const {posting} = useSelector((state) => state);
     const dispatch = useDispatch();
     const token = getJwt();
-    const {id} = getUser()
+    const user = getUser()
     const getPost = async (page = 0) => {
       dispatch(setLoading(true))
       try {
         const response = await callAPI({
-          url:`/postingan?page=${page}&size=5&sort=desc&idUser=${id}`,
+          url:`/postingan?page=${page}&size=5&sort=desc&idUser=${user.id}`,
           method: 'get', 
           headers: {
             Authorization: `Bearer ${token}`
