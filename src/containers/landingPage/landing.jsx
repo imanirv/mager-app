@@ -23,7 +23,7 @@ const LandingContainer = () => {
                     <p className="text-xl font-semibold text-white mb-1">Ayo Gabung Bersama Ribuan </p>
                     <h1 className="text-4xl lg:text-6xl font-bold text-white mb-10">Komunitas Gamers di Indonesia</h1>
                     <div className="hidden lg:flex items-center justify-center lg:justify-start">
-                        <button className="relative h-12 w-44"><Image src="/google-play-badge.png" alt="" layout="fill" className="object-cover rounded-md"/></button>
+                        <button onClick={() => push('https://play.google.com/store/apps/details?id=com.mager.gamer')} className="relative h-12 w-44"><Image src="/google-play-badge.png" alt="" layout="fill" className="object-cover rounded-md"/></button>
                         <button onClick={() => push('/homepage')} className="border border-white text-white rounded-md h-12 ml-3  bg-darkmode-2 px-5 ">Buka Mager di Browser</button>
                     </div>
                 </div>
@@ -117,7 +117,7 @@ const LandingContainer = () => {
                 <div className="w-60 h-60 lg:w-80 lg:h-80">
                     <Image src="/astro-1.png" width={300} height={300} alt="" />
                 </div>
-                <button><Image src="/google-play-badge.png" width={150} height={43} alt="" /></button>
+                <button onClick={() => push('https://play.google.com/store/apps/details?id=com.mager.gamer')}><Image src="/google-play-badge.png" width={150} height={43} alt="" /></button>
                 <button onClick={() => push('/homepage')} className="border border-white text-white rounded-md  bg-darkmode-2 px-5 py-2 mt-4">Buka Mager di Browser</button>
             </div>
             <div className="w-full bg-darkmode-2 flex flex-col lg:flex-row items-center justify-center lg:justify-between px-10 lg:px-36">

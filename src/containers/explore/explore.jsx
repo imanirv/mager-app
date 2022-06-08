@@ -40,7 +40,7 @@ const Item = ({id, banner, nama, deskripsi, lokasi, anggota, kategori}) => {
                             </div>
 
                         </div>
-                        <div className="hidden lg:block ml-3  ">
+                        <div className="hidden lg:block ml-3 w-64 ">
                             <Header4>{nama}</Header4>
                             <div className="">
                                 <Body2>
