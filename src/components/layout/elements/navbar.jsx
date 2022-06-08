@@ -8,7 +8,7 @@ import RoundProfile from '../../icons/round-profile';
 import {useAuthDispatcher} from '../../../redux/reducers/auth'
 import { useNotificationDispatcher } from '../../../redux/reducers/notification';
 import {getUser} from '../../../helpers/auth'
-
+import Button from '../../button';
 import {useFormik} from "formik"
 import * as Yup from  "yup"
 
@@ -85,10 +85,12 @@ function Profile() {
     </div>
   )
 }
+
 const Navbar = ({active}) => {
     const {notification: {listNotification}} = useNotificationDispatcher() 
     const [toggle, setToggle] = useState(false)
     const {push} = useRouter()
+    const bio = getUser()
     const onSubmit = (values) => {
       console.log(values.keyword)
       push(`/search/${values.keyword}`)
@@ -142,7 +144,15 @@ const Navbar = ({active}) => {
                     <BellIcon className={`${active === 'notification' ? 'text-white': 'text-darkmode-disabled'} w-6 h-6 mr-4`}/>
                   </div>
                 </button>
-                <Profile />
+                {bio ? <Profile />: <>
+                  <div className="h-full w-44 py-2" onClick={() => push('/auth/login')}>
+                    <button className='w-full h-10 my-2 py-2 border-2 border-blue-600 rounded-lg text-blue-500 hover:bg-blue-600 hover:text-white font-bold font-nunito transition-all'>Masuk</button>
+                  </div>
+                  <div className="w-44 ml-3" onClick={() => push('/auth/register')}>
+                    <Button caption="Daftar" />
+                  </div>
+                </>}
+                
             </div>
 
             {/* mobile item  */}

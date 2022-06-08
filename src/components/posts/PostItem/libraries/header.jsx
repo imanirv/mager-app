@@ -462,7 +462,7 @@ function Dropdown({idUser, idPost}) {
 export const HeaderUser = ({data, date, idPost}) => {
   const {id, nama, username, fotoProfile}= data
   const {push} = useRouter()
-
+  const bio = getUser()
   console.log(fotoProfile)
     return (
       <>
@@ -478,7 +478,9 @@ export const HeaderUser = ({data, date, idPost}) => {
                     <Caption disabled={true} cursor={true}>{date}</Caption>
                 </div>
             </div>
-            <Dropdown idUser={id} idPost={idPost}/>
+            {
+              bio && <Dropdown idUser={id} idPost={idPost}/>
+            }
         </div>
         
       </>

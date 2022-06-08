@@ -79,6 +79,17 @@ export const useKomunitasDispatcher = () => {
         dispatch(setListKomunitas(response.data.data.content))
         dispatch(setLoading(false))
     }
+    
+    const getListKomunitasPopuler = async () => {
+        dispatch(setLoading(true))
+        const response = await callAPI({
+            url:`/komunitas/list/terpopuler?size=10&page=0`,
+            method: 'get',
+        })
+
+        dispatch(setListKomunitas(response.data.data.content))
+        dispatch(setLoading(false))
+    }
     const getListKomunitasJoined = async () => {
         const {id} = getUser()
         try {
@@ -290,6 +301,7 @@ export const useKomunitasDispatcher = () => {
     return {
         doJoinKomunitas,
         getListKomunitas,
+        getListKomunitasPopuler,
         getListKomunitasJoined,
         getDetailKomunitas,
         getPostinganKomunitas,

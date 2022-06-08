@@ -5,9 +5,9 @@ const AuthProvider = ({children}) => {
     const [mounted, setMounted] = useState(false);
     useEffect(() =>{
         const jwt = getJwt();
-        if(!jwt) {
-            window.location.href = '/auth/login';
-        }
+        // if(!jwt) {
+        //     window.location.href = '/auth/login';
+        // }
         setMounted(true)
     }, [])
 

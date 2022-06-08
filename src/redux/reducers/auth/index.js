@@ -124,7 +124,7 @@ export const useAuthDispatcher = () => {
                       dispatch(setUser([]));
                       localStorage.removeItem("jwt");
                       localStorage.removeItem("user");
-                      window.location.href = "/"
+                      window.location.href = "/homepage"
                   }
               })
             }

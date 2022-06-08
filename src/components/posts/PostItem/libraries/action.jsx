@@ -28,10 +28,12 @@ const ActionButtons = ({id, setToggle, toggle, likedList}) => {
     }
 
     useEffect(() => {
-       const isLike = likedList.filter(item => item.user.id === userData.id)
-        if (isLike.length >= 1) {
-          setLiked(true)
-        }
+      if (userData) {
+        const isLike = likedList.filter(item => item.user.id === userData.id)
+         if (isLike.length >= 1) {
+           setLiked(true)
+         }
+      }
     })
       return (
           <div className="my-1 flex justify-between items-center md:px-14">
