@@ -21,6 +21,7 @@ import { getUser } from '../../helpers/auth'
 
 // component 
 import Button from "../button"
+import ReactPlayer from 'react-player'
 
 
     const validationSchema = Yup.object({
@@ -45,6 +46,7 @@ import Button from "../button"
     
     function Tabs({index, komunitas = false, idKomunitas=0}) {
         const [preview, setPreview] = useState();
+        const [type, setType] = useState()
         const {posting:{loadingPost},doPost} = usePostDispatcher()
         const onSubmit = async (values) => {
             doPost(values, komunitas, idKomunitas)
@@ -68,8 +70,11 @@ import Button from "../button"
         const handleChangeFile = (e) =>{
             const files = e.target.files;
             if (files) {
+                const type = files[0].type
+                const exact = type.split('/')
                 setPreview(URL.createObjectURL(files[0]))
                 setFieldValue("files", files[0])
+                setType(exact[0])
             }
         } 
         return (
@@ -148,10 +153,14 @@ import Button from "../button"
                                 </div>
                             </div>
                             <label htmlFor="files">
-                                <div className="h-36 bg-darkmode-2 p-3 text-white mt-2 rounded-lg border border-dashed border-gray-500">
+                                <div className=" bg-darkmode-2 p-3 text-white mt-2 rounded-lg border border-dashed border-gray-500">
                                     {preview ? (
-                                        <div className="h-full w-full bg-red-200 relative">
-                                            <Image alt='post image' src={preview} layout='fill' className='object-cover' />
+                                        <div className="h-full w-full bg-darkmode-1 relative">
+                                            {type == 'image' ? 
+                                            <div className="h-36">
+                                                <Image alt='post image' src={preview} layout='fill' className='object-cover' />
+                                            </div>
+                                            : <ReactPlayer url={preview} />}
                                         </div>
                                     ): (
                                         <>

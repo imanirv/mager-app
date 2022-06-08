@@ -223,6 +223,25 @@ export const useUserDispatcher = () => {
             
         }
     }
+    const searchUser = async (keyword) => {
+        try {
+            dispatch(setLoadingEdit(true))
+           
+            const response = await callAPI({
+                url:`/user/search-user?nama=${keyword}&page=0&size=100`,
+                method: "get",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            const data = response.data.data.content
+            dispatch(setListUser(data))
+
+            dispatch(setLoadingEdit(false))
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
 
     return {
@@ -233,6 +252,7 @@ export const useUserDispatcher = () => {
         getFollowing,
         doFollow,
         updateUser,
+        searchUser,
         user
     }
 

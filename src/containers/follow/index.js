@@ -105,7 +105,7 @@ const FollowsContainer = ({index}) => {
                                                 {following.length > 0 ?
                                                 <>
                                                     {following.map((user, i)=>(
-                                                         <Followers key={i} idFolls={user.userFollowing.id} nama={user.userFollowing.nama} username={user.userFollowing.username}/>
+                                                         <Followers key={i} idFolls={user.userFollowing.id} nama={user.userFollowing.nama} username={user.userFollowing.username} foto={user.userFollowing.fotoProfile}/>
                                                     ))}
                                                 </>
                                                 : <div className='flex flex-col justify-center items-center mb-10'>
