@@ -21,8 +21,8 @@ const Item = ({id, banner, nama, deskripsi, lokasi, anggota, kategori}) => {
                 <div className="flex items-center justify-between">
                     <div className="flex items-center justify-start">
                         <div className="h-14 w-14 lg:h-32 lg:w-32 relative p-5">
-                            {/* <Image src={!banner ? banner : "/astro-2.png"} alt="community icon" layout='fill' className='rounded-lg bg-red-200 object-cover'/> */}
-                            <Image src={ "/astro-2.png"} alt="community icon" layout='fill' className='rounded-lg bg-red-200 object-cover'/>
+                            <Image src={banner ? banner : "/astro-2.png"} alt="community icon" layout='fill' className='rounded-lg bg-red-200 object-cover'/>
+                            {/* <Image src={ "/astro-2.png"} alt="community icon" layout='fill' className='rounded-lg bg-red-200 object-cover'/> */}
                             {/* <p className="text-white">{banner}</p> */}
                         </div>
                         <div className="ml-5 w-full lg:hidden">
