@@ -40,7 +40,7 @@ const NotificationContainer = () => {
     }, [])
     return (
         <AuthProvider>
-            <MainLayout>
+            <MainLayout active="notification">
             <div className=" px-3 lg:px-40 pt-20">
                 <div className="flex items-start justify-center">
                     <div className=" w-full md:w-8/12 mr-3">

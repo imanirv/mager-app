@@ -18,7 +18,7 @@ const initialValues = {
 }
 
 const validationSchema = Yup.object({
-  keyword: Yup.string()
+  keyword: Yup.string().max(100)
 })
 
 function Profile() {
@@ -85,7 +85,7 @@ function Profile() {
     </div>
   )
 }
-const Navbar = () => {
+const Navbar = ({active}) => {
     const {notification: {listNotification}} = useNotificationDispatcher() 
     const [toggle, setToggle] = useState(false)
     const {push} = useRouter()
@@ -96,7 +96,8 @@ const Navbar = () => {
     const {
       handleSubmit,
       handleChange,
-      handleBlur
+      handleBlur,
+      errors
     } = useFormik({
       initialValues,
       validationSchema,
@@ -113,20 +114,24 @@ const Navbar = () => {
                     <h1 className="text-white font-nunito font-extrabold text-xl mt-1 ml-1">Mager</h1>
                 </div>
                 <div className="hidden md:flex items-center cursor-pointer mr-10 lg:mr-1" onClick={() => push('/homepage')}>
-                    <HomeIcon className="text-white w-6 h-6"/>
-                    <h1 className="text-white font-nunito font-bold mt-1 ml-1">Home</h1>
+                    <HomeIcon className={`${active === 'home' ? 'text-white': 'text-darkmode-disabled'} w-6 h-6`}/>
+                    <h1 className={`${active === 'home' ? 'text-white': 'text-darkmode-disabled'} font-nunito font-bold mt-1 ml-1`}>Beranda</h1>
                 </div>
                 <div className="hidden md:flex items-center cursor-pointer mr-10 lg:mr-1" onClick={() => push("/explore")}>
-                    <UserGroupIcon className="text-darkmode-disabled w-6 h-6"/>
-                    <h1 className="text-darkmode-disabled font-nunito font-bold mt-1 ml-1">Komunitas</h1>
+                    <UserGroupIcon className={`${active === 'explore' ? 'text-white': 'text-darkmode-disabled'} w-6 h-6`}/>
+                    <h1 className={`${active === 'explore' ? 'text-white': 'text-darkmode-disabled'} font-nunito font-bold mt-1 ml-1`}>Komunitas</h1>
                 </div>
                
                 
             </div>
             <div className="w-2/3 items-center justify-between hidden lg:flex">
                 <form action="" className="w-full mr-4 relative hidden lg:block" onSubmit={handleSubmit}>
-                    <SearchIcon className="w-6 h-6 text-white absolute right-4 top-1/4"/>
-                    <input type="text" name='keyword' className="p-2 pl-4 focus:outline-none  bg-darkmode-3 w-full rounded-lg text-white" placeholder="Cari Di Markas Gamer" onChange={handleChange}/>
+                  {
+                    !errors.keyword && <button type='submit'>
+                      <SearchIcon className="w-6 h-6 text-white absolute right-4 top-1/4"/>
+                    </button>
+                  }
+                    <input type="text" name='keyword' className="p-2 px-4 pr-14 focus:outline-none  bg-darkmode-3 w-full rounded-lg text-white" placeholder="Cari Di Markas Gamer" onChange={handleChange}  autoComplete="off"/>
                 </form>
                 <button onClick={() => push('/notification')} >
                   <div className="relative w-6 h-6  mr-4">
@@ -134,7 +139,7 @@ const Navbar = () => {
                       listNotification.length > 0 && 
                     <div className="w-2 h-2 bg-red-500 rounded-full absolute top-0 right-0"></div>
                     }
-                    <BellIcon className="text-darkmode-disabled w-6 h-6 mr-4"/>
+                    <BellIcon className={`${active === 'notification' ? 'text-white': 'text-darkmode-disabled'} w-6 h-6 mr-4`}/>
                   </div>
                 </button>
                 <Profile />
@@ -147,7 +152,7 @@ const Navbar = () => {
                 </button>
                 <form action="" className={`w-full mr-4 relative ${!toggle ? 'hidden' : 'block'}`} onSubmit={handleSubmit}>
                     <SearchIcon className="w-6 h-6 text-white absolute right-4 top-1/4" onClick={() => setToggle(!toggle)}/>
-                    <input type="text" name='keyword' className="p-2 px-4 focus:outline-none  bg-darkmode-3 w-full rounded-lg text-white" placeholder="Cari Di Markas .." onChange={handleChange}/>
+                    <input type="text" name='keyword' className="p-2 px-4 focus:outline-none  bg-darkmode-3 w-full rounded-lg text-white" placeholder="Cari Di Markas .." onChange={handleChange} disabled={errors.keyword}/>
                 </form>
                 <button onClick={() => push('/notification')}>
                     <BellIcon className="text-darkmode-disabled w-6 h-6"/>

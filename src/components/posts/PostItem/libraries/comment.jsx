@@ -27,6 +27,8 @@ const Comment = ({idPost, commentar, toggle, limit=true}) => {
     validationSchema,
     onSubmit
     })
+
+    console.log(errors  )
   return (
     <div className="mt-3">
       {/* input comment  */}

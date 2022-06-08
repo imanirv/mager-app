@@ -1,4 +1,5 @@
 import { useRouter } from "next/router"
+import Link from "next/link"
 import Image from "next/image"
 import MainLayout from "../../components/layout"
 import AuthProvider from "../../providers/auth"
@@ -13,6 +14,7 @@ import { UserGroupIcon, LocationMarkerIcon } from "@heroicons/react/solid"
 import EsportIcon from "../../components/icons/sport-esport"
 import { LoadingItem, LoadingPost, LoadingProfile } from "../../components/loading"
 import EmptyState from "../../components/emptyState"
+import Button from "../../components/button"
 
 const KomunitasContainer = () => {
     const router = useRouter()
@@ -32,8 +34,7 @@ const KomunitasContainer = () => {
     }, [id])
 
     useEffect(() => {
-        const isFollowed =  memberKomunitas.filter(member => member.user.id === account.id)
-        // console.log(id)
+        const isFollowed =  memberKomunitas.filter(member => member.user.id == account.id)
         if (isFollowed.length >= 1) {
             setFollow(true)
         }
@@ -67,11 +68,15 @@ const KomunitasContainer = () => {
                                 </>
                             )}
                         </div>
+                        {detailKomunitas.roomMaster && detailKomunitas.roomMaster.id == account.id ? (<Link href={`/komunitas/${id}/edit`} passHref>
+                        <a className="mt-3 w-56"><Button secondary caption="Edit Komunitas" /></a></Link>) : <>
                         {follow ?(
                             <button onClick={() => doJoinKomunitas(detailKomunitas.id)} className="bg-darkmode-3 mt-4 px-32 py-2 text-white rounded-md">Bergabung</button>
                             ): (
                                 <button onClick={() => doJoinKomunitas(detailKomunitas.id)} className="bg-blue-500 mt-4 px-32 py-2 text-white rounded-md">Gabung</button>
                             )}
+                        
+                        </>  }
                     </div>
                 </div>
                 <div className=" px-3 lg:px-40 mt-3">

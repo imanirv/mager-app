@@ -1,10 +1,10 @@
 import Navbar from "./elements/navbar"
 import {HomeIcon, UserGroupIcon} from "@heroicons/react/solid"
 import RoundProfile from '../icons/round-profile';
-const MainLayout = ({children}) => {
+const MainLayout = ({children, active}) => {
     return(
         <>
-            <Navbar />
+            <Navbar active={active} />
             <div className="bg-darkmode-1  min-h-screen">
                 {children}
             </div>

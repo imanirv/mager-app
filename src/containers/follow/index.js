@@ -11,7 +11,7 @@ import { Tab } from '@headlessui/react'
 import {Body1, Body2, Header4, Subtitle1, Subtitle2} from "../../components/typography"
 import Card from "../../components/card"
 import { ArrowLeftIcon } from "@heroicons/react/solid"
-
+import CommunityCard from "../../components/posts/CommunityCard"
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
@@ -120,7 +120,7 @@ const FollowsContainer = ({index}) => {
                                 </Card>
                             </div>
                             <div className="hidden md:block w-4/12  bg-darkmode-2 rounded-2xl ">
-                            
+                                <CommunityCard />
                             </div>
                         
                         </div>
@@ -132,7 +132,7 @@ const FollowsContainer = ({index}) => {
 
 
 const Followers = ({idFolls, nama, username, foto}) => {
-    const [isFollowed, setIsFollowed] = useState(true)
+    const [isFollowed, setIsFollowed] = useState(false)
     const {doFollow} = useUserDispatcher()
     const {id} = getUser()
     const token = getJwt()
@@ -140,7 +140,7 @@ const Followers = ({idFolls, nama, username, foto}) => {
     const GetMyFollowing = async () => {
         try {
             const myFollowing = await callAPI({
-                url: `/user/${id}/following?size=10&page=0`,
+                url: `/user/${id}/following?size=100&page=0`,
                 method:'get',
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -148,8 +148,7 @@ const Followers = ({idFolls, nama, username, foto}) => {
             }) 
 
             const data = myFollowing.data.data.content
-            
-            const checkStatus = data.filter((user) => user.userFollowing.id === idFolls)
+            const checkStatus = data.filter((user) => user.userFollowing.id == idFolls)
             if (checkStatus.length > 0) {setIsFollowed(true)}
         } catch (error) {
             console.log(error)

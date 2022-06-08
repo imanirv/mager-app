@@ -21,7 +21,9 @@ const Item = ({id, banner, nama, deskripsi, lokasi, anggota, kategori}) => {
                 <div className="flex items-center justify-between">
                     <div className="flex items-center justify-start">
                         <div className="h-14 w-14 lg:h-32 lg:w-32 relative p-5">
-                            <Image src={banner ? banner : "/astro-2.png"} alt="community icon" layout='fill' className='rounded-lg bg-red-200 object-cover'/>
+                            {/* <Image src={!banner ? banner : "/astro-2.png"} alt="community icon" layout='fill' className='rounded-lg bg-red-200 object-cover'/> */}
+                            <Image src={ "/astro-2.png"} alt="community icon" layout='fill' className='rounded-lg bg-red-200 object-cover'/>
+                            {/* <p className="text-white">{banner}</p> */}
                         </div>
                         <div className="ml-5 w-full lg:hidden">
                             <h1 className='text-white font-semibold'>{nama}</h1>
@@ -81,7 +83,7 @@ const ExploreContainer = () => {
     }, [])
     return(
       <AuthProvider>
-        <MainLayout>
+        <MainLayout active="explore">
              <div className=" px-3 lg:px-40 pt-20">
                 <div className="flex items-start justify-center">
                     <div className=" w-full md:w-8/12 mr-3">

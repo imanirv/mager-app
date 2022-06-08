@@ -88,11 +88,11 @@ function ComboboxItem({data, placeholder, onChange, title,  name, id, defaultVal
         </Combobox>
     )
   }
-  const SelectInput = ({data, placeholder, onChange, title,  name, id}) => {
+  const SelectInput = ({data, placeholder, onChange, title,  name, id, defaultVal}) => {
       return(
         <div className="mb-3">
             <div className="bg-darkmode-3 w-full rounded-lg text-white font-nunito font-bold">
-                <ComboboxItem data={data} placeholder={placeholder} onChange={onChange}  name={name} id={id}/>
+                <ComboboxItem data={data} placeholder={placeholder} onChange={onChange}  name={name} id={id} />
             </div> 
         </div>
       )

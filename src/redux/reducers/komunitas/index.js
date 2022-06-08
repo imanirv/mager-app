@@ -179,7 +179,7 @@ export const useKomunitasDispatcher = () => {
                 acceptance: false
             }
             try {
-                const response = callAPI({
+                const response = await callAPI({
                     url:`/komunitas?idUser=${id}`,
                     method: "post",
                     data: payload,
@@ -188,9 +188,9 @@ export const useKomunitasDispatcher = () => {
                     }
                 })
 
-                // if (response) {
-                //     window.location.href = "/homepage"
-                // }
+                if (response) {
+                    window.location.href = "/homepage"
+                }
             } catch (error) {
                 console.log(error.response)
             }
@@ -215,6 +215,76 @@ export const useKomunitasDispatcher = () => {
         }
         dispatch(setLoading(false))
     }
+    const doKick = async (idUser, idKomunitas) => {
+        const {id} = getUser()
+        dispatch(setLoading(true))
+        try {
+            const response = await callAPI({
+                url:`/komunitas/join/${idUser}/${idKomunitas}`,
+                method: "post",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            push(`/komunitas/${idKomunitas}`)
+            // console.log('ini respon >', response)
+            window.location.reload()
+        } catch (error) {
+            console.log(error)
+        }
+        dispatch(setLoading(false))
+    }
+    const updateKomunitas = async (values, id) => {
+        const fileUrl = "";
+        try {
+            dispatch(setLoading(true))
+            if (values.files) {
+                const formData = new FormData();
+                formData.append("file", values.files)
+                
+                console.log(formData);
+                
+                const upload = await callAPI({
+                    url:"/uploadFiles",
+                    method:"post",
+                    data: formData,
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+                
+                fileUrl = upload.data.data;
+            }else if(values.banner){
+                fileUrl = values.banner
+            }
+            
+            const payload = {
+                namaKomunitas: values.namaKomunitas,
+                kategori: {id:values.kategori.id},
+                deskripsi: values.deskripsi,
+                banner: fileUrl,
+                lokasi: values.lokasi.name,
+                acceptance: false
+            }
+            
+            const response = await callAPI({
+                url:`/komunitas/${id}`,
+                method: "put",
+                data: payload,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            
+            console.log(response)
+            if (response) {
+                window.location.href = `/komunitas/${id}`
+            }
+            dispatch(setLoading(false))
+        } catch (error) {
+            
+        }
+    }
 
 
     return {
@@ -225,6 +295,8 @@ export const useKomunitasDispatcher = () => {
         getPostinganKomunitas,
         getMemberKomunitas,
         doCreateKomunitas,
+        updateKomunitas,
+        doKick,
         komunitas
     }
 

@@ -19,9 +19,9 @@ import { useUserDispatcher } from "../../redux/reducers/user"
 
 
 const validationSchema = Yup.object({
-    nama : Yup.string(),
-    username : Yup.object(),
-    bio : Yup.object(),
+    nama : Yup.string().max(15, 'Maximal 15 karakter'),
+
+    biodata : Yup.string().max(300, 'Maximal 300 Karakter'),
     lokasi: Yup.object()
 })
 
@@ -70,9 +70,10 @@ const EditUserContainer = () => {
         handleChange, 
         setFieldValue,
         errors,
+        touched
     } = useFormik({
         initialValues,
-        // validationSchema,
+        validationSchema,
         onSubmit,
         enableReinitialize : true
     })
@@ -97,7 +98,7 @@ const EditUserContainer = () => {
             setFieldValue('files', file[0])
         }
     }
-
+    console.log(errors)
     return (
         <AuthProvider>
             <MainLayout>
@@ -124,12 +125,26 @@ const EditUserContainer = () => {
 
                                     />
                                 </div>
+                                {
+                                        getIn(touched, "nama") && getIn(errors, "nama") && (
+                                            <div className="text-xs text-red-500 pb-3" >
+                                                {errors.nama}
+                                            </div>
+                                        )
+                                    }
                                 <div className="mt-2">
                                     <label>
                                         <span className="block text-white">Bio</span>
                                         <textarea type="text" name="biodata" onChange={handleChange} onBlur={handleBlur} id="" placeholder='Masukkan biodata' defaultValue={detailUser.biodata} className='w-full h-full bg-darkmode-3 text-white outline-none p-3 rounded-md' />
                                     </label>
                                 </div>
+                                {
+                                        getIn(touched, "biodata") && getIn(errors, "biodata") && (
+                                            <div className="text-xs text-red-500 pb-3" >
+                                                {errors.biodata}
+                                            </div>
+                                        )
+                                    }
                                 <div className="mt-2">
                                     <span className="block text-white mb-2">Lokasi</span>
                                     <SelectInput 
@@ -169,7 +184,7 @@ const EditUserContainer = () => {
                                 </div>
                                 <div className="mt-2 mb-5">
                                     {
-                                        !errors.namaKomunitas || !errors.lokasi || !errors.kategori ? (
+                                        !errors.nama && !errors.biodata  ? (
                                             <Button type="submit" caption={loadingEdit ? "Mengirim" : "Perbarui"} />
                                         ):(
                                             <button disabled className="w-full p-2 bg-darkmode-disabled text-white font-semibold rounded-md mt-2">Buat</button>

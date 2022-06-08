@@ -193,7 +193,7 @@ export const useUserDispatcher = () => {
                 nama : values.nama,
                 username: values.username,
                 biodata: values.biodata,
-                // lokasi: values.lokasi,
+                lokasi: values.lokasi.name,
                 fotoProfile: fileUrl ? fileUrl : ""
             }
             // console.log(payload)

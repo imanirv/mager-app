@@ -7,7 +7,7 @@ import { useFormik, getIn } from 'formik'
 import * as Yup from 'yup'
 
 // icons 
-import { PhotographIcon, GlobeIcon, LinkIcon  } from '@heroicons/react/solid'
+import { PhotographIcon, GlobeIcon, LinkIcon, XIcon  } from '@heroicons/react/solid'
 import PostAdd from "../icons/post-add"
 import ImageAdd from "../icons/image-add"
 import LiveIcon from "../icons/live"
@@ -19,10 +19,13 @@ import { Subtitle1, Subtitle2, Caption,ButtonText, Body1, Body2 } from '../typog
 import { usePostDispatcher } from '../../redux/reducers/posts'
 import { getUser } from '../../helpers/auth'
 
+// component 
+import Button from "../button"
+
 
     const validationSchema = Yup.object({
         title: Yup.string(),
-        postText: Yup.string().required(),
+        postText: Yup.string().max(300),
         draft: Yup.boolean(),
         visibility: Yup.boolean()
     
@@ -69,7 +72,6 @@ import { getUser } from '../../helpers/auth'
                 setFieldValue("files", files[0])
             }
         } 
-    
         return (
         <div className="p-2">
             <div className="w-full bg-darkmode-3 rounded-md">
@@ -121,13 +123,16 @@ import { getUser } from '../../helpers/auth'
                                 </div>
                                 <textarea type="text" name="postText" onChange={handleChange} onBlur={handleBlur} id="" placeholder='Text' className='w-full h-full bg-transparent outline-none px-3 mb-5' />
                                 <div className="absolute right-3 bottom-3">
-                                    <Caption disabled>0/200</Caption>
+                                    <Caption disabled>{values.postText.length}/300</Caption>
                                 </div>
                             </div>
-                            <div className="mt-4 flex align-items-center justify-center">
+                            <div className="mt-4 flex items-center justify-end">
                                 <input type="text" name="tipePost" defaultValue="teks" onChange={handleChange} className="hidden" />
-                                <button type='button' onClick={() => onSubmit({...values, draft: true, visibility: false })} className='text-white font-bold bg-darkmode-3 w-1/2 mx-2 p-2 rounded-lg'>Simpan di Draft</button>
-                                <button name='submit' type='submit' className='bg-gradient-to-r text-white font-bold  from-[#384CFF] to-[#009EF8] w-1/2 mx-2 p-2 rounded-lg'>{loadingPost ? 'Mengirim Post': 'Kirim'}</button>
+                               
+                                {
+                                    !errors.postText ? <Button type="submit" caption={loadingPost ? 'Mengirim Post': 'Kirim'} /> : <Button disabled caption={loadingPost ? 'Mengirim Post': 'Kirim'} />
+                                }
+                                
                             </div>
                         </form>
                     </Tab.Panel>
@@ -139,7 +144,7 @@ import { getUser } from '../../helpers/auth'
                                 </div>
                                 <textarea type="text" name="postText" onChange={handleChange} onBlur={handleBlur} id="" placeholder='Text' className='w-full h-full bg-transparent outline-none px-3 mb-5' />
                                 <div className="absolute right-3 bottom-3">
-                                    <Caption disabled>0/200</Caption>
+                                    <Caption disabled>{values.postText.length}/300</Caption>
                                 </div>
                             </div>
                             <label htmlFor="files">
@@ -149,17 +154,28 @@ import { getUser } from '../../helpers/auth'
                                             <Image alt='post image' src={preview} layout='fill' className='object-cover' />
                                         </div>
                                     ): (
-                                        <div className="flex items-center justify-center w-full h-full">
-                                            <ImageAdd className="mr-1"/><Body1>Upload Foto/Video</Body1>
-                                        </div> 
+                                        <>
+                                            <div className="flex flex-col items-center justify-center w-full h-full">
+                                                <div className="flex items-center justify-center">
+                                                    <ImageAdd className="mr-1"/><Body1>Upload Foto/Video</Body1>
+                                                </div>
+                                                <div className="text-left">
+                                                    <Body2 disabled>Maks File = 1 Foto/Video</Body2>
+                                                    <Body2 disabled>Maks Size Foto = 5 MB</Body2>
+                                                    <Body2 disabled>Maks Size Video = 10 MB</Body2>
+                                                </div>
+                                            </div> 
+                                        </>
                                     )}
                                 </div>
                                 <input type="file" id='files' name="file" className='hidden' onChange={handleChangeFile} accept="image/*, video/*"  />
                             </label>
-                            <div className="mt-4 flex align-items-center justify-center">
+                            <div className="mt-4 flex items-center justify-end">
                             <input type="hidden" name="tipePost" value="foto" onChange={handleChange} />
-                                <button type='button' onClick={() => onSubmit({...values, draft: true, visibility: false })} className='text-white font-bold bg-darkmode-3 w-1/2 mx-2 p-2 rounded-lg'>Simpan di Draft</button>
-                                <button name='submit' type='submit' className='bg-gradient-to-r text-white font-bold  from-[#384CFF] to-[#009EF8] w-1/2 mx-2 p-2 rounded-lg'>{loadingPost ? 'Mengirim Post': 'Kirim'}</button>
+                                
+                                {
+                                    !errors.postText ? <Button type="submit" caption={loadingPost ? 'Mengirim Post': 'Kirim'} /> : <Button disabled caption={loadingPost ? 'Mengirim Post': 'Kirim'} />
+                                }
                             </div>
                         </form>
                     </Tab.Panel>
@@ -171,7 +187,7 @@ import { getUser } from '../../helpers/auth'
                                 </div>
                                 <textarea type="text" name="postText" onChange={handleChange} onBlur={handleBlur} id="" placeholder='Text' className='w-full h-full bg-transparent outline-none px-3 mb-5' />
                                 <div className="absolute right-3 bottom-3">
-                                    <Caption disabled>0/200</Caption>
+                                    <Caption disabled>{values.postText.length}/300</Caption>
                                 </div>
                             </div>
                             <div className=" bg-darkmode-2 flex items-center text-white mt-2 rounded-lg  ">
@@ -183,11 +199,15 @@ import { getUser } from '../../helpers/auth'
                                     <input type="text" name='liveStream' className='pl-4 bg-transparent h-full w-full outline-none' onChange={handleChange} />
                                 </div>
                             </div>
+                            <div className="mt-1">
+                                <Body2 disabled>Video yang dapat diputar hanya video Youtube</Body2>
+                            </div>
                            
-                            <div className="mt-4 flex align-items-center justify-center">
+                            <div className="mt-4 flex items-center justify-end">
                                 <input type="hidden" name="tipePost" value="livestream" onChange={handleChange}/>
-                                <button type='button' onClick={() => onSubmit({...values, draft: true, visibility: false })} className='text-white font-bold bg-darkmode-3 w-1/2 mx-2 p-2 rounded-lg'>Simpan di Draft</button>
-                                <button name='submit' type='submit' className='bg-gradient-to-r text-white font-bold  from-[#384CFF] to-[#009EF8] w-1/2 mx-2 p-2 rounded-lg'>{loadingPost ? 'Mengirim Post': 'Kirim'}</button>
+                                {
+                                    !errors.postText ? <Button type="submit" caption={loadingPost ? 'Mengirim Post': 'Kirim'} /> : <Button disabled caption={loadingPost ? 'Mengirim Post': 'Kirim'} />
+                                }
                             </div>
                         </form>
                     </Tab.Panel>
@@ -216,7 +236,7 @@ import { getUser } from '../../helpers/auth'
                         </div>
                         <div className="flex items-center">
                             <GlobeIcon className='w-4 h-4 text-darkmode-disabled mr-2' />
-                            <Caption disabled>Public</Caption>
+                            <Caption disabled>Publik</Caption>
                         </div>
                     </div>
                 </div>
@@ -264,6 +284,7 @@ import { getUser } from '../../helpers/auth'
                     leaveTo="opacity-0 scale-95"
                 >
                     <div className="inline-block md:w-[700px] mt-28 text-left align-middle transition-all transform bg-darkmode-1  shadow-xl rounded-2xl">
+                        <button onClick={close} className='absolute right-6 top-5'><XIcon className='text-white w-7 h-7' /></button>
                     <Dialog.Title
                         as="h3"
                         className="text-lg font-medium leading-6 text-white text-center p-5"

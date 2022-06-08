@@ -13,6 +13,7 @@ import Card from '../../../components/card/card'
 import { ArrowLeftIcon } from "@heroicons/react/solid"
 
 import { useKomunitasDispatcher } from '../../../redux/reducers/komunitas'
+import Button from '../../../components/button'
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -62,7 +63,7 @@ const MemberKomunitasPage = ({index}) => {
                                     {memberKomunitas.length > 0 ?
                                         <>
                                             {memberKomunitas.map((member, i)=>(
-                                                    <Followers key={i} idFolls={member.user.id} nama={member.user.nama} username={member.user.username} foto={member.user.fotoProfile}/>
+                                                    <Followers key={i} idKomunitas={member.komunitas.id} idFolls={member.user.id} nama={member.user.nama} username={member.user.username} foto={member.user.fotoProfile} rm={member.komunitas.roomMaster.id }/>
                                             ))}
                                         </>
                                         : <div className='flex flex-col justify-center items-center mb-10'>
@@ -84,9 +85,10 @@ const MemberKomunitasPage = ({index}) => {
 }
 
 
-const Followers = ({idFolls, nama, username, foto}) => {
+const Followers = ({idKomunitas, idFolls, nama, username, foto, rm}) => {
     const [isFollowed, setIsFollowed] = useState(false)
     const {doFollow} = useUserDispatcher()
+    const {doKick} = useKomunitasDispatcher()
     const {id} = getUser()
     const token = getJwt()
 
@@ -124,13 +126,21 @@ const Followers = ({idFolls, nama, username, foto}) => {
                     <Body2 disabled>{username}</Body2>
                 </div>
             </div>
-            {
-                idFolls == id ? (<p className='text-darkmode-disabled'>Hey, its me</p>) : (
-                    <button className={`text-white  px-5 py-2 rounded-lg ${isFollowed ? 'bg-darkmode-3' : 'bg-blue-500'}`} onClick={() => doFollow(idFolls)} >
-                    {!isFollowed ? 'ikuti' : 'Mengikuti'}   
-                    </button>
-                )
-            }
+            <div className="flex justify-end">
+                {
+                    idFolls == id ? (<p className='text-darkmode-disabled'>Hey, its me</p>) : (
+                        <>
+                            <button className={`text-white  px-5 py-2 rounded-lg ${isFollowed ? 'bg-darkmode-3' : 'bg-blue-500'}`} onClick={() => doFollow(idFolls)} >
+                            {!isFollowed ? 'ikuti' : 'Mengikuti'}   
+                            </button>
+                            {
+                                rm == id ? <div className="ml-3"><button className='border border-blue-500 text-blue-500 rounded-lg px-5 py-2' onClick={() => doKick(idFolls,idKomunitas)}>Keluarkan</button></div> :""
+                            }
+                        </>
+                    )
+                }
+               
+            </div>
             
         </div>
     )

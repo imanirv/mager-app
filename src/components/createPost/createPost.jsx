@@ -41,7 +41,7 @@ const CreatePost = ({komunitas, idKomunitas}) => {
             <div className={`bg-darkmode-3 hover:bg-darkmode-hover text-darkmode-disabled w-full h-10 rounded-lg mx-2 flex items-center px-4` }  onClick={ () => openModal(0)}>Buat post</div>
           </div>
             <div className="flex md:flex">
-              <CreatePostItem><PhotographIcon className={`bg-darkmode-3 w-4 h-4`} onClick={() => openModal(1)} /></CreatePostItem>
+              <CreatePostItem><PhotographIcon className={`bg-darkmode-3 w-6 h-6`} onClick={() => openModal(1)} /></CreatePostItem>
               <CreatePostItem><LiveIcon onClick={() => openModal(2)} /></CreatePostItem>
             </div>
         </div>

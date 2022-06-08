@@ -45,13 +45,9 @@ export const useGameDispatcher = () => {
                     Authorization: `Bearer ${token}`
                 }
             })
-            // console.log(response.data.data)
             const data = response.data.data
-            const newData = []
-            for (let i = 0; i < data.length; i++) {
-                // const element = array[i];
-                newData.push({id:data[i].id, name: data[i].namaGame})
-            }
+            const newData = data.map((item, i) => { return{ id: item.id, name: item.namaGame}})
+
             dispatch(setListGames(newData))
         } catch (error) {
             console.log(error)

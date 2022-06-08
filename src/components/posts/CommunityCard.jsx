@@ -41,7 +41,11 @@ const CommunityCard = () => {
             </div>
             <div className="my-3">
                 {listKomunitasJoined.length > 0 ? <>
-                    <Button href='/komunitas/buat-komunitas' caption="+ Buat Komunitas" />
+                    <Link href='/komunitas/buat-komunitas' passHref>
+                        <a>
+                            <Button caption="+ Buat Komunitas" />
+                        </a>
+                    </Link>
                     {listKomunitasJoined.map((item, i) => (
                         <ItemList key={i} id={item.komunitas.id} name={item.komunitas.namaKomunitas} src={item.komunitas.banner ? item.komunitas.banner : "/astro-2.png"} anggota={item.komunitas.jumlahAnggota} />
                     ))}
