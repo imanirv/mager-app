@@ -98,7 +98,7 @@ export const useAuthDispatcher = () => {
                 text: 'Username atau password anda salah',
                 icon: 'error',
             });
-            dispatch(setErrMessage(error.response.data.message))
+            dispatch(setErrMessage('Username atau password anda salah / tidak terdaftar'))
             dispatch(setLoading(false))
         }
     }
