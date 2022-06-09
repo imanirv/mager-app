@@ -8,13 +8,14 @@ import Card from "../../../card"
 import { useFormik, getIn } from 'formik'
 import * as Yup from 'yup'
 import { usePostDispatcher } from '../../../../redux/reducers/posts'
+import { getUser } from '../../../../helpers/auth'
 
 const validationSchema = Yup.object({
   isiKomentar: Yup.string().max(300, 'maximal 300 karakter')
 })
 
 const Comment = ({idPost, commentar, toggle, limit=true}) => {
-  
+  const bio = getUser()
   const {posting:{loadingComment}, doComment} = usePostDispatcher()
 
   const onSubmit = (values) => {
@@ -33,7 +34,11 @@ const Comment = ({idPost, commentar, toggle, limit=true}) => {
     <div className="mt-3">
       {/* input comment  */}
       <div className={`flex w-full items-center ${toggle ? 'block' : 'hidden'}`}>
-        <Image src={"/images/profile.png"} width={30} height={30} alt="profile"/>
+        {bio ?  
+        <Image src={bio.fotoProfile ? bio.fotoProfile :"/images/profile.png"} width={30} height={30} alt="profile" className='rounded-lg'/>
+        :
+        <Image src={"/images/profile.png"} width={30} height={30} alt="profile" className='rounded-lg'/>
+        }
         <div className="w-full px-2 relative">
           <form onSubmit={handleSubmit}>
             <input type="text" name='isiKomentar' className='bg-darkmode-3 text-white rounded-lg p-1 pl-4 pr-14 w-full ml-2' placeholder='Tulis Komentar' onChange={handleChange} onBlur={handleBlur} />

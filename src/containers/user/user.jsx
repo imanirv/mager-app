@@ -54,7 +54,7 @@ const UserContainer = () => {
                     <div className="flex flex-col items-center text-center">
                         {!loading ? (
                             <div className={`w-44  h-44  mr-4 relative border-4 rounded-lg ${detailUser.gender === 'P' ? 'border-red-400' : 'border-blue-400'}`}>
-                                <Image src={detailUser.fotoProfile ? detailUser.fotoProfile : '/images/profile/default-1.png' } layout="fill" className={`object-cover rounded-md   `} alt="profile"  />
+                                <Image src={detailUser.fotoProfile ? detailUser.fotoProfile : '/images/profile.jpg' } layout="fill" className={`object-cover    `} alt="profile"  />
                             </div>
 
                         ): <LoadingProfile />}

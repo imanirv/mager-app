@@ -234,7 +234,11 @@ import ReactPlayer from 'react-player'
         return (
             <div className="flex items-center justify-between px-5 mb-3">
                 <div className="flex items-center justify-between">
-                    <Image src={"/images/profile.png"} width={42} height={42} alt="profile"/>
+                    {userdata ? 
+                    <Image src={userdata.fotoProfile? userdata.fotoProfile :"/images/profile.png"} width={42} height={42} alt="profile" className='rounded-lg'/>
+                    :
+                    <Image src={"/images/profile.png"} width={42} height={42} alt="profile" className='rounded-lg'/>
+                    }
                     <div className="mx-3">
                         <div className="flex items-center">
                             <Subtitle1>{userdata.name}</Subtitle1>
