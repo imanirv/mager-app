@@ -116,6 +116,7 @@ export const usePostDispatcher = () => {
         dispatch(setLoading(false))
 
       } catch (error) {
+        console.log(error)
             const res = await Swal.fire({
                 title: 'hmmm',
                 text: 'Terjadi kesalahan, silahkan coba lagi',
@@ -147,11 +148,12 @@ export const usePostDispatcher = () => {
         dispatch(setPosts(payload))
         dispatch(setLoadMore(false))
       } catch (error) {
-        const res = await Swal.fire({
-          title: 'hmmm',
-          text: 'Terjadi kesalahan, silahkan coba lagi',
-          icon: 'error',
-      });
+        console.log(error)
+      //   const res = await Swal.fire({
+      //     title: 'hmmm',
+      //     text: 'Terjadi kesalahan, silahkan coba lagi',
+      //     icon: 'error',
+      // });
       }
     }
     const getPostDetail = async (id) => {

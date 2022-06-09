@@ -6,14 +6,25 @@ import { getUser } from '../helpers/auth'
 
 export default function Home() {
   const user = getUser()
-  return (
-    <AuthProvider>
-      <Head>
-        <title>mager - Homepage</title>
-      </Head>
-      {user ? 
-      <HomeContainer />
-      :<UnauthorizedHome />}
-    </AuthProvider>
-  )
+  if(user){
+    return (
+      <AuthProvider>
+        <Head>
+          <title>mager - Homepage</title>
+        </Head>
+        <HomeContainer />
+      </AuthProvider>
+    )
+    
+  }else{
+    return (
+      <AuthProvider>
+        <Head>
+          <title>mager - Homepage</title>
+        </Head>
+        <UnauthorizedHome />
+      </AuthProvider>
+    )
+
+  }
 }
