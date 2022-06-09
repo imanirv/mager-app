@@ -172,7 +172,7 @@ const BuatKomunitasContainer = () => {
                             </div>
                             <div className="mt-2">
                                 <label htmlFor="file" >
-                                    <span className="block text-white mb-2">Deskripsi Komunitas</span>
+                                    <span className="block text-white mb-2">Foto Komunitas</span>
                                     {!preview ? (
                                     <div className="w-60 h-60 bg-darkmode-3 border-dashed border border-darkmode-4 rounded-md flex-col flex items-center justify-center">
                                         <div className="">
